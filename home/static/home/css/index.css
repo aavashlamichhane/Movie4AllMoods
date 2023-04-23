@@ -1,0 +1,21 @@
+.cards-wrapper
+{
+  display: flex;
+}
+
+.card{
+  margin: 0.5em;
+  width: calc(100%/3);
+}
+
+.carousel-indicators .active{
+  background-color: blue;
+}
+
+.carousel-indicators{
+  bottom: 0;
+}
+
+.carousel-indicators li{
+  background-color: black;
+}
