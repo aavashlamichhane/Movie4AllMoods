@@ -13,10 +13,10 @@ def signUp(request):
     return render(request, "home/signup.html")
 
 def help(request):
-    return HttpResponse("This is where help lies.")
+    return render(request, "home/about.html")
 
 def aboutUs(request):
-    return HttpResponse("This is where about us lies.")
+    return render(request, "home/about.html")
 
 
 
