@@ -7,10 +7,10 @@ def index(request):
     return render(request, 'home/index.html')
 
 def logIn(request):
-    return HttpResponse("This is where login lies.")
+    return render(request, "home/login.html")
 
 def signUp(request):
-    return HttpResponse("This is where Sign up lies.")
+    return render(request, "home/signup.html")
 
 def help(request):
     return HttpResponse("This is where help lies.")
