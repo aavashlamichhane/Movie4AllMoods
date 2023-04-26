@@ -14,55 +14,66 @@
             <div class="col-md-6 right">
                 <div class="input-box">
                     <header>Create Your Account</header>
-                    <div class="input-field">
-                        <input type="text" class="input" id="email" required autocomplete="off">
-                        <label for="email">Email-Address</label>
-                    </div>
-                    <div class="input-field">
-                        <input type="text" class="input" id="username" required autocomplete="off">
-                        <label for="username">Username</label>
-                    </div>
-                    <div class="input-field">
-                        <input type="password" class="input" id="password" required>
-                        <label for="password">Password</label>
-                    </div>
-                    <div class="input-field">
-                        <input type="password" class="input" id="confirmpassword" required>
-                        <label for="repassword">Confirm Password</label>
-                    </div>
-                    <div class="gender-details">
-                        <span class="gender-title">Gender</span>
-                        <div class="category">
-                            <label for="">
-                                <span class="dot one"></span>
-                                <span class="gender">Male</span>
-                            </label>
-                            <label for="">
-                                <span class="dot one"></span>
-                                <span class="gender">Female</span>
-                            </label>
-                            <label for="">
-                                <span class="dot one"></span>
-                                <span class="gender">Others</span>
-                            </label>
-
+                    <form action="/home/signup/" method="post">
+                        {% csrf_token %}
+                        <div class="input-field">
+                            <input type="text" class="input" id="email" name = "email" required autocomplete="off">
+                            <label for="email">Email-Address</label>
                         </div>
-                    </div>
-                    
-                    
-                    <div class="input-field">
-                        <input type="submit" class="submit" value="SIGNUP">
+                        <div class="input-field">
+                            <input type="text" class="input" id="username" name = "username" required autocomplete="off">
+                            <label for="username">Username</label>
+                        </div>
+                        <div class="input-field">
+                            <input type="text" class="input" id="fname" name = "fname" required autocomplete="off">
+                            <label for="username">First Name</label>
+                        </div>
+                        <div class="input-field">
+                            <input type="text" class="input" id="lname" name = "lname" required autocomplete="off">
+                            <label for="username">Last Name</label>
+                        </div>
+                        <div class="input-field">
+                            <input type="password" class="input" id="password" name = "password" required>
+                            <label for="password">Password</label>
+                        </div>
+                        <div class="input-field">
+                            <input type="password" class="input" id="confirmpassword" name = "confirmpassword" required>
+                            <label for="repassword">Confirm Password</label>
+                        </div>
+                        <div class="gender-details">
+                            <span class="gender-title">Gender</span>
+                            <div class="category">
+                                <label for="">
+                                    <span class="dot one"></span>
+                                    <span class="gender">Male</span>
+                                </label>
+                                <label for="">
+                                    <span class="dot one"></span>
+                                    <span class="gender">Female</span>
+                                </label>
+                                <label for="">
+                                    <span class="dot one"></span>
+                                    <span class="gender">Others</span>
+                                </label>
+
+                            </div>
+                        </div>
                         
-                    </div>
-                    <div class="input-field">
-                        <label>
-                            <input type="checkbox" id="checkbox" name="">
-                            I accept all the <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.
-                        </label>
                         
-                    </div>
+                        <div class="input-field">
+                            <input type="submit" class="submit" value="SIGNUP">
+                            
+                        </div>
+                        <div class="input-field">
+                            <label>
+                                <input type="checkbox" id="checkbox" name="">
+                                I accept all the <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.
+                            </label>
+                            
+                        </div>
+                </form>
                     <div class="signup">
-                        <span>Already have an account? <a href="../login">LogIn</a></span>
+                        <span>Already have an account? <a href="/home/login">LogIn</a></span>
                     </div>
 
                 </div>

@@ -1,8 +1,14 @@
 body
 {
     font-family: sans-serif;
+    
 }
 
+.bglala
+{
+    background-image: url("../img/background.jpg");
+    filter: blur(8px);
+}
 .navbar
 {
     background-image: linear-gradient(to right, #000000, #404b51);

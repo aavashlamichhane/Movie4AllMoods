@@ -25,12 +25,24 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
+                    {% comment %} <li class="nav-item">
+                        <form class="d-flex">
+                            <input class="form-control me-2" type="search" name="search" placeholder="Search by name...." aria-label="Search">
+                            <button class="btn btn-dark" type="submit">Search</button>
+                        </form>
+                    </li> {% endcomment %}
+                    {% if not user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/home/login">Log In</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/home/signup">Sign Up</a>
+                        </li>
+                    {% else %}
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/home/login">Log In</a>
+                        <a class="nav-link" href="/home/logout">User Profile</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/home/signup">Sign Up</a>
-                    </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="/home/help">Help</a>
                     </li>
@@ -41,6 +53,12 @@
             </div>
         </div>
     </nav>
+    {% for message in messages %}
+    <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+        {{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endfor %}
     {% block body %}{% endblock body %}
 
         <!-- Optional JavaScript; choose one of the two! -->

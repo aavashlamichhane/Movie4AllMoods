@@ -14,22 +14,24 @@
             <div class="col-md-6 right">
                 <div class="input-box">
                     <header>Log Into Your Account</header>
-                    <div class="input-field">
-                        <input type="text" class="input" id="email" required autocomplete="off">
-                        <label for="email">Email or Username</label>
-                    </div>
-                    <div class="input-field">
-                        <input type="password" class="input" id="password" required>
-                        <label for="password">Password</label>
-                    </div>
-                    <div class="input-field">
-                        <input type="submit" class="submit" value="LOGIN">
-                        
-                    </div>
-                    <div class="login">
-                        <span>Don't have an account? <a href="../signup">SignUp</a></span>
-                    </div>
-
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="input-field">
+                            <input type="text" class="input" id="username" name="username" required autocomplete="off">
+                            <label for="email">Username</label>
+                        </div>
+                        <div class="input-field">
+                            <input type="password" class="input" id="password" name="password" required>
+                            <label for="password">Password</label>
+                        </div>
+                        <div class="input-field">
+                            <input type="submit" class="submit" value="LOGIN">
+                            
+                        </div>
+                        <div class="login">
+                            <span>Don't have an account? <a href="../signup">SignUp</a></span>
+                        </div>
+                    </form>
                 </div>
             </div>
 

@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="{%static 'home/css/index.css' %}">
 {% endblock css %}
 {% block body %}
+{% load static %}
 <div class="btn-group">
 	<button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 			Mood
@@ -50,10 +51,59 @@ Action
 <br>
 <br>
 <br>
+{% if user.is_authenticated %}
+<h2>Recommended Movies</h2>
+<br>
+
+<div id="recom" class="carousel carousel-dark slide">
+<div class="carousel-indicators">
+<button type="button" data-bs-target="#recom" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+<button type="button" data-bs-target="#recom" data-bs-slide-to="1" aria-label="Slide 2"></button>
+</div>
+<div class="container">
+<div class="carousel-inner">
+<div class="carousel-item active">
+<div class="cards-wrapper">
+	{% for i in range %}
+	<div class="card">
+		<img src="..." class="card-img-top" alt="...">
+		<div class="card-body">
+			<h5 class="card-title">Card title</h5>
+			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+			<a href="#" class="btn btn-outline-primary">Information</a>
+			<a href="#" class="btn btn-outline-primary">Watch Later</a>
+		</div>
+	</div>
+	{% if forloop.counter|divisibleby:5 and forloop.counter > 0 and not forloop.last %}
+	</div>
+	</div>
+	<div class="carousel-item">
+		<div class="cards-wrapper">
+	{% endif %}
+	{% endfor %}
+</div>
+</div>
+</div>
+
+</div>
+
+
+<button class="carousel-control-prev" type="button" data-bs-target="#recom" data-bs-slide="prev">
+<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+<span class="visually-hidden">Previous</span>
+</button>
+<button class="carousel-control-next" type="button" data-bs-target="#recom" data-bs-slide="next">
+<span class="carousel-control-next-icon" aria-hidden="true"></span>
+<span class="visually-hidden">Next</span>
+</button>
+</div>
+<br>
+<br>
+{% endif %}
 <h2>Top Movies</h2>
 <br>
 
-<div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">
+<div id="carouselExampleIndicators" class="carousel carousel-dark slide">
 <div class="carousel-indicators">
 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -62,6 +112,7 @@ Action
 <div class="carousel-inner">
 <div class="carousel-item active">
 <div class="cards-wrapper">
+	{% for i in range %}
 	<div class="card">
 		<img src="..." class="card-img-top" alt="...">
 		<div class="card-body">
@@ -71,91 +122,13 @@ Action
 			<a href="#" class="btn btn-outline-primary">Watch Later</a>
 		</div>
 	</div>
-	<div class="card">
-		<img src="..." class="card-img-top" alt="...">
-		<div class="card-body">
-			<h5 class="card-title">Card title</h5>
-			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			<a href="#" class="btn btn-outline-primary">Information</a>
-			<a href="#" class="btn btn-outline-primary">Watch Later</a>
-		</div>
+	{% if forloop.counter|divisibleby:5 and forloop.counter > 0 and not forloop.last %}
 	</div>
-	<div class="card">
-		<img src="..." class="card-img-top" alt="...">
-		<div class="card-body">
-			<h5 class="card-title">Card title</h5>
-			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			<a href="#" class="btn btn-outline-primary">Information</a>
-			<a href="#" class="btn btn-outline-primary">Watch Later</a>
-		</div>
 	</div>
-	<div class="card">
-		<img src="..." class="card-img-top" alt="...">
-		<div class="card-body">
-			<h5 class="card-title">Card title</h5>
-			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			<a href="#" class="btn btn-outline-primary">Information</a>
-			<a href="#" class="btn btn-outline-primary">Watch Later</a>
-		</div>
-	</div>
-	<div class="card">
-		<img src="..." class="card-img-top" alt="...">
-		<div class="card-body">
-			<h5 class="card-title">Card title</h5>
-			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			<a href="#" class="btn btn-outline-primary">Information</a>
-			<a href="#" class="btn btn-outline-primary">Watch Later</a>
-		</div>
-	</div>
-</div>
-</div>
-<div class="carousel-item">
-<div class="cards-wrapper">
-	<div class="card">
-		<img src="..." class="card-img-top" alt="...">
-		<div class="card-body">
-			<h5 class="card-title">Card title</h5>
-			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			<a href="#" class="btn btn-outline-primary">Information</a>
-			<a href="#" class="btn btn-outline-primary">Watch Later</a>
-		</div>
-	</div>
-	<div class="card">
-		<img src="..." class="card-img-top" alt="...">
-		<div class="card-body">
-			<h5 class="card-title">Card title</h5>
-			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			<a href="#" class="btn btn-outline-primary">Information</a>
-			<a href="#" class="btn btn-outline-primary">Watch Later</a>
-		</div>
-	</div>
-	<div class="card">
-		<img src="..." class="card-img-top" alt="...">
-		<div class="card-body">
-			<h5 class="card-title">Card title</h5>
-			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			<a href="#" class="btn btn-outline-primary">Information</a>
-			<a href="#" class="btn btn-outline-primary">Watch Later</a>
-		</div>
-	</div>
-	<div class="card">
-		<img src="..." class="card-img-top" alt="...">
-		<div class="card-body">
-			<h5 class="card-title">Card title</h5>
-			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			<a href="#" class="btn btn-outline-primary">Information</a>
-			<a href="#" class="btn btn-outline-primary">Watch Later</a>
-		</div>
-	</div>
-	<div class="card">
-		<img src="..." class="card-img-top" alt="...">
-		<div class="card-body">
-			<h5 class="card-title">Card title</h5>
-			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			<a href="#" class="btn btn-outline-primary">Information</a>
-			<a href="#" class="btn btn-outline-primary">Watch Later</a>
-		</div>
-	</div>
+	<div class="carousel-item">
+		<div class="cards-wrapper">
+	{% endif %}
+	{% endfor %}
 </div>
 </div>
 </div>
@@ -173,112 +146,35 @@ Action
 <br>
 <br>
 <h2>Latest Movies</h2><br>
-<div id="lmovies" class="carousel carousel-dark slide" data-bs-ride="carousel">
+<div id="lmovies" class="carousel carousel-dark slide">
 <div class="carousel-indicators">
 <button type="button" data-bs-target="#lmovies" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
 <button type="button" data-bs-target="#lmovies" data-bs-slide-to="1" aria-label="Slide 2"></button>
 </div>
 <div class="container">
-<div class="carousel-inner">
-<div class="carousel-item active">
-<div class="cards-wrapper">
-	<div class="card">
-		<img src="..." class="card-img-top" alt="...">
-		<div class="card-body">
-			<h5 class="card-title">Card title</h5>
-			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			<a href="#" class="btn btn-outline-primary">Information</a>
-			<a href="#" class="btn btn-outline-primary">Watch Later</a>
+	<div class="carousel-inner">
+	<div class="carousel-item active">
+	<div class="cards-wrapper">
+		{% for i in range %}
+		<div class="card">
+			<img src="..." class="card-img-top" alt="...">
+			<div class="card-body">
+				<h5 class="card-title">Card title</h5>
+				<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+				<a href="#" class="btn btn-outline-primary">Information</a>
+				<a href="#" class="btn btn-outline-primary">Watch Later</a>
+			</div>
 		</div>
-	</div>
-	<div class="card">
-		<img src="..." class="card-img-top" alt="...">
-		<div class="card-body">
-			<h5 class="card-title">Card title</h5>
-			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			<a href="#" class="btn btn-outline-primary">Information</a>
-			<a href="#" class="btn btn-outline-primary">Watch Later</a>
+		{% if forloop.counter|divisibleby:5 and forloop.counter > 0 and not forloop.last %}
 		</div>
-	</div>
-	<div class="card">
-		<img src="..." class="card-img-top" alt="...">
-		<div class="card-body">
-			<h5 class="card-title">Card title</h5>
-			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			<a href="#" class="btn btn-outline-primary">Information</a>
-			<a href="#" class="btn btn-outline-primary">Watch Later</a>
 		</div>
+		<div class="carousel-item">
+			<div class="cards-wrapper">
+		{% endif %}
+		{% endfor %}
 	</div>
-	<div class="card">
-		<img src="..." class="card-img-top" alt="...">
-		<div class="card-body">
-			<h5 class="card-title">Card title</h5>
-			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			<a href="#" class="btn btn-outline-primary">Information</a>
-			<a href="#" class="btn btn-outline-primary">Watch Later</a>
-		</div>
 	</div>
-	<div class="card">
-		<img src="..." class="card-img-top" alt="...">
-		<div class="card-body">
-			<h5 class="card-title">Card title</h5>
-			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			<a href="#" class="btn btn-outline-primary">Information</a>
-			<a href="#" class="btn btn-outline-primary">Watch Later</a>
-		</div>
 	</div>
-</div>
-</div>
-<div class="carousel-item">
-<div class="cards-wrapper">
-	<div class="card">
-		<img src="..." class="card-img-top" alt="...">
-		<div class="card-body">
-			<h5 class="card-title">Card title</h5>
-			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			<a href="#" class="btn btn-outline-primary">Information</a>
-			<a href="#" class="btn btn-outline-primary">Watch Later</a>
-		</div>
-	</div>
-	<div class="card">
-		<img src="..." class="card-img-top" alt="...">
-		<div class="card-body">
-			<h5 class="card-title">Card title</h5>
-			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			<a href="#" class="btn btn-outline-primary">Information</a>
-			<a href="#" class="btn btn-outline-primary">Watch Later</a>
-		</div>
-	</div>
-	<div class="card">
-		<img src="..." class="card-img-top" alt="...">
-		<div class="card-body">
-			<h5 class="card-title">Card title</h5>
-			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			<a href="#" class="btn btn-outline-primary">Information</a>
-			<a href="#" class="btn btn-outline-primary">Watch Later</a>
-		</div>
-	</div>
-	<div class="card">
-		<img src="..." class="card-img-top" alt="...">
-		<div class="card-body">
-			<h5 class="card-title">Card title</h5>
-			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			<a href="#" class="btn btn-outline-primary">Information</a>
-			<a href="#" class="btn btn-outline-primary">Watch Later</a>
-		</div>
-	</div>
-	<div class="card">
-		<img src="..." class="card-img-top" alt="...">
-		<div class="card-body">
-			<h5 class="card-title">Card title</h5>
-			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			<a href="#" class="btn btn-outline-primary">Information</a>
-			<a href="#" class="btn btn-outline-primary">Watch Later</a>
-		</div>
-	</div>
-</div>
-</div>
-</div>
 
 </div>
 <button class="carousel-control-prev" type="button" data-bs-target="#lmovies" data-bs-slide="prev">
@@ -290,6 +186,7 @@ Action
 <span class="visually-hidden">Next</span>
 </button>
 </div>
+
 {% endblock body %}
 
 
