@@ -3,7 +3,7 @@ import os
 from home.models import Movies
 
 def run():
-    file = open('C:\Aavash files\COMP206\Project\Movie4AllMoods\scripts\MovieGenre.csv',encoding="utf-8")
+    file = open('C:\\Aavash files\\COMP206\\Project\\Movie4AllMoods\\scripts\\finale.csv',encoding="utf-8")
     read_file=csv.reader(file)
     
     Movies.objects.all().delete()
@@ -14,5 +14,5 @@ def run():
         if count==1:
             pass
         else:
-            Movies.objects.create(imdbid=record[0],imdblink=record[1],title=record[2],imdbscore=record[3],genre=record[4],poster=record[5])
+            Movies.objects.create(imdbid=record[0],imdbscore=record[7],cast=record[11],crew=record[12],genre=record[6],isAdult=record[3],numVotes=record[8],otitle=record[2],poster=record[10],title=record[1],runtime=record[5],date=record[4])
         count=count+1

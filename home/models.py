@@ -11,12 +11,17 @@ class Profile(models.Model):
     password = models.CharField(max_length=30)
     
 class Movies(models.Model):
-    imdbid = models.IntegerField(default=0)
-    imdblink=models.CharField(max_length=500)
+    imdbid = models.CharField(max_length=10)
     title=models.CharField(max_length=200)
     imdbscore=models.FloatField(default=-1)
     genre=models.CharField(max_length=500)
     poster=models.CharField(max_length=500)
-    
+    cast=models.TextField()
+    crew=models.TextField()
+    isAdult= models.IntegerField()
+    numVotes=models.IntegerField()
+    otitle=models.CharField(max_length=200)
+    runtime=models.IntegerField()
+    date=models.IntegerField()
     def __str__(self):
         return self.title

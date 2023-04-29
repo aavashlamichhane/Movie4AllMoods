@@ -8,8 +8,10 @@ from .models import Movies
 # Create your views here.
 
 def index(request):
-    movie=Movies.objects.all().order_by('-imdbscore')[:10]
-    params={'item':movie, 'range': range(10)}
+    tmovie=Movies.objects.all().order_by('-imdbscore')[:10]
+    pmovie=Movies.objects.all().order_by('-numVotes')[:10]
+    lmovie=Movies.objects.all().order_by('-date')[:10]
+    params={'titem':tmovie,'pitem':pmovie,'litem':lmovie, 'range': range(10)}
     return render(request, 'home/index.html',params)
 
 def logIn(request):
