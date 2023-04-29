@@ -14,5 +14,5 @@ def run():
         if count==1:
             pass
         else:
-            Movies.objects.create(imdbid=record[0],imdblink=record[1],title=record[2],imdbscore=record[3],genre=record[3],poster=record[4])
+            Movies.objects.create(imdbid=record[0],imdblink=record[1],title=record[2],imdbscore=record[3],genre=record[4],poster=record[5])
         count=count+1

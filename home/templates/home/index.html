@@ -66,7 +66,7 @@ Action
 <div class="cards-wrapper">
 	{% for i in range %}
 	<div class="card">
-		<img src="..." class="card-img-top" alt="...">
+		<img src="..." class="card-img-top" alt="..." height="400px">
 		<div class="card-body">
 			<h5 class="card-title">Card title</h5>
 			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -112,14 +112,14 @@ Action
 <div class="carousel-inner">
 <div class="carousel-item active">
 <div class="cards-wrapper">
-	{% for i in range %}
+	{% for i in item %}
 	<div class="card">
-		<img src="..." class="card-img-top" alt="...">
+		<img src="{{i.poster}}" class="card-img-top" alt="Image has failed to load." height="400px">
 		<div class="card-body">
-			<h5 class="card-title">Card title</h5>
-			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			<a href="#" class="btn btn-outline-primary">Information</a>
-			<a href="#" class="btn btn-outline-primary">Watch Later</a>
+			<h5 class="card-title">{{i.title}}</h5>
+			<p class="card-text">Genre:<br>{{i.genre}}<br>Score: {{i.imdbscore}}</p>
+			<a href="{{i.imdblink}}" class="btn btn-outline-primary">IMDb</a>
+			<a href="#" class="btn btn-outline-primary">Plan-to-watch</a>
 		</div>
 	</div>
 	{% if forloop.counter|divisibleby:5 and forloop.counter > 0 and not forloop.last %}
@@ -157,7 +157,7 @@ Action
 	<div class="cards-wrapper">
 		{% for i in range %}
 		<div class="card">
-			<img src="..." class="card-img-top" alt="...">
+			<img src="{% static 'home/img/imageerror.jpg' %}" class="card-img-top" alt="..." height="400px">
 			<div class="card-body">
 				<h5 class="card-title">Card title</h5>
 				<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
