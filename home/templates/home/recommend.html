@@ -11,17 +11,20 @@
 <h2>Recommended Movies</h2>
 <br>
 <div class="container">
-	{% for i in range %}
-		<div class="card">
-			<img src="{{i.poster}}" class="card-img-top" alt="Image has failed to load." height="350px">
-			<div class="card-body">
-			<h5 class="card-title">{{i.title}}</h5>
-			<p class="card-text">Genre: {{i.genre}}<br>Score: {{i.imdbscore}}<br>Release Date: {{i.date}}</p>
-			<a href="http://www.imdb.com/title/{{i.imdbid}}" class="btn btn-outline-primary" target="_blank">IMDb</a>
-			<a href="#" class="btn btn-outline-primary">Plan-to-watch</a>
-		</div>
+	{% for i in ritem %}
+		<div class="card=row row-cols-1 row-cols-md-5 g-4" >
+			<div class="col">
+				<div class="card">
+				<img src="{{i.poster}}" class="card-img-top" alt="Image has failed to load." height="350px">
+				<div class="card-body">
+					<h5 class="card-title">{{i.title}}</h5>
+					<p class="card-text">Genre: {{i.genre}}<br>Score: {{i.imdbscore}}<br>Release Date: {{i.date}}</p>
+					<a href="http://www.imdb.com/title/{{i.imdbid}}" class="btn btn-outline-primary" target="_blank">IMDb</a>
+					<a href="#" class="btn btn-outline-primary">Plan-to-watch</a>
+				</div>
+				</div>
+			</div>
 		</div>
 	{% endfor %}
-	
 </div>
 {% endblock body %}
