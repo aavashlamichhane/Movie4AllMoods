@@ -11,7 +11,8 @@ def index(request):
     tmovie=Movies.objects.all().order_by('-imdbscore')[:10]
     pmovie=Movies.objects.all().order_by('-numVotes')[:10]
     lmovie=Movies.objects.all().order_by('-date')[:10]
-    params={'titem':tmovie,'pitem':pmovie,'litem':lmovie, 'range': range(10)}
+    
+    params={'titem':tmovie,'pitem':pmovie,'litem':lmovie, 'range': range(50)}
     return render(request, 'home/index.html',params)
 
 def logIn(request):
@@ -84,6 +85,9 @@ def signout(request):
     logout(request)
     messages.success(request,"Logged out successfully.")
     return redirect('/home')
+
+def recommend(request):
+    return render(request, "home/recommend.html")
 
 
 
