@@ -3,7 +3,7 @@ import os
 from home.models import Movies
 
 def run():
-    file = open('C:\\Aavash files\\COMP206\\Project\\Movie4AllMoods\\scripts\\finale.csv',encoding="utf-8")
+    file = open('C:\\AbhyuditFIles\\Project\\Movie4AllMoods\\scripts\\finale.csv',encoding="utf-8")
     read_file=csv.reader(file)
     
     Movies.objects.all().delete()

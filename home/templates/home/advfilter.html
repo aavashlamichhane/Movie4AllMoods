@@ -1,0 +1,95 @@
+{% extends 'home/basic.html' %}
+{% block title %}Movie4AllMoods{% endblock title %}
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'home/css/advfilter.css' %}">
+{% endblock css %}
+{% block body %}
+{% load static %}
+
+<h1>Advance Filters</h1>
+
+<div class="d-flex justify-content-center">
+        <div class="dropdown d-inline-block">
+            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                Mood
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Happy</a></li>
+                <li><a class="dropdown-item" href="#">Sad</a></li>
+                <li><a class="dropdown-item" href="#">Angry</a></li>
+                <li><a class="dropdown-item" href="#">Bored</a></li>
+                
+            </ul>
+        </div>
+
+        <div class="dropdown d-inline-block">
+            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            Genre
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Adventure</a></li>
+                <li><a class="dropdown-item" href="#">Animation</a></li>
+                <li><a class="dropdown-item" href="#">Biography</a></li>
+                <li><a class="dropdown-item" href="#">Comedy</a></li>
+                <li><a class="dropdown-item" href="#">Crime</a></li>
+                <li><a class="dropdown-item" href="#">Drama</a></li>
+                <li><a class="dropdown-item" href="#">Family</a></li>
+                <li><a class="dropdown-item" href="#">Fantasy</a></li>
+                <li><a class="dropdown-item" href="#">History</a></li>
+                <li><a class="dropdown-item" href="#">Horror</a></li>
+                <li><a class="dropdown-item" href="#">Music</a></li>
+                <li><a class="dropdown-item" href="#">Mystery</a></li>
+                <li><a class="dropdown-item" href="#">Romance</a></li>
+                <li><a class="dropdown-item" href="#">Sci-Fi</a></li>
+                <li><a class="dropdown-item" href="#">Sport</a></li>
+                <li><a class="dropdown-item" href="#">Thriller</a></li>
+                <li><a class="dropdown-item" href="#">War</a></li>
+                <li><a class="dropdown-item" href="#">Western</a></li>
+            </ul>
+        </div>
+
+        <div class="dropdown d-inline-block">
+            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            Release Date
+            </button>
+            <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">1990-2000</a></li>
+            <li><a class="dropdown-item" href="#">2000-2010</a></li>
+            <li><a class="dropdown-item" href="#">2010-2020</a></li>
+            </ul>
+        </div>
+
+        <button>Search</button>
+        
+        <div class="dropdown" id="sort">
+            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            Sort By
+            </button>
+            <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Title</a></li>
+            <li><a class="dropdown-item" href="#">IMDb score</a></li>
+            <li><a class="dropdown-item" href="#">Playtime</a></li>
+            <li><a class="dropdown-item" href="#">Release Date</a></li>
+            </ul>
+        </div>
+</div>
+
+<form class="d-flex" role="search">
+    <input class="form-control me-2" type="search" placeholder="Search by cast" aria-label="Search">
+    <button class="btn btn-outline-success" type="submit">Search</button>
+  </form>
+
+  {% for i in advmovies %}
+		<div class="card">
+			<img src="{{i.poster}}" class="card-img-top" alt="Image has failed to load.">
+			<div class="card-body">
+				<h5 class="card-title">{{i.title}}</h5>
+				<p class="card-text">Genre: {{i.genre}}<br>Score: {{i.imdbscore}}<br>Release Date: {{i.date}}</p>
+				<a href="http://www.imdb.com/title/{{i.imdbid}}" class="btn btn-outline-primary" target="_blank">IMDb</a>
+				<a href="#" class="btn btn-outline-primary">Plan-to-watch</a>
+			</div>
+		</div>
+    {% endfor %}
+{% endblock body %}
