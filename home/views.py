@@ -88,10 +88,11 @@ def signout(request):
 
 def recommend(request):
     rmovie=Movies.objects.all().order_by('-title')[:50]
-    params={'ritem':rmovie, 'range':range(5)}
+    params={'ritem':rmovie, 'range':range(10)}
     return render(request, "home/recommend.html",params)
 
-
+def filter(request):
+    return render(request, "home/filter.html")
 
 
 
