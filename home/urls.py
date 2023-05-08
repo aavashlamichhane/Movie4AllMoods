@@ -10,4 +10,5 @@ urlpatterns = [
     path('logout/',views.signout,name='logout'),
     path('recommend/',views.recommend,name='Recommended Movies'),
     path('filter/',views.filter,name='Advanced Filters'),
+    path('userprofile/',views.profile,name='UserProfile')
 ]

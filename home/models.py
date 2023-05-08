@@ -1,14 +1,10 @@
 from django.db import models
+from datetime import date
 
 # Create your models here.
 
 class Profile(models.Model):
-    user_Id = models.AutoField
-    username = models.CharField(max_length=50)
-    name = models.CharField(max_length=75)
-    age = models.PositiveIntegerField
-    email = models.EmailField(max_length=254)
-    password = models.CharField(max_length=30)
+    bdate = models.DateField(default=date.today)
     
 class Movies(models.Model):
     imdbid = models.CharField(max_length=10)
