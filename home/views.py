@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .models import Movies
 from django.contrib.auth.decorators import login_required
+from .forms import EditProfileForm
 
 # Create your views here.
 
@@ -95,6 +96,7 @@ def recommend(request):
 def filter(request):
     return render(request, "home/filter.html")
 
+@login_required
 def profile(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -114,10 +116,7 @@ def profile(request):
         if not username.isalnum():
             messages.error(request,"Username must be alphanumeric")
             return redirect('/home/signup')
-        
-    return render(request, "home/profile.html")
-    
-
+    return render(request,"home/profile.html")
 
 
 def list(request):
