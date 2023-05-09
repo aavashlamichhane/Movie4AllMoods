@@ -94,5 +94,14 @@ def recommend(request):
 def filter(request):
     return render(request, "home/filter.html")
 
+def profile(request):
+    return render(request, "home/profile.html")
 
 
+
+def list(request):
+    return render(request,"home/list.html")
+
+def p2w(request):
+    messages.success(request,"Added.")
+    return redirect('/home')
