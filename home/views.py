@@ -100,7 +100,43 @@ def filter(request):
     return render(request, "home/filter.html")
 
 @login_required
-def profile(request):
+def profile(request,*args,**kwargs):
+    # user_id = kwargs.get('user_id')
+    # print(user_id)
+    # try:
+    #     user= User.objects.get(pk=user_id)
+    # except User.DoesNotExist:
+    #     return HttpResponse("Something went wrong.")
+    # if user.pk != request.user.pk:
+    #     return HttpResponse("Cannot edit this data.")
+    # context = {}
+    # if request.POST:
+    #     form = EditProfileForm(request.POST,instance=request.user)
+    #     if form.is_valid():
+    #         form.save()
+    #         return redirect('/home/userprofile',user_id=user.pk)
+    #     else:
+    #         form = EditProfileForm(request.POST,instance=request.user,
+    #             initial={
+    #                 "first_name":user.first_name,
+    #                 "last_name":user.last_name,
+    #                 "username":user.username,
+    #                 "email":user.email,
+    #             }    
+    #         )
+    #         context['form']=form
+    # else:
+    #     form = EditProfileForm(
+    #             initial={
+    #                 "first_name":user.first_name,
+    #                 "last_name":user.last_name,
+    #                 "username":user.username,
+    #                 "email":user.email,
+    #             }    
+    #         )
+    #     context['form']=form
+    # return render(request,'home/profile.html',context)
+    
     if request.method == 'POST':
         form=EditProfileForm(request.POST,instance=request.user)
         if form.is_valid():
