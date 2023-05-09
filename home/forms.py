@@ -5,17 +5,16 @@ from django.contrib.auth import authenticate
 
 from home.models import Profile
 
-class EditProfileForm(UserChangeForm):
-    fname= forms.CharField(widget=forms.TextInput(attrs={'class':'form_control','placeholder':'{{user.first_name}}'}))
-    lname= forms.CharField(widget=forms.TextInput(attrs={'class':'form_control','placeholder':'{{user.last_name}}'}))
-    username = forms.CharField(max_length=30,widget=forms.EmailInput(attrs={'class':'form_control','placeholder':'{{user.username}}'}))
-    email = forms.CharField(widget=forms.EmailInput(attrs={'class':'form_control','placeholder':'{{user.email}}'}))
-    
+class EditProfileForm(forms.ModelForm):
+    first_name= forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    last_name= forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    email= forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control'}))
+    username= forms.CharField(max_length=30,widget=forms.TextInput(attrs={'class':'form-control'}))
     class Meta:
         model = User
         fields = (
-            'email',
             'first_name',
             'last_name',
+            'email',
             'username',
         )

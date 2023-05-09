@@ -99,17 +99,19 @@ def recommend(request):
 def filter(request):
     return render(request, "home/filter.html")
 
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        form=EditProfileForm(request.POST,instance=request.user)
+        if form.is_valid():
+            user_form=form.save()
+            return redirect('/home/userprofile')
+    else:
+        form= EditProfileForm(instance=request.user)
+        args={}
+        args['form']=form
+        return render(request,"home/profile.html",args)
 
-# def profile(request):
-#     return render(request,"home/profile.html")
-
-class userProfileView(generic.UpdateView):
-    form_class = EditProfileForm
-    template_name = "home/profile.html" 
-    success_url = reverse_lazy('home')
-    
-    def get_object(self):
-        return self.request.user
 
 
 
