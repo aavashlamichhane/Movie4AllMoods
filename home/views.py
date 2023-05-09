@@ -94,7 +94,7 @@ def recommend(request):
 def filter(request):
     return render(request, "home/filter.html")
 
-def profile(request):
+def userprofile(request):
     return render(request, "home/profile.html")
 
 
