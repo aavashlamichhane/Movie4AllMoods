@@ -3,9 +3,12 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.urls import reverse_lazy
 from .models import Movies
 from django.contrib.auth.decorators import login_required
 from .forms import EditProfileForm
+from django.contrib.auth.forms import UserChangeForm
+from django.views import generic
 
 # Create your views here.
 
@@ -99,24 +102,17 @@ def filter(request):
 @login_required
 def profile(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        email= request.POST.get('email')
-        fname=request.POST.get('fname')
-        lname=request.POST.get('lname')
-        dob=request.POST.get('dob')
-        if User.objects.filter(username=username):
-            messages.error(request,"Username already exists.")
+        form=EditProfileForm(request.POST,instance=request.user)
+        if form.is_valid():
+            user_form=form.save()
             return redirect('/home/userprofile')
-        if User.objects.filter(email=email):
-            messages.error(request,"E-Mail already exists.")
-            return redirect('/home/userprofile') 
-        if len(username)>30:
-            messages.error(request,"Username is longer than 30 characters.")
-            return redirect('/home/userprofile')
-        if not username.isalnum():
-            messages.error(request,"Username must be alphanumeric")
-            return redirect('/home/signup')
-    return render(request,"home/profile.html")
+    else:
+        form= EditProfileForm(instance=request.user)
+        args={}
+        args['form']=form
+        return render(request,"home/profile.html",args)
+
+
 
 
 def list(request):

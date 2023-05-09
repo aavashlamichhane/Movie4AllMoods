@@ -62,12 +62,12 @@
           <div class="heading">User Profile</div>
         <div class="col-md-10 mt-1">
           <div class="card mb-3 content">
-            <form method="POST" action="#">
+            <form method="POST">
               {% csrf_token %}
               <div class="card-details">
-                <div class="card-box">
+                {% comment %} <div class="card-box">
                   <span class="details">First Name</span>
-                  {% comment %} <input type="text" name="fname" placeholder="{{user.first_name}}"> {% endcomment %}
+                  <input type="text" name="fname" placeholder="{{user.first_name}}">
                   {{user_form.username}}
                 </div>
       
@@ -89,8 +89,8 @@
                 <div class="card-box">
                   <span class="details">Date of Birth</span>
                   <input type="text" name="dob" placeholder="DD/MM/YYYY">
-                </div>
-      
+                </div> {% endcomment %}
+                {{form.as_p}}
       
               </div>
               <div class="button">
