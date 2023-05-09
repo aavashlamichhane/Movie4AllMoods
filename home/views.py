@@ -95,7 +95,27 @@ def filter(request):
     return render(request, "home/filter.html")
 
 def profile(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email= request.POST.get('email')
+        fname=request.POST.get('fname')
+        lname=request.POST.get('lname')
+        dob=request.POST.get('dob')
+        if User.objects.filter(username=username):
+            messages.error(request,"Username already exists.")
+            return redirect('/home/userprofile')
+        if User.objects.filter(email=email):
+            messages.error(request,"E-Mail already exists.")
+            return redirect('/home/userprofile') 
+        if len(username)>30:
+            messages.error(request,"Username is longer than 30 characters.")
+            return redirect('/home/userprofile')
+        if not username.isalnum():
+            messages.error(request,"Username must be alphanumeric")
+            return redirect('/home/signup')
+        
     return render(request, "home/profile.html")
+    
 
 
 

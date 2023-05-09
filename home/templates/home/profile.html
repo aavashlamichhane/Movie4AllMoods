@@ -18,6 +18,12 @@
   </head>
 
   <body>
+    {% for message in messages %}
+    <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+        {{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
     <div class="container container1">
       <div class="row">
         <div class="col-md-3 sidebar">
@@ -142,32 +148,32 @@
           <div class="heading">User Profile</div>
         <div class="col-md-10 mt-1">
           <div class="card mb-3 content">
-            <form action="#">
+            <form method="POST" action="#">
+              {% csrf_token %}
               <div class="card-details">
-                
                 <div class="card-box">
                   <span class="details">First Name</span>
-                  <input type="text" placeholder="{{user.first_name}}">
+                  <input type="text" name="fname" placeholder="{{user.first_name}}">
                 </div>
       
                 <div class="card-box">
                   <span class="details">Last Name</span>
-                  <input type="text" placeholder="{{user.last_name}}">
+                  <input type="text" name="lname" placeholder="{{user.last_name}}">
                 </div>
       
                 <div class="card-box">
                   <span class="details">Username</span>
-                  <input type="text" placeholder="{{user.username}}">
+                  <input type="text" name="username" placeholder="{{user.username}}">
                 </div>
                 
                 <div class="card-box">
                   <span class="details">E-mail Address</span>
-                  <input type="text" placeholder="{{user.email}}">
+                  <input type="text" name="email" placeholder="{{user.email}}">
                 </div>
       
                 <div class="card-box">
                   <span class="details">Date of Birth</span>
-                  <input type="text" placeholder="DD/MM/YYYY">
+                  <input type="text" name="dob" placeholder="DD/MM/YYYY">
                 </div>
       
       
