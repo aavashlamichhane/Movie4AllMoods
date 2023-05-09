@@ -21,3 +21,9 @@ class Movies(models.Model):
     date=models.IntegerField()
     def __str__(self):
         return self.title
+    
+class list(models.Model):
+    userId = models.IntegerField(default=0)
+    movieId = models.IntegerField(default=0)
+    rating = models.FloatField(default=0)
+    status = models.IntegerField(default=0)

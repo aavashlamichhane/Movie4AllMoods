@@ -99,3 +99,9 @@ def profile(request):
 
 
 
+def list(request):
+    return render(request,"home/list.html")
+
+def p2w(request):
+    messages.success(request,"Added.")
+    return redirect('/home')

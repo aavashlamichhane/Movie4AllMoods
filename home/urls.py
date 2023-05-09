@@ -10,5 +10,7 @@ urlpatterns = [
     path('logout/',views.signout,name='logout'),
     path('recommend/',views.recommend,name='Recommended Movies'),
     path('filter/',views.filter,name='Advanced Filters'),
-    path('userprofile/',views.profile,name='UserProfile')
+    path('userprofile/',views.profile,name='UserProfile'),
+    path('list/',views.list,name='List'),
+    path('p2w/',views.p2w,name='Plan-to-watch')
 ]
