@@ -76,10 +76,10 @@ def signUp(request):
     return render(request, "home/signup.html")
 
 def help(request):
-    return render(request, "home/about.html")
+    return render(request, "home/aboutus.html")
 
-def aboutUs(request):
-    return render(request, "home/about.html")
+def aboutus(request):
+    return render(request, "home/aboutus.html")
 
 def signout(request):
     logout(request)
