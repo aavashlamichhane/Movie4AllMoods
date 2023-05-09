@@ -20,6 +20,10 @@ body{
     padding: 3px;
     color: whitesmoke;
 }
+.about-item i{
+    font-size: 43px;
+    margin: 0;
+}
 .about-item{
     margin-bottom: 20px;
     margin-top: 20px;
@@ -45,23 +49,19 @@ body{
     text-align: center;
     padding: 5px;
 }
-.about-item i{
-    font-size: 40px;
-    margin: 0;
-}
 .about-item:hover{
     background-color: white;
 }
-.about-item i,
+.about-item:hover i,
 .about-item:hover h3,
 .about-item:hover p{
     color: black;
 }
-.about-item:hover hr{
-    background-color: black;
-}
 .about-item:hover i{
     transform: translateY(-20px);
+}
+.about-item:hover hr{
+    background-color: black;
 }
 .about-item:hover i,
 .about-item:hover h3,

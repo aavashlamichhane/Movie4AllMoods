@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .models import Movies
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -76,10 +77,10 @@ def signUp(request):
     return render(request, "home/signup.html")
 
 def help(request):
-    return render(request, "home/about.html")
+    return render(request, "home/aboutus.html")
 
-def aboutUs(request):
-    return render(request, "home/about.html")
+def aboutus(request):
+    return render(request, "home/aboutus.html")
 
 def signout(request):
     logout(request)
@@ -95,7 +96,27 @@ def filter(request):
     return render(request, "home/filter.html")
 
 def profile(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email= request.POST.get('email')
+        fname=request.POST.get('fname')
+        lname=request.POST.get('lname')
+        dob=request.POST.get('dob')
+        if User.objects.filter(username=username):
+            messages.error(request,"Username already exists.")
+            return redirect('/home/userprofile')
+        if User.objects.filter(email=email):
+            messages.error(request,"E-Mail already exists.")
+            return redirect('/home/userprofile') 
+        if len(username)>30:
+            messages.error(request,"Username is longer than 30 characters.")
+            return redirect('/home/userprofile')
+        if not username.isalnum():
+            messages.error(request,"Username must be alphanumeric")
+            return redirect('/home/signup')
+        
     return render(request, "home/profile.html")
+    
 
 
 
