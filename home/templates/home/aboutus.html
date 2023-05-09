@@ -1,0 +1,60 @@
+{% extends 'home/basic.html' %}
+{% block title %}Movie4AllMoods{% endblock title %}
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{%static 'home/css/aboutus.css' %}">
+
+{% endblock css %}
+{% block body %}
+{% load static %}
+
+  
+
+
+    <section id="about">
+        <div class="about-1">
+            <h1> ABOUT US</h1>
+            <p>Welcome to our movie recommendation website! We're excited to help you find your next favorite film. So, kick back, grab some popcorn, and let us help you discover your next favorite movie.</p>
+        </div>
+        <div id="about-2">
+            <div class="content-box-lg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="about-item text-center">
+                                <i class="bi bi-book"></i>
+                                <h3>MISSION</h3>
+                                <hr>
+                                <p>At our site, we strive to provide you with personalized movie recommendations that match your preferences and tastes. We understand that everyone's movie taste is unique, which is why we use a variety of data and algorithms to analyze your movie preferences and suggest the perfect movie for you. Our website aims to help users discover new movies they may not have otherwise found, and to make the process of finding and selecting movies as easy and enjoyable as possible. </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="about-item text-center">
+                                <i class="bi bi-list-task"></i>
+                                <h3>FEATURES</h3>
+                                <hr>
+                                <p>Users can search for movies by genre, their mood, cast, directors to find movies that match their interests. A registered user can also rate movies that they have watched and also create a watchlist of movies that they want to watch and keep track of movies they have already watched. Our site includes features such as "Recommended Movies", all curated to give you a diverse selection of movies to choose from. We take pride in our user-friendly interface, which makes finding and selecting movies quick and easy.</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="about-item text-center">
+                                <i class="bi bi-lightbulb"></i>
+                                <h3>FUTURE UPDATES</h3>
+                                <hr>
+                                <p>Some potential future enhancements for our website include integration with popular streaming services like Netflix, Hulu, to allow users to easily access recommended movies directly from their streaming accounts. The website could allow users to submit their own movie reviews, creating a community of movie lovers who can share their thoughts and opinions. The website could also expand its content by allowing users to search for series, documentaries and short films that match their interests.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center">
+        <p> Copyright &copy; 2023 All rights reserved.</p>
+    </footer>
+    
+
+    {% endblock body %}

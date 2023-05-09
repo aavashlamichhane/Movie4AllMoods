@@ -76,10 +76,10 @@ def signUp(request):
     return render(request, "home/signup.html")
 
 def help(request):
-    return render(request, "home/about.html")
+    return render(request, "home/aboutus.html")
 
-def aboutUs(request):
-    return render(request, "home/about.html")
+def aboutus(request):
+    return render(request, "home/aboutus.html")
 
 def signout(request):
     logout(request)
@@ -90,6 +90,9 @@ def recommend(request):
     rmovie=Movies.objects.all().order_by('-title')[:50]
     params={'ritem':rmovie, 'range':range(5)}
     return render(request, "home/recommend.html",params)
+
+def userprofile(request):
+    return render(request, "home/profile.html")
 
 
 
