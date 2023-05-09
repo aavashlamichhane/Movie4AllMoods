@@ -100,7 +100,9 @@ def userprofile(request):
 
 
 def list(request):
-    return render(request,"home/list.html")
+    tmovie=Movies.objects.all().order_by('-title')[:10]
+    params={'titem':tmovie}
+    return render(request,"home/list.html",params)
 
 def p2w(request):
     messages.success(request,"Added.")

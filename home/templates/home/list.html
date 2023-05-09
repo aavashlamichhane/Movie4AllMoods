@@ -11,17 +11,13 @@
 {% load static %}
 
 <div class="status-menu">
-      <a href="#" class="status-button">Already Watched</a>
-      <a href="#" class="status-button">Plan to Watch</a>
-    <div class="search-container">
-      <div id="search-box"><input type="text" value=""></div>
-    </div>
-</div>
-
-  
   <main class="table">
     <section class="table_header">
       <h1> Already Watched</h1>
+      <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
     </section>
     
   </main>
@@ -39,7 +35,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for i in awMov %}
+        {% for i in titem %}
         <tr>
           <th scope="row">{{forloop.counter}}</th>
           <td><img src="{{i.poster}}"></td>
