@@ -3,9 +3,12 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.urls import reverse_lazy
 from .models import Movies
 from django.contrib.auth.decorators import login_required
 from .forms import EditProfileForm
+from django.contrib.auth.forms import UserChangeForm
+from django.views import generic
 
 # Create your views here.
 
@@ -96,27 +99,18 @@ def recommend(request):
 def filter(request):
     return render(request, "home/filter.html")
 
-@login_required
-def profile(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        email= request.POST.get('email')
-        fname=request.POST.get('fname')
-        lname=request.POST.get('lname')
-        dob=request.POST.get('dob')
-        if User.objects.filter(username=username):
-            messages.error(request,"Username already exists.")
-            return redirect('/home/userprofile')
-        if User.objects.filter(email=email):
-            messages.error(request,"E-Mail already exists.")
-            return redirect('/home/userprofile') 
-        if len(username)>30:
-            messages.error(request,"Username is longer than 30 characters.")
-            return redirect('/home/userprofile')
-        if not username.isalnum():
-            messages.error(request,"Username must be alphanumeric")
-            return redirect('/home/signup')
-    return render(request,"home/profile.html")
+
+# def profile(request):
+#     return render(request,"home/profile.html")
+
+class userProfileView(generic.UpdateView):
+    form_class = EditProfileForm
+    template_name = "home/profile.html" 
+    success_url = reverse_lazy('home')
+    
+    def get_object(self):
+        return self.request.user
+
 
 
 def list(request):
