@@ -88,13 +88,20 @@ def signout(request):
 
 def recommend(request):
     rmovie=Movies.objects.all().order_by('-title')[:50]
-    params={'ritem':rmovie, 'range':range(5)}
+    params={'ritem':rmovie, 'range':range(10)}
     return render(request, "home/recommend.html",params)
 
-def userprofile(request):
+def filter(request):
+    return render(request, "home/filter.html")
+
+def profile(request):
     return render(request, "home/profile.html")
 
 
 
+def list(request):
+    return render(request,"home/list.html")
 
-
+def p2w(request):
+    messages.success(request,"Added.")
+    return redirect('/home')
