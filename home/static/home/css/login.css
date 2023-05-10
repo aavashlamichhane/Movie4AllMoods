@@ -1,5 +1,6 @@
 *{
     font-family:  sans-serif;
+    
 }
 
 .wrapper{
@@ -17,7 +18,7 @@
     width: 900px;
     height: 750px;
     border-radius: 10px;
-    background: #fff;
+    background: #ffffff00;
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.2);
 }
 
@@ -28,7 +29,7 @@
     transform: translate(-50%, -50%);
 }
 .text p{
-    color: #fff;
+    color: #000;
     font-size: 18px;
 }
 i{
@@ -44,6 +45,7 @@ i{
 .input-box{
     width: 330px;
     box-sizing: border-box;
+    color: #000;
 }
 .input-box header{
     font-weight: 700;
