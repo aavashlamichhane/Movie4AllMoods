@@ -3,7 +3,12 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.urls import reverse_lazy
 from .models import Movies
+from django.contrib.auth.decorators import login_required
+from .forms import EditProfileForm
+from django.contrib.auth.forms import UserChangeForm
+from django.views import generic
 
 # Create your views here.
 
@@ -94,8 +99,19 @@ def recommend(request):
 def filter(request):
     return render(request, "home/filter.html")
 
+@login_required
 def userprofile(request):
-    return render(request, "home/profile.html")
+    if request.method == 'POST':
+        form=EditProfileForm(request.POST,instance=request.user)
+        if form.is_valid():
+            user_form=form.save()
+            return redirect('/home/userprofile')
+    else:
+        form= EditProfileForm(instance=request.user)
+        args={}
+        args['form']=form
+        return render(request,"home/profile.html",args)
+
 
 
 

@@ -2,7 +2,7 @@
 {% block title %}Movie4AllMoods{% endblock title %}
 {% block css %}
 {% load static %}
-<link rel="stylesheet" href="{% static 'home/css/list.css' %}">
+<link rel="stylesheet" href="/static/home/css/list.css">
 
 
 
@@ -10,15 +10,24 @@
 {% block body %}
 {% load static %}
 
-<div class="status-menu">
+
   <main class="table">
-    <section class="table_header">
-      <h1> Already Watched</h1>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+   
+      <nav class="navbar navbar-light bg-light justify-content-between">
+        <a class="navbar-brand">Already Watched</a>
+        <form class="form-inline">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </nav>
+       
+      {% comment %} <h1> Already Watched</h1>
+      <form class="form-inline">
+        <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    </section>
+      </form> {% endcomment %}
+      
+  
     
   </main>
 
@@ -41,8 +50,17 @@
           <td><img src="{{i.poster}}"></td>
           <td>{{i.title}}</td>
           <td>stars</td>
-          <td><i class="bi bi-plus" ></i></td>
-          <td><i class="bi bi-trash" ></i></td>
+          <td>
+            <button class="btn btn-primary">
+              <i class="bi bi-plus" ></i>
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-primary">
+              <i class="bi bi-trash" >
+          </i>
+        </button>
+      </td>
         </tr>
         {% endfor %}
       </tbody>

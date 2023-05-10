@@ -1,0 +1,29 @@
+/* .btn-primary i.bi-plus{
+    color: white;
+    background-color: black;
+    font-size: 20px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+.btn-primary i.bi-trash{
+    color: white;
+    background-color: black;
+    font-size: 20px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+} */
+body{
+    background-color: brown;
+}
+.navbar{
+    display: inline-block;
+}
+.form-inline{
+    display: inline-block;
+    margin: 0;
+}
+.navbar-brand{
+    color: white;
+}

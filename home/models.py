@@ -1,9 +1,12 @@
 from django.db import models
 from datetime import date
+from django.contrib.auth.models import User
+
 
 # Create your models here.
 
 class Profile(models.Model):
+    user = models.OneToOneField(User,null=True, on_delete=models.CASCADE)
     bdate = models.DateField(default=date.today)
     
 class Movies(models.Model):
@@ -23,7 +26,7 @@ class Movies(models.Model):
         return self.title
     
 class list(models.Model):
-    userId = models.IntegerField(default=0)
-    movieId = models.IntegerField(default=0)
+    user = models.OneToOneField(User,null=True,on_delete=models.CASCADE)
+    movie = models.OneToOneField(Movies,null=True,on_delete=models.CASCADE)
     rating = models.FloatField(default=0)
     status = models.IntegerField(default=0)
