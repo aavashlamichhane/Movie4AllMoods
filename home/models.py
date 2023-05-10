@@ -30,3 +30,4 @@ class list(models.Model):
     movie = models.OneToOneField(Movies,null=True,on_delete=models.CASCADE)
     rating = models.FloatField(default=0)
     status = models.IntegerField(default=0)
+

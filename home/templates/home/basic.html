@@ -27,8 +27,8 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                   <li class="nav-item">
-                        <form class="d-flex">
-                            <input class="form-control me-2" type="search" name="search" placeholder="Search by Movie Title" aria-label="Search">
+                        <form method="get" action="/home/search" class="d-flex">
+                            <input class="form-control me-2" type="search" name="search" id="search" placeholder="Search by Movie Title" aria-label="Search">
                         </form>
                     </li>
                     {% if not user.is_authenticated %}

@@ -157,3 +157,6 @@ def list(request):
 def p2w(request):
     messages.success(request,"Added.")
     return redirect('/home')
+
+def search(request):
+    return render(request,"home/search.html") 
