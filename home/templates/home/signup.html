@@ -51,16 +51,21 @@ Movie4AllMoods
                         <input type="submit" class="submit" value="SIGNUP">
                         
                     </div>
-                    <div class="input-field">
-                        <input type="checkbox" id="checkbox" name="terms">
-                        <label for="terms">
-                            I accept all the <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                        <label class="form-check-label" for="invalidCheck">
+                          I agree to all the Terms and Conditions.
                         </label>
+                        <div class="invalid-feedback">
+                          You must agree before submitting.
+                        </div>
+                      </div>
                     </form>
-                    </div>
                     <div class="signup">
                         <span>Already have an account? <a href="/home/login">LogIn</a></span>
                     </div>
+                    </div>
+                   
 
                 </div>
             </div>

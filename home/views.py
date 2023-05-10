@@ -3,7 +3,12 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.urls import reverse_lazy
 from .models import Movies
+from django.contrib.auth.decorators import login_required
+from .forms import EditProfileForm
+from django.contrib.auth.forms import UserChangeForm
+from django.views import generic
 
 # Create your views here.
 
@@ -76,10 +81,10 @@ def signUp(request):
     return render(request, "home/signup.html")
 
 def help(request):
-    return render(request, "home/about.html")
+    return render(request, "home/aboutus.html")
 
-def aboutUs(request):
-    return render(request, "home/about.html")
+def aboutus(request):
+    return render(request, "home/aboutus.html")
 
 def signout(request):
     logout(request)
@@ -96,14 +101,66 @@ def filter(request):
     params={'sritem':srmovie, 'range':range(10)}
     return render(request, "home/filter.html",params)
 
-def profile(request):
-    return render(request, "home/profile.html")
+@login_required
+def profile(request,*args,**kwargs):
+    # user_id = kwargs.get('user_id')
+    # print(user_id)
+    # try:
+    #     user= User.objects.get(pk=user_id)
+    # except User.DoesNotExist:
+    #     return HttpResponse("Something went wrong.")
+    # if user.pk != request.user.pk:
+    #     return HttpResponse("Cannot edit this data.")
+    # context = {}
+    # if request.POST:
+    #     form = EditProfileForm(request.POST,instance=request.user)
+    #     if form.is_valid():
+    #         form.save()
+    #         return redirect('/home/userprofile',user_id=user.pk)
+    #     else:
+    #         form = EditProfileForm(request.POST,instance=request.user,
+    #             initial={
+    #                 "first_name":user.first_name,
+    #                 "last_name":user.last_name,
+    #                 "username":user.username,
+    #                 "email":user.email,
+    #             }    
+    #         )
+    #         context['form']=form
+    # else:
+    #     form = EditProfileForm(
+    #             initial={
+    #                 "first_name":user.first_name,
+    #                 "last_name":user.last_name,
+    #                 "username":user.username,
+    #                 "email":user.email,
+    #             }    
+    #         )
+    #     context['form']=form
+    # return render(request,'home/profile.html',context)
+    
+    if request.method == 'POST':
+        form=EditProfileForm(request.POST,instance=request.user)
+        if form.is_valid():
+            user_form=form.save()
+            return redirect('/home/userprofile')
+    else:
+        form= EditProfileForm(instance=request.user)
+        args={}
+        args['form']=form
+        return render(request,"home/profile.html",args)
+
 
 
 
 def list(request):
-    return render(request,"home/list.html")
+    tmovie=Movies.objects.all().order_by('-title')[:10]
+    params={'titem':tmovie}
+    return render(request,"home/list.html",params)
 
 def p2w(request):
     messages.success(request,"Added.")
     return redirect('/home')
+
+def search(request):
+    return render(request,"home/search.html") 

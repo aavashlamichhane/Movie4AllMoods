@@ -1,13 +1,10 @@
+
 body
 {
+    background-image: url("/static/home/img/background.jpg");
+    /* background-repeat: no-repeat; */
+    background-color: #000000;
     font-family: sans-serif;
-    
-}
-
-.bglala
-{
-    background-image: url("../img/background.jpg");
-    filter: blur(8px);
 }
 .navbar
 {
@@ -24,4 +21,5 @@ body
 {
     color: white;
 }
+
 

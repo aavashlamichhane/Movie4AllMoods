@@ -8,29 +8,31 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <title>{% block title %}{% endblock title %}</title>
     {% load static %}
-    <link rel="stylesheet" href="{%static 'home/css/style.css' %}">
     {% block css %}{% endblock css %}
+    <link rel="stylesheet" href="{%static 'home/css/style.css' %}">
+    
 </head>
 
 <body>
+
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/home">Movie4AllMoods</a>
+            <a class="navbar-brand" href="/home"><img src="/static/home/img/logo.png" height="50" width="130" alt=""></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    {% comment %} <li class="nav-item">
-                        <form class="d-flex">
-                            <input class="form-control me-2" type="search" name="search" placeholder="Search by name...." aria-label="Search">
-                            <button class="btn btn-dark" type="submit">Search</button>
+                  <li class="nav-item">
+                        <form method="get" action="/home/search" class="d-flex">
+                            <input class="form-control me-2" type="search" name="search" id="search" placeholder="Search by Movie Title" aria-label="Search">
                         </form>
-                    </li> {% endcomment %}
+                    </li>
                     {% if not user.is_authenticated %}
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/home/login">Log In</a>
@@ -47,7 +49,7 @@
                         <a class="nav-link" href="/home/help">Help</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/home/aboutUs">About Us</a>
+                        <a class="nav-link" href="/home/aboutus">About Us</a>
                     </li>
                 </ul>
             </div>

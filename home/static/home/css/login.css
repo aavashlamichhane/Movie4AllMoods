@@ -1,5 +1,6 @@
 *{
     font-family:  sans-serif;
+    
 }
 
 .wrapper{
@@ -17,17 +18,8 @@
     width: 900px;
     height: 750px;
     border-radius: 10px;
-    background: #fff;
+    background: #ffffff;
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.2);
-}
-.side-image{
-    background-image: url("/m4am-logo.PNG");
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-    border-radius: 10px 0 0 10px;
-    
 }
 
 .text{
@@ -37,7 +29,7 @@
     transform: translate(-50%, -50%);
 }
 .text p{
-    color: #fff;
+    color: #000;
     font-size: 18px;
 }
 i{
@@ -53,6 +45,7 @@ i{
 .input-box{
     width: 330px;
     box-sizing: border-box;
+    color: #000;
 }
 .input-box header{
     font-weight: 700;
@@ -122,9 +115,7 @@ span a:hover{
     color: #000;
 }
 @media only screen and (max-width: 768px){
-    .side-image{
-        border-radius: 10px 10px 0 0;
-    }
+    
    
     .row{
         max-width: 420px;

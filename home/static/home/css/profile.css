@@ -10,7 +10,7 @@
 }
 body{
     margin-top: 20px;
-    background-image: url("background.jpg");
+    /* background-image: url("/static/home/img/background.jpg"); */
     background-color: black;
     background-repeat: no-repeat;
     display: flex;
@@ -30,8 +30,9 @@ body{
     height: 100%;
     
 }
-.container1 .mt-3{
+.container1 {
     align-items: center;
+    
 }
   
   .rounded-circle {
