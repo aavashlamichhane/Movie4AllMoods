@@ -95,28 +95,6 @@ i{
 .input-field .input:focus, .input-field .input:valid{
     border-bottom: 1px solid #000000;
 }
-.input-field .gender-details .gender-title{
-    font-size: 13px;
-}
-.input-field .gender-details .category{
-    display: flex;
-    width: 330px;
-    margin: 14px 0;
-    justify-content: space-between;
-}
-.gender-details .category ~ label{
-    display: flex;
-    align-items: center;
-}
-.gender-details .category .dot{
-    height: 18px;
-    width: 18px;
-    background: #d9d9d9;
-    border-radius: 50%;
-    margin-right: 10px;
-    border: 5px solid transparent;
-}
-
 #checkbox:checked + .position-right {
     background: blue;
   }
