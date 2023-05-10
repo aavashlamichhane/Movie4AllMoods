@@ -92,7 +92,9 @@ def recommend(request):
     return render(request, "home/recommend.html",params)
 
 def filter(request):
-    return render(request, "home/filter.html")
+    srmovie=Movies.objects.all().order_by('-genre')[:30]
+    params={'sritem':srmovie, 'range':range(10)}
+    return render(request, "home/filter.html",params)
 
 def profile(request):
     return render(request, "home/profile.html")
