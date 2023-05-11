@@ -16,4 +16,7 @@ urlpatterns = [
     path('search/',views.search,name='Search'),
     path('watched/',views.watched,name='Already Watched'),
     path('alwat/',views.alwat,name='Already Watched button'),
+    path('updaterating/',views.updaterating,name="update rating"),
+    path('deletelistentry/',views.deleteListEntry,name="delete list entry"),
+    path('updatestatus/',views.updateStatus,name="updatestatus")
 ]
