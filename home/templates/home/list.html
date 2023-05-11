@@ -32,16 +32,15 @@
   </main>
   {% endcomment %}
 
-
+<div class="item-table">
   <table class="table table-dark table-hover">
     <thead>
-        <tr class="head">
+        <tr>
           <th scope="col">S.N.</th>
           <th scope="col">Image</th>
           <th style="width:25%" scope="col">Title</th>
-          <th style="width:25%" scope="col">Rating</th>
-          <th>Add to Already Watched</th>
-          <th>Remove</th>
+          <th style="width:25%">Add to Already Watched</th>
+          <th style="width:25%">Remove</th>
         </tr>
       </thead>
       <tbody>
@@ -50,7 +49,6 @@
           <th scope="row">{{forloop.counter}}</th>
           <td><img src="{{i.movie.poster}}" onerror="this.src='https://source.unsplash.com/400x600/?{{i.movie.title}}';" width="75" height="100"></td>
           <td>{{i.movie.title}}</td>
-          <td>stars</td>
           <td>
             <button class="btn btn-primary">
               <i class="bi bi-plus" ></i>
@@ -66,5 +64,5 @@
         {% endfor %}
       </tbody>
   </table>
-
+</div>
 {% endblock body %}

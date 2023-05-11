@@ -187,6 +187,13 @@ def p2w(request):
     
 
 def search(request):
+    query=request.GET['query']
+    if len(query) > 100 :
+        allMovies=[]
+    else:
+        allMovies=Movies.objects.filter(title__icontains=query)
+    params={'allMovies':allMovies, 'query':query}
+    return render(request,"home/search.html", params) 
     return render(request,"home/search.html") 
 
 def watched(request):
