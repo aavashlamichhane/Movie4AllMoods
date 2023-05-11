@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -230,3 +230,36 @@ def alwat(request):
                 return redirect('/home')
         else:
             return HttpResponse("Something went wrong.")
+        
+def updaterating(request):
+    if request.method =='POST':
+        rating=request.POST['uprating']
+        entry_id =request.POST['entryid']
+        entry = list.objects.get(pk=entry_id)
+        entry.rating=rating
+        entry.save()
+        messages.success(request,"Rating updated.")
+        return redirect('/home/watched')
+    else:
+        return HttpResponse("some thing went wrong.")
+    
+def deleteListEntry(request):
+    if request.method == 'POST':
+        entry_id = request.POST['delete']
+        entry = list.objects.get(pk=entry_id)
+        entry.delete()
+        messages.success(request,"Entry deleted.")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    else:
+        return HttpResponse("some thing went wrong.")
+    
+def updateStatus(request):
+    if request.method=="POST":
+        entry_id=request.POST['update']
+        rating=request.POST['rating11']
+        entry = list.objects.get(pk=entry_id)
+        entry.status=1
+        entry.rating=rating
+        entry.save()
+        messages.success(request,"Entry moved to already watched.")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

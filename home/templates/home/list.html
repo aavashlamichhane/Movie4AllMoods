@@ -50,15 +50,76 @@
           <td><img src="{{i.movie.poster}}" onerror="this.src='https://source.unsplash.com/400x600/?{{i.movie.title}}';" width="75" height="100"></td>
           <td>{{i.movie.title}}</td>
           <td>
-            <button class="btn btn-primary">
+            <form action="/home/updatestatus/" method="post">
+              {% csrf_token %}
+            {% comment %} <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalupdate{{forloop.counter}}">
               <i class="bi bi-plus" ></i>
-            </button>
+            </button> {% endcomment %}
+            {% comment %} <div class="modal fade" id="exampleModalupdate{{forloop.counter}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 style="color: #000;" class="modal-title" id="exampleModalLabel">Are You Sure?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    Add a rating: <br>
+                    <label for="customRange2" class="form-label">Rating 1-10</label>
+                    <input type="range" value="1" class="form-range" min="1" max="10" id="customRange2" name="rating" oninput="this.nextElementSibling.value = this.value">
+                    <output>1</output>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <input type="hidden" name="update" value="{{i.pk}}" />
+                    <input type="submit" class="btn btn-outline-primary" value="Watched"/>
+                  </div>
+                </div>
+              </div>
+            </div> {% endcomment %}
+            <input type="hidden" name="update" value="{{i.pk}}" />
+              <button type="button" class ="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalupdate{{forloop.counter}}"><i class="bi bi-plus" ></i></button>
+              <div class="modal fade" id="exampleModalupdate{{forloop.counter}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 style="color: #000;" class="modal-title" id="exampleModalLabel">Are You Sure?</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    Add a rating: <br>
+                    <label for="customRange2" class="form-label">Rating 1-10</label>
+                    <input type="range" value="1" class="form-range" min="1" max="10" id="customRange2" name="rating11" oninput="this.nextElementSibling.value = this.value">
+                    <output>1</output>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <input type="submit" class="btn btn-outline-primary" value="Update">
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </form>
           </td>
           <td>
-            <button class="btn btn-primary">
-              <i class="bi bi-trash" >
-          </i>
-        </button>
+            <form action="/home/deletelistentry/" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="delete" value="{{i.pk}}" />
+              <button type="button" class ="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModaldelete{{forloop.counter}}"><i class="bi bi-trash" ></i></button>
+              <div class="modal fade" id="exampleModaldelete{{forloop.counter}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 style="color: #000;" class="modal-title" id="exampleModalLabel">Are You Sure?</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <input type="submit" class="btn btn-outline-primary" value="Delete">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
       </td>
         </tr>
         {% endfor %}
