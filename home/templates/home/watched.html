@@ -1,0 +1,69 @@
+{% extends 'home/basic.html' %}
+{% block title %}Movie4AllMoods{% endblock title %}
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="/static/home/css/list.css">
+
+
+
+{% endblock css %}
+{% block body %}
+{% load static %}
+
+
+  <main class="table">
+   
+      <nav class="navbar navbar-light bg-light justify-content-between">
+        <a class="navbar-brand">Already Watched</a>
+        <form class="form-inline">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </nav>
+       
+      {% comment %} <h1> Already Watched</h1>
+      <form class="form-inline">
+        <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form> {% endcomment %}
+      
+  
+    
+  </main>
+
+
+  <table class="table table-dark table-hover">
+    <thead>
+        <tr>
+          <th scope="col">S.N.</th>
+          <th scope="col">Image</th>
+          <th scope="col">Title</th>
+          <th scope="col">Rating</th>
+          <th>Add to Already Watched</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in titem %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td><img src="{{i.poster}}"></td>
+          <td>{{i.title}}</td>
+          <td>stars</td>
+          <td>
+            <button class="btn btn-primary">
+              <i class="bi bi-plus" ></i>
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-primary">
+              <i class="bi bi-trash" >
+          </i>
+        </button>
+      </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+  </table>
+
+{% endblock body %}

@@ -164,3 +164,8 @@ def p2w(request):
 
 def search(request):
     return render(request,"home/search.html") 
+
+def watched(request):
+    tmovie=Movies.objects.all().order_by('-title')[:10]
+    params={'titem':tmovie}
+    return render(request,"home/watched.html",params)

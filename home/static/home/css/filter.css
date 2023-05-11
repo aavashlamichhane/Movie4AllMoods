@@ -1,18 +1,13 @@
-body
+.scrollspy-example
 {
     background: white;
-}
-
-.scrollspy
-{
-    background: black;
-    min-width: 250px;
-    max-width: 250px;
+    min-width: 150px;
+    max-width: 150px;
 }
 
 #side_nav
 {
-    background: black;
-    min-width: 350px;
-    max-width: 350px;
+    background: white;
+    min-width: 250px;
+    max-width: 250px;
 }
