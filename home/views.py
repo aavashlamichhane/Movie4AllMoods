@@ -1,3 +1,4 @@
+import ast
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
@@ -84,6 +85,16 @@ def help(request):
     return render(request, "home/aboutus.html")
 
 def aboutus(request):
+    # movie = Movies.objects.get(pk=266330)
+    # print(type(movie.cast))
+    # haha=ast.literal_eval(movie.cast)
+    # print(type(haha))
+    # print(haha[0]['name'])
+    # final = ''
+    # for names in haha:
+    #     final += names['name']
+    #     final +=' '
+    # print(final)
     return render(request, "home/aboutus.html")
 
 def signout(request):
