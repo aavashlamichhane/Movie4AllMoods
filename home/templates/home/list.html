@@ -2,12 +2,12 @@
 {% block title %}Movie4AllMoods{% endblock title %}
 {% block css %}
 {% load static %}
+
 <link rel="stylesheet" href="/static/home/css/list.css">
-
-
 
 {% endblock css %}
 {% block body %}
+{% comment %}
 {% load static %}
 
 
@@ -21,24 +21,25 @@
         </form>
       </nav>
        
-      {% comment %} <h1> Already Watched</h1>
+       <h1> Already Watched</h1>
       <form class="form-inline">
         <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
-      </form> {% endcomment %}
+      </form> 
       
   
     
   </main>
+  {% endcomment %}
 
 
   <table class="table table-dark table-hover">
     <thead>
-        <tr>
+        <tr class="head">
           <th scope="col">S.N.</th>
           <th scope="col">Image</th>
-          <th scope="col">Title</th>
-          <th scope="col">Rating</th>
+          <th style="width:25%" scope="col">Title</th>
+          <th style="width:25%" scope="col">Rating</th>
           <th>Add to Already Watched</th>
           <th>Remove</th>
         </tr>
@@ -47,7 +48,7 @@
         {% for i in titem %}
         <tr>
           <th scope="row">{{forloop.counter}}</th>
-          <td><img src="{{i.poster}}"></td>
+          <td><img src="{{i.poster}}" width="75" height="100"></td>
           <td>{{i.title}}</td>
           <td>stars</td>
           <td>
