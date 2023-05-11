@@ -48,8 +48,8 @@
         {% for i in titem %}
         <tr>
           <th scope="row">{{forloop.counter}}</th>
-          <td><img src="{{i.poster}}" width="75" height="100"></td>
-          <td>{{i.title}}</td>
+          <td><img src="{{i.movie.poster}}" onerror="this.src='https://source.unsplash.com/400x600/?{{i.movie.title}}';" width="75" height="100"></td>
+          <td>{{i.movie.title}}</td>
           <td>stars</td>
           <td>
             <button class="btn btn-primary">
