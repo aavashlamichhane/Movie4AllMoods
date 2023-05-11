@@ -202,10 +202,13 @@ def search(request):
     if len(query) > 100 :
         allMovies=[]
     else:
-        allMovies=Movies.objects.filter(title__icontains=query)
+        allMoviesTitle = Movies.objects.filter(title__icontains=query)
+        allMoviesCast = Movies.objects.filter(cast__icontains=query)
+        allMoviesCrew = Movies.objects.filter(crew__icontains=query)
+        allMovies = allMoviesTitle.union(allMoviesCast).union(allMoviesCrew).order_by('-imdbscore')
+
     params={'allMovies':allMovies, 'query':query}
     return render(request,"home/search.html", params) 
-    return render(request,"home/search.html") 
 
 def watched(request):
     tmovie=list.objects.filter(user=request.user,status=1)
