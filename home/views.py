@@ -187,7 +187,6 @@ def search(request):
         allMovies=Movies.objects.filter(title__icontains=query)
     params={'allMovies':allMovies, 'query':query}
     return render(request,"home/search.html", params) 
-    return render(request,"home/search.html") 
 
 def watched(request):
     tmovie=Movies.objects.all().order_by('-title')[:10]
