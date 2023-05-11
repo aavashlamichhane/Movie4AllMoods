@@ -1,6 +1,7 @@
 
 body
 {
+    
     background-image: url("/static/home/img/background.jpg");
     /* background-repeat: no-repeat; */
     background-color: #000000;
@@ -21,4 +22,5 @@ body
 {
     color: white;
 }
+
 

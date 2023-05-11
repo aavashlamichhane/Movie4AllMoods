@@ -4,7 +4,6 @@
 }
 
 .wrapper{
-    background-image: url("");
     padding: 0 20px 0 20px;
 }
 
@@ -18,7 +17,7 @@
     width: 900px;
     height: 750px;
     border-radius: 10px;
-    background: #ffffff00;
+    background: #ffffff;
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.2);
 }
 
@@ -121,4 +120,8 @@ span a:hover{
         max-width: 420px;
         width: 100%;
     }
+}
+
+.row{
+    background-color: white;
 }
