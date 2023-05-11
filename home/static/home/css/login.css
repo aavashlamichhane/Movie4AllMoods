@@ -4,7 +4,6 @@
 }
 
 .wrapper{
-    background-image: url("");
     padding: 0 20px 0 20px;
 }
 
@@ -121,4 +120,8 @@ span a:hover{
         max-width: 420px;
         width: 100%;
     }
+}
+
+.row{
+    background-color: white;
 }
