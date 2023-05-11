@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse_lazy
-from .models import Movies
+from .models import Movies, list
 from django.contrib.auth.decorators import login_required
 from .forms import EditProfileForm
 from django.contrib.auth.forms import UserChangeForm
@@ -151,14 +151,27 @@ def profile(request,*args,**kwargs):
 
 
 
-def list(request):
+def lists(request):
     tmovie=Movies.objects.all().order_by('-title')[:10]
     params={'titem':tmovie}
     return render(request,"home/list.html",params)
 
+
 def p2w(request):
-    messages.success(request,"Added.")
-    return redirect('/home')
+    if not request.user.is_authenticated:
+        messages.error(request,"Log in first.")
+        return redirect('/home/login')
+    else:
+        if request.method =='POST':
+            movieId = request.POST['movieId']
+            movie = Movies.objects.get(pk=movieId)
+            list_entry = list(user=request.user,movie=movie,rating=0,status=2)
+            list_entry.save()
+            messages.success(request,"Added.")
+            return redirect('/home')
+        else:
+            return HttpResponse("Something went wrong.")
+    
 
 def search(request):
     return render(request,"home/search.html") 

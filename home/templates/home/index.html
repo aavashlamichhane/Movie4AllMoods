@@ -70,12 +70,17 @@ Action
 <div class="cards-wrapper">
 	{% for i in ritem %}
 		<div class="card">
-			<img src="{{i.poster}}" class="card-img-top" alt="Image has failed to load." onerror="this.src='https://source.unsplash.com/400x600/?movie,{{i.title}}';" height="350px">
-			<div class="card-body">
-			<h5 class="card-title">{{i.title}}</h5>
-			<p class="card-text">Genre: {{i.genre}}<br>Score: {{i.imdbscore}}<br>Release Date: {{i.date}}</p>
-			<a href="http://www.imdb.com/title/{{i.imdbid}}" class="btn btn-outline-primary" target="_blank">IMDb</a>
-			<a href="#" class="btn btn-outline-primary">Plan-to-watch</a>
+			<form method="POST" action="p2w/">
+				{% csrf_token %}
+				<img src="{{i.poster}}" class="card-img-top" alt="Image has failed to load." onerror="this.src='https://source.unsplash.com/400x600/?movie,{{i.title}}';" height="350px">
+				<div class="card-body">
+				<h5 class="card-title">{{i.title}}</h5>
+				<p class="card-text">Genre: {{i.genre}}<br>Score: {{i.imdbscore}}<br>Release Date: {{i.date}}</p>
+				<a href="http://www.imdb.com/title/{{i.imdbid}}" class="btn btn-outline-primary" target="_blank">IMDb</a>
+				{% comment %} <a href="/home/p2w" class="btn btn-outline-primary">Plan-to-watch</a> {% endcomment %}
+				<input type="hidden" name="movieId" value="{{i.pk}}" />
+				<input type="submit" class="btn btn-outline-primary" value="Plan-to-Watch">
+			</form>
 		</div>
 		</div>
 	{% if forloop.counter|divisibleby:5 and forloop.counter > 0 and not forloop.last %}
