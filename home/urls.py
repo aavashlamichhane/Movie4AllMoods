@@ -15,4 +15,5 @@ urlpatterns = [
     path('p2w/',views.p2w,name='Plan-to-watch'),
     path('search/',views.search,name='Search'),
     path('watched/',views.watched,name='Already Watched'),
+    path('alwat/',views.alwat,name='Already Watched button'),
 ]

@@ -168,12 +168,19 @@ def p2w(request):
             movieId = request.POST['movieId']
             movie = Movies.objects.get(pk=movieId)
             if list.objects.filter(user=request.user,movie=movie):
-                messages.warning(request,"Entry already exists.")
-                return redirect('/home')
+                entry = list.objects.get(user=request.user,movie=movie)
+                if entry.status == 1:
+                    messages.warning(request,"Entry already exists in Already Watched.")
+                    return redirect('/home')
+                elif entry.status == 2:
+                    messages.warning(request,"Entry already exists in Plan-To-Watch")
+                    return redirect('/home')
+                else:
+                    return HttpResponse("Something went wrong1.")
             else:
                 list_entry = list(user=request.user,movie=movie,rating=0,status=2)
                 list_entry.save()
-                messages.success(request,"Added.")
+                messages.success(request,"Added to plan to watch.")
                 return redirect('/home')
         else:
             return HttpResponse("Something went wrong.")
@@ -183,6 +190,33 @@ def search(request):
     return render(request,"home/search.html") 
 
 def watched(request):
-    tmovie=Movies.objects.all().order_by('-title')[:10]
+    tmovie=list.objects.filter(user=request.user,status=1)
     params={'titem':tmovie}
     return render(request,"home/watched.html",params)
+
+def alwat(request):
+    if not request.user.is_authenticated:
+        messages.warning(request,"Log in first.")
+        return redirect('/home/login')
+    else:
+        if request.method =='POST':
+            movieId = request.POST['amovieId']
+            movie = Movies.objects.get(pk=movieId)
+            rating = request.POST['rating']
+            if list.objects.filter(user=request.user,movie=movie):
+                entry = list.objects.get(user=request.user,movie=movie)
+                if entry.status == 1:
+                    messages.warning(request,"Entry already exists in Already Watched.")
+                    return redirect('/home')
+                elif entry.status == 2:
+                    messages.warning(request,"Entry already exists in Plan-To-Watch")
+                    return redirect('/home')
+                else:
+                    return HttpResponse("Something went wrong2.")
+            else:
+                list_entry = list(user=request.user,movie=movie,rating=rating,status=1)
+                list_entry.save()
+                messages.success(request,"Added to already watched.")
+                return redirect('/home')
+        else:
+            return HttpResponse("Something went wrong.")
