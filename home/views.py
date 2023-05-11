@@ -154,23 +154,27 @@ def profile(request,*args,**kwargs):
 
 
 def lists(request):
-    tmovie=Movies.objects.all().order_by('-title')[:10]
+    tmovie=list.objects.filter(user=request.user,status=2)
     params={'titem':tmovie}
     return render(request,"home/list.html",params)
 
 
 def p2w(request):
     if not request.user.is_authenticated:
-        messages.error(request,"Log in first.")
+        messages.warning(request,"Log in first.")
         return redirect('/home/login')
     else:
         if request.method =='POST':
             movieId = request.POST['movieId']
             movie = Movies.objects.get(pk=movieId)
-            list_entry = list(user=request.user,movie=movie,rating=0,status=2)
-            list_entry.save()
-            messages.success(request,"Added.")
-            return redirect('/home')
+            if list.objects.filter(user=request.user,movie=movie):
+                messages.warning(request,"Entry already exists.")
+                return redirect('/home')
+            else:
+                list_entry = list(user=request.user,movie=movie,rating=0,status=2)
+                list_entry.save()
+                messages.success(request,"Added.")
+                return redirect('/home')
         else:
             return HttpResponse("Something went wrong.")
     
