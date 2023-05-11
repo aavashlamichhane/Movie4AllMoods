@@ -40,7 +40,7 @@
           </a>
           <a href="/home/list" class="list-group-item list-group-item-action"><i class="bi bi-clock"></i>
             <span style="padding-left: 10px;"> Plan to Watch</span></a>
-          <a href="#" class="list-group-item list-group-item-action"><i class="bi bi-check-circle"></i>
+          <a href="/home/watched" class="list-group-item list-group-item-action"><i class="bi bi-check-circle"></i>
             <span style="padding-left: 10px;"> Already Watched </span></a>
           <a href="#" class="list-group-item list-group-item-action"><i class="bi bi-gear"></i>
             <span style="padding-left: 10px;"> Settings</span></a>
@@ -65,33 +65,7 @@
             <form method="POST">
               {% csrf_token %}
               <div class="card-details">
-                {% comment %} <div class="card-box">
-                  <span class="details">First Name</span>
-                  <input type="text" name="fname" placeholder="{{user.first_name}}">
-                  {{user_form.username}}
-                </div>
-      
-                <div class="card-box">
-                  <span class="details">Last Name</span>
-                  <input type="text" name="lname" placeholder="{{user.last_name}}">
-                </div>
-      
-                <div class="card-box">
-                  <span class="details">Username</span>
-                  <input type="text" name="username" placeholder="{{user.username}}">
-                </div>
-                
-                <div class="card-box">
-                  <span class="details">E-mail Address</span>
-                  <input type="text" name="email" placeholder="{{user.email}}">
-                </div>
-      
-                <div class="card-box">
-                  <span class="details">Date of Birth</span>
-                  <input type="text" name="dob" placeholder="DD/MM/YYYY">
-                </div> {% endcomment %}
                 {{form.as_p}}
-      
               </div>
               <div class="button">
                 <input type="submit" value="Edit Profile">

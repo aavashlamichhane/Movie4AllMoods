@@ -11,7 +11,8 @@ urlpatterns = [
     path('recommend/',views.recommend,name='Recommended Movies'),
     path('filter/',views.filter,name='Advanced Filters'),
     path('userprofile/',views.profile,name='UserProfile'),
-    path('list/',views.list,name='List'),
+    path('list/',views.lists,name='List'),
     path('p2w/',views.p2w,name='Plan-to-watch'),
-    path('search/',views.search,name='Search')
+    path('search/',views.search,name='Search'),
+    path('watched/',views.watched,name='Already Watched'),
 ]

@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse_lazy
-from .models import Movies
+from .models import Movies, list
 from django.contrib.auth.decorators import login_required
 from .forms import EditProfileForm
 from django.contrib.auth.forms import UserChangeForm
@@ -97,7 +97,9 @@ def recommend(request):
     return render(request, "home/recommend.html",params)
 
 def filter(request):
-    return render(request, "home/filter.html")
+    srmovie=Movies.objects.all().order_by('-genre')[:30]
+    params={'sritem':srmovie, 'range':range(10)}
+    return render(request, "home/filter.html",params)
 
 @login_required
 def profile(request,*args,**kwargs):
@@ -151,14 +153,31 @@ def profile(request,*args,**kwargs):
 
 
 
-def list(request):
-    tmovie=Movies.objects.all().order_by('-title')[:10]
+def lists(request):
+    tmovie=list.objects.filter(user=request.user,status=2)
     params={'titem':tmovie}
     return render(request,"home/list.html",params)
 
+
 def p2w(request):
-    messages.success(request,"Added.")
-    return redirect('/home')
+    if not request.user.is_authenticated:
+        messages.warning(request,"Log in first.")
+        return redirect('/home/login')
+    else:
+        if request.method =='POST':
+            movieId = request.POST['movieId']
+            movie = Movies.objects.get(pk=movieId)
+            if list.objects.filter(user=request.user,movie=movie):
+                messages.warning(request,"Entry already exists.")
+                return redirect('/home')
+            else:
+                list_entry = list(user=request.user,movie=movie,rating=0,status=2)
+                list_entry.save()
+                messages.success(request,"Added.")
+                return redirect('/home')
+        else:
+            return HttpResponse("Something went wrong.")
+    
 
 def search(request):
     query=request.GET['query']
@@ -168,3 +187,9 @@ def search(request):
         allMovies=Movies.objects.filter(title__icontains=query)
     params={'allMovies':allMovies, 'query':query}
     return render(request,"home/search.html", params) 
+    return render(request,"home/search.html") 
+
+def watched(request):
+    tmovie=Movies.objects.all().order_by('-title')[:10]
+    params={'titem':tmovie}
+    return render(request,"home/watched.html",params)
