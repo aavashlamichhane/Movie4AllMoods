@@ -1,20 +1,23 @@
 {% extends 'home/basic.html' %}
-{% block title %}Recommended Movies{% endblock title %}
+{% block title %}Search Results{% endblock title %}
 
 {% load static %}
-<link rel="stylesheet" href="{%static 'home/css/recommend.css' %}">
+<link rel="stylesheet" href="{%static 'home/css/search.css' %}">
 {% block css %}{% endblock css %}
 
 {% block body %}
 <br>
 <br>
-<h2>Recommended Movies</h2><br>
+<h2>Search Results:</h2><br>
+{% if allMovies|length < 1 %}
+	<p>No Movies Found</p> 
+	Your input <b> {{query}}</b> does not match any results. <br>
+{% endif %}
 <div class="row row-cols-1 row-cols-md-5 g-3">
-{% for j in range %}
-	<div class="col">
-		{% for i in ritem %}
+	<div class="card-container">
+		{% for i in allMovies %}
 			<div class="card">
-				<img src="{{i.poster}}" class="card-img-top" alt="Image has failed to load." height="350px">
+				<img src="{{i.poster}}" class="card-img-top" alt="Image has failed to load." onerror="this.src='https://source.unsplash.com/400x600/?movie,{{i.title}}';" height="350px">
 				<div class="card-body">
 					<h5 class="card-title">{{i.title}}</h5>
 					<p class="card-text">Genre: {{i.genre}}<br>Score: {{i.imdbscore}}<br>Release Date: {{i.date}}</p>
@@ -25,7 +28,6 @@
 		{% endfor %}
 		
 	</div>
-	{% endfor %}
   </div>
   
 {% endblock body %}
