@@ -1,10 +1,11 @@
+import ast
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse_lazy
-from .models import Movies
+from .models import Movies, list
 from django.contrib.auth.decorators import login_required
 from .forms import EditProfileForm
 from django.contrib.auth.forms import UserChangeForm
@@ -89,6 +90,16 @@ def help(request):
     return render(request, "home/aboutus.html")
 
 def aboutus(request):
+    # movie = Movies.objects.get(pk=266330)
+    # print(type(movie.cast))
+    # haha=ast.literal_eval(movie.cast)
+    # print(type(haha))
+    # print(haha[0]['name'])
+    # final = ''
+    # for names in haha:
+    #     final += names['name']
+    #     final +=' '
+    # print(final)
     return render(request, "home/aboutus.html")
 
 def signout(request):
@@ -102,7 +113,9 @@ def recommend(request):
     return render(request, "home/recommend.html",params)
 
 def filter(request):
-    return render(request, "home/filter.html")
+    srmovie=Movies.objects.all().order_by('-genre')[:30]
+    params={'sritem':srmovie, 'range':range(10)}
+    return render(request, "home/filter.html",params)
 
 @login_required
 def profile(request,*args,**kwargs):
@@ -156,14 +169,113 @@ def profile(request,*args,**kwargs):
 
 
 
-def list(request):
-    tmovie=Movies.objects.all().order_by('-title')[:10]
+def lists(request):
+    tmovie=list.objects.filter(user=request.user,status=2)
     params={'titem':tmovie}
     return render(request,"home/list.html",params)
 
+
 def p2w(request):
-    messages.success(request,"Added.")
-    return redirect('/home')
+    if not request.user.is_authenticated:
+        messages.warning(request,"Log in first.")
+        return redirect('/home/login')
+    else:
+        if request.method =='POST':
+            movieId = request.POST['movieId']
+            movie = Movies.objects.get(pk=movieId)
+            if list.objects.filter(user=request.user,movie=movie):
+                entry = list.objects.get(user=request.user,movie=movie)
+                if entry.status == 1:
+                    messages.warning(request,"Entry already exists in Already Watched.")
+                    return redirect('/home')
+                elif entry.status == 2:
+                    messages.warning(request,"Entry already exists in Plan-To-Watch")
+                    return redirect('/home')
+                else:
+                    return HttpResponse("Something went wrong1.")
+            else:
+                list_entry = list(user=request.user,movie=movie,rating=0,status=2)
+                list_entry.save()
+                messages.success(request,"Added to plan to watch.")
+                return redirect('/home')
+        else:
+            return HttpResponse("Something went wrong.")
+    
 
 def search(request):
-    return render(request,"home/search.html") 
+    query=request.GET['query']
+    if len(query) > 100 :
+        allMovies=[]
+    else:
+        allMoviesTitle = Movies.objects.filter(title__icontains=query)
+        allMoviesCast = Movies.objects.filter(cast__icontains=query)
+        allMoviesCrew = Movies.objects.filter(crew__icontains=query)
+        allMovies = allMoviesTitle.union(allMoviesCast).union(allMoviesCrew).order_by('-imdbscore')
+
+    params={'allMovies':allMovies, 'query':query}
+    return render(request,"home/search.html", params) 
+
+def watched(request):
+    tmovie=list.objects.filter(user=request.user,status=1)
+    params={'titem':tmovie}
+    return render(request,"home/watched.html",params)
+
+def alwat(request):
+    if not request.user.is_authenticated:
+        messages.warning(request,"Log in first.")
+        return redirect('/home/login')
+    else:
+        if request.method =='POST':
+            movieId = request.POST['amovieId']
+            movie = Movies.objects.get(pk=movieId)
+            rating = request.POST['rating']
+            if list.objects.filter(user=request.user,movie=movie):
+                entry = list.objects.get(user=request.user,movie=movie)
+                if entry.status == 1:
+                    messages.warning(request,"Entry already exists in Already Watched.")
+                    return redirect('/home')
+                elif entry.status == 2:
+                    messages.warning(request,"Entry already exists in Plan-To-Watch")
+                    return redirect('/home')
+                else:
+                    return HttpResponse("Something went wrong2.")
+            else:
+                list_entry = list(user=request.user,movie=movie,rating=rating,status=1)
+                list_entry.save()
+                messages.success(request,"Added to already watched.")
+                return redirect('/home')
+        else:
+            return HttpResponse("Something went wrong.")
+        
+def updaterating(request):
+    if request.method =='POST':
+        rating=request.POST['uprating']
+        entry_id =request.POST['entryid']
+        entry = list.objects.get(pk=entry_id)
+        entry.rating=rating
+        entry.save()
+        messages.success(request,"Rating updated.")
+        return redirect('/home/watched')
+    else:
+        return HttpResponse("some thing went wrong.")
+    
+def deleteListEntry(request):
+    if request.method == 'POST':
+        entry_id = request.POST['delete']
+        entry = list.objects.get(pk=entry_id)
+        entry.delete()
+        messages.success(request,"Entry deleted.")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    else:
+        return HttpResponse("some thing went wrong.")
+    
+def updateStatus(request):
+    if request.method=="POST":
+        entry_id=request.POST['update']
+        rating=request.POST['rating11']
+        entry = list.objects.get(pk=entry_id)
+        entry.status=1
+        entry.rating=rating
+        entry.save()
+        messages.success(request,"Entry moved to already watched.")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

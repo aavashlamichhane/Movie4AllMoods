@@ -12,7 +12,12 @@ urlpatterns = [
     path('home/recommend/',views.recommend,name='Recommended Movies'),
     path('home/filter/',views.filter,name='Advanced Filters'),
     path('home/userprofile/',views.profile,name='UserProfile'),
-    path('home/list/',views.list,name='List'),
+    path('home/list/',views.lists,name='List'),
     path('home/p2w/',views.p2w,name='Plan-to-watch'),
-    path('home/search/',views.search,name='Search')
+    path('home/search/',views.search,name='Search'),
+    path('home/watched/',views.watched,name='Already Watched'),
+    path('home/alwat/',views.alwat,name='Already Watched button'),
+    path('home/updaterating/',views.updaterating,name="update rating"),
+    path('home/deletelistentry/',views.deleteListEntry,name="delete list entry"),
+    path('home/updatestatus/',views.updateStatus,name="updatestatus")
 ]

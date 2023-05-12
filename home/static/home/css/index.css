@@ -51,3 +51,11 @@ body{
 {
   font-size: 14px;
 }
+
+.modal-title{
+  color:black;
+}
+
+.modal-body{
+  color: black;
+}

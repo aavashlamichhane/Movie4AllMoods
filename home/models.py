@@ -26,8 +26,13 @@ class Movies(models.Model):
         return self.title
     
 class list(models.Model):
-    user = models.OneToOneField(User,null=True,on_delete=models.CASCADE)
-    movie = models.OneToOneField(Movies,null=True,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,null=True,on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movies,null=True,on_delete=models.CASCADE)
     rating = models.FloatField(default=0)
     status = models.IntegerField(default=0)
+    
+    # @classmethod
+    # def create(cls,user,movie,rating,status):
+    #     entry = cls(user=user,movie=movie,rating=rating,status=status)
+    #     return entry
 

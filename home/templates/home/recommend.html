@@ -6,9 +6,10 @@
 {% block css %}{% endblock css %}
 
 {% block body %}
+<div class="container-fluid">
 <br>
 <br>
-<h2>Recommended Movies</h2><br>
+<h2 style="color: white">Recommended Movies</h2><br>
 <div class="row row-cols-1 row-cols-md-5 g-3">
 {% for j in range %}
 	<div class="col">
@@ -27,5 +28,5 @@
 	</div>
 	{% endfor %}
   </div>
-  
+</div>
 {% endblock body %}

@@ -17,13 +17,13 @@
 body{
     background-color: brown;
 }
-.navbar{
-    display: inline-block;
-}
+
 .form-inline{
     display: inline-block;
     margin: 0;
 }
-.navbar-brand{
-    color: white;
+
+.modal-body{
+    color: black;
 }
+
