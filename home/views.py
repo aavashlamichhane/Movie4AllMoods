@@ -10,7 +10,6 @@ from .forms import EditProfileForm
 from django.contrib.auth.forms import UserChangeForm
 from django.views import generic
 
-# Create your views here.
 
 def index(request):
     tmovie=Movies.objects.all().order_by('-imdbscore')[:10]
