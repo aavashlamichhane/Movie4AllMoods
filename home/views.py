@@ -10,6 +10,10 @@ from django.contrib.auth.decorators import login_required
 from .forms import EditProfileForm
 from django.contrib.auth.forms import UserChangeForm
 from django.views import generic
+import pandas as pd
+import numpy as np
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 # Create your views here.
 def landing(request):
@@ -90,16 +94,29 @@ def help(request):
     return render(request, "home/aboutus.html")
 
 def aboutus(request):
-    # movie = Movies.objects.get(pk=266330)
-    # print(type(movie.cast))
-    # haha=ast.literal_eval(movie.cast)
-    # print(type(haha))
-    # print(haha[0]['name'])
-    # final = ''
-    # for names in haha:
-    #     final += names['name']
-    #     final +=' '
-    # print(final)
+    # # movie = Movies.objects.get(pk=266330)
+    # # print(type(movie.cast))
+    # # haha=ast.literal_eval(movie.cast)
+    # # print(type(haha))
+    # # print(haha[0]['name'])
+    # # final = ''
+    # # for names in haha:
+    # #     final += names['name']
+    # #     final +=' '
+    # # print(final)
+    # movie = Movies.objects.all()
+    # movies_panda=pd.DataFrame([t.__dict__ for t in movie])
+    # # print(movie)
+    # # print(movies_panda.head())
+    # # print(movies_panda[['id','imdbid','title','crew','cast','otitle','numVotes','imdbscore','runtime','date','genre','isAdult','poster',]])
+    # features = ['crew','cast','genre']
+    # combined_features = movies_panda['genre']+' '+movies_panda['cast']+' '+movies_panda['crew']
+    # # print(combined_features)
+    # vectorizer = TfidfVectorizer()
+    # feature_vectors = vectorizer.fit_transform(combined_features)
+    # print(feature_vectors)
+    
+    
     return render(request, "home/aboutus.html")
 
 def help(request):
