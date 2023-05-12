@@ -104,17 +104,19 @@ def aboutus(request):
     # #     final += names['name']
     # #     final +=' '
     # # print(final)
-    # movie = Movies.objects.all()
-    # movies_panda=pd.DataFrame([t.__dict__ for t in movie])
+    
+    
+    movie = Movies.objects.all()
+    movies_panda=pd.DataFrame([t.__dict__ for t in movie])
     # # print(movie)
     # # print(movies_panda.head())
     # # print(movies_panda[['id','imdbid','title','crew','cast','otitle','numVotes','imdbscore','runtime','date','genre','isAdult','poster',]])
-    # features = ['crew','cast','genre']
-    # combined_features = movies_panda['genre']+' '+movies_panda['cast']+' '+movies_panda['crew']
+    features = ['crew','cast','genre']
+    combined_features = movies_panda['genre']+' '+movies_panda['cast']+' '+movies_panda['crew']
     # # print(combined_features)
-    # vectorizer = TfidfVectorizer()
-    # feature_vectors = vectorizer.fit_transform(combined_features)
-    # print(feature_vectors)
+    vectorizer = TfidfVectorizer()
+    feature_vectors = vectorizer.fit_transform(combined_features)
+    print(feature_vectors)
     
     
     return render(request, "home/aboutus.html")

@@ -13,21 +13,26 @@
 	<p>No Movies Found</p> 
 	Your input <b> {{query}}</b> does not match any results. <br>
 {% endif %}
-<div class="row row-cols-1 row-cols-md-5 g-3">
+<div class="col">
 	<div class="card-container">
-		{% for i in allMovies %}
-			<div class="card">
-				<img src="{{i.poster}}" class="card-img-top" alt="Image has failed to load." onerror="this.src='https://source.unsplash.com/400x600/?movie,{{i.title}}';" height="350px">
-				<div class="card-body">
-					<h5 class="card-title">{{i.title}}</h5>
-					<p class="card-text">Genre: {{i.genre}}<br>Score: {{i.imdbscore}}<br>Release Date: {{i.date}}</p>
-					<a href="http://www.imdb.com/title/{{i.imdbid}}" class="btn btn-outline-primary" target="_blank">IMDb</a>
-					<a href="#" class="btn btn-outline-primary">Plan-to-watch</a>
+		<div class="cards-wrapper">
+			{% for i in allMovies %}
+				<div class="card col-2">
+					<img src="{{i.poster}}" class="card-img-top" alt="Image has failed to load." onerror="this.src='https://source.unsplash.com/400x600/?movie,{{i.title}}';" height="350px">
+					<div class="card-body">
+						<h5 class="card-title">{{i.title}}</h5>
+						<p class="card-text">Genre: {{i.genre}}<br>Score: {{i.imdbscore}}<br>Release Date: {{i.date}}</p>
+						<a href="http://www.imdb.com/title/{{i.imdbid}}" class="btn btn-outline-primary" target="_blank">IMDb</a>
+						<a href="#" class="btn btn-outline-primary">Plan-to-watch</a>
+					</div>
 				</div>
-			</div>
-		{% endfor %}
-		
-	</div>
+				{% if forloop.counter|divisibleby:5 and forloop.counter > 0 and not forloop.last %}
+					</div>
+					
+					<div class="cards-wrapper">
+				{% endif %}
+			{% endfor %}
+
   </div>
   
 {% endblock body %}
