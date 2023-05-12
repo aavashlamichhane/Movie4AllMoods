@@ -11,7 +11,12 @@ from django.contrib.auth.forms import UserChangeForm
 from django.views import generic
 
 # Create your views here.
-
+def landing(request):
+    if request.user.is_authenticated:
+        return redirect('/home')
+    else:
+        return render(request, 'home/landing.html')
+ 
 def index(request):
     tmovie=Movies.objects.all().order_by('-imdbscore')[:10]
     pmovie=Movies.objects.all().order_by('-numVotes')[:10]

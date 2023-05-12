@@ -1,0 +1,16 @@
+{% extends 'home/basic.html' %}
+{% block title %}Landing{% endblock title %}
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'home/css/landing.css' %}">
+{% endblock css %}
+{% block body %}
+    <div class="col-md-8 offset-md-2 info">
+      <h1 class="text-center">Movie4AllMoods</h1>
+      <p class="text-center">
+        Our platform is dedicated to providing you with the best movie recommendations to suit your interests. From action-packed thrillers to heartwarming dramas, we have something for everyone. Join our community of movie lovers and discover your next favorite film today!
+      </p>
+      <a href="/home" class="btn btn-md text-center">GET STARTED</a>
+    </div>
+
+    {% endblock body %}

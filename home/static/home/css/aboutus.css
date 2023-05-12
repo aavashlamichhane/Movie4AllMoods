@@ -5,6 +5,7 @@
 
 body{
     background-color: black;
+    background-image: url(/static/home/img/black.png);
 }
 #c2{
     background-color: #4f4f4b;
