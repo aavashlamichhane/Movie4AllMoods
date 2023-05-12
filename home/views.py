@@ -102,6 +102,9 @@ def aboutus(request):
     # print(final)
     return render(request, "home/aboutus.html")
 
+def help(request):
+    return render(request, "home/help.html")
+
 def signout(request):
     logout(request)
     messages.success(request,"Logged out successfully.")

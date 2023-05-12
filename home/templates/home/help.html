@@ -1,0 +1,144 @@
+
+{% extends 'home/basic.html' %}
+{% block title %}Help{% endblock title %}
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'home/css/help.css' %}">
+{% endblock css %}
+{% block body %}
+    <section id="help">
+      <div class="help-1">
+          <h1> HELP</h1>
+      </div>
+      <div id="help-2">
+          <div class="content-box-lg">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-md-4">
+                          <div class="help-item text-center">
+                            <i class="bi bi-chat-left-text"></i>
+                              <h3>What is this website for?</h3>
+                              <hr>
+                              <p>Our website is designed to help users discover new movies that match their interests and preferences. The goal of our website is to make it easier and more enjoyable for users to find movies they will love, and to help users explore a wide variety of movies they may not have otherwise discovered.  </p>
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                          <div class="help-item text-center">
+                            <i class="bi bi-gear-wide-connected"></i>
+                              <h3>How does this website work?</h3>
+                              <hr>
+                              <p>Our website uses algorithms to provide personalized movie recommendations based on a user's watch history, ratings, mood, choice of genre, etc. The recommendations may include movies that the user has not yet watched, as well as similar movies to those that the user has enjoyed in the past.</p>
+                          </div>
+                      </div>
+
+                      <div class="col-md-4">
+                          <div class="help-item text-center">
+                            <i class="bi bi-person-check"></i>
+                              <h3>How do I create an account?</h3>
+                              <hr>
+                              <p>To create an account, click the "Sign Up" button on the homepage or the navbar and fill out all the required personal credentials like first name, last name, desired username, email, password and so on. If you have already created an account, click the "Log In" button on the homepage or the navbar.</p>
+                          </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <div class="help-item text-center">
+                          <i class="bi bi-cash-stack"></i>
+                            <h3>Is the website free to use?</h3>
+                            <hr>
+                            <p>Our movie recommendation website is free to use. You can sign up for an account and start receiving personalized movie recommendations based on your viewing history, preferences, and ratings. There are no hidden fees or subscription costs.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="help-item text-center">
+                        <i class="bi bi-clock"></i>
+                          <h3>Can I create a watchlist on the website?</h3>
+                          <hr>
+                          <p>Users can create watchlists or save movies for future viewing by saving them to a watch later list. The website also allows users to remove movies from their lists if they change their mind. </p>
+                      </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="help-item text-center">
+                      <i class="bi bi-list-stars"></i>
+                        <h3>Can I rate or review movies in the website?</h3>
+                        <hr>
+                        <p>Users can rate but not leave reviews of the movies that they have watched. The feedback is used to improve the movie recommendation system as the given information is used to enhance the website's algorithm.</p>
+                    </div>
+                </div>
+
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  <hr>
+
+  <footer class="text-center text-white pt-5 pb-4">
+      <div class="container text-center text md-left" id="c2">
+          <div class="row text-center text-md-left">
+              <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                  <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Developers</h5>
+                      <p>
+                          Abhyudit Adhikari
+                      </p>
+                      <p>
+                          Aavash Lamichhane 
+                      </p>
+                      <p>
+                          Karib Maharjan
+                      </p>
+                      <p>
+                          Saumya Shrestha
+                      </p>
+                  </div>
+                  <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+                      <h5 class="text-uppercase mb-4 font-weight-bold text-warning">E-mail</h5>
+                      <p>
+                          <a href="#" class="text-white" style="text-decoration:none;">aa02021321@student.ku.edu.np</a>
+                      </p>
+                      <p>
+                          <a href="#" class="text-white" style="text-decoration:none;">al29021321@student.ku.edu.np</a> 
+                      </p>
+                      <p>
+                          <a href="#" class="text-white" style="text-decoration:none;">km32021321@student.ku.edu.np</a> 
+                      </p>
+                      <p>
+                          <a href="#" class="text-white" style="text-decoration:none;">ss51021321@student.ku.edu.np</a>
+                      </p>
+              </div>
+              <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                  <h5 class="text-uppercase mb-4 font-weight-bold text-warning"><i class="bi bi-telephone fill"></i>Contact</h5>
+                  <p>9748284848</p>
+                  <p>9748284848</p>
+                  <p>9748284848</p>
+                  <p>9748284848</p>
+
+          </div>
+          <div class="col-md-5 col-lg-4">
+              <div class="text-center text-md-right">
+                  <ul class="list-unstyled list-inline">
+                      <li class="list-inline-item">
+                          <a href="#" class="btn-floating btn-sm text-white" style="font-size: 23px;"><i class="bi bi-facebook"></i></a>
+                      </li>
+                      <li class="list-inline-item">
+                          <a href="#" class="btn-floating btn-sm text-white" style="font-size: 23px;"><i class="bi bi-twitter"></i></a>
+                      </li>
+                      <li class="list-inline-item">
+                          <a href="#" class="btn-floating btn-sm text-white" style="font-size: 23px;"><i class="bi bi-google"></i></a>
+                      </li>
+                      <li class="list-inline-item">
+                          <a href="#" class="btn-floating btn-sm text-white" style="font-size: 23px;"><i class="bi bi-linkedin"></i></a>
+                      </li>
+                      <p> Copyright &copy; 2023 All rights reserved.</p>
+      </footer>
+
+
+     
+  
+  
+</div>
+    
+
+   
+{% endblock body %}

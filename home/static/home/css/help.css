@@ -4,30 +4,31 @@
 }
 
 body{
-    margin-top: 5%;
+    background-color: black;
+    background-image: url(/static/home/img/black.png);
 }
 #c2{
     background-color: #4f4f4b;
 }
-.about-1{
+.help-1{
     margin: 30px;
     padding: 5px;
 }
-.about-1 h1{
+.help-1 h1{
     text-align: center;
     color: whitesmoke;
     font-weight: bold;
 }
-.about-1 p{
+.help-1 p{
     text-align: center;
     padding: 3px;
     color: whitesmoke;
 }
-.about-item i{
+.help-item i{
     font-size: 43px;
     margin: 0;
 }
-.about-item{
+.help-item{
     margin-bottom: 20px;
     margin-top: 20px;
     background-color: rgb(232, 230, 230);
@@ -35,40 +36,41 @@ body{
     box-shadow: 0 0 9px rgba(0, 0, 0.6) ;
     border-radius: 10px;
 }
-.about-item h3{
+.help-item h3{
     font-size: 25px;
     margin-bottom: 10px;
     padding-top: 10px;
 }
-.about-item hr{
+.help-item hr{
     width: 46px;
     height: 3px;
     background-color: rgb(187, 185, 185);
     margin: 0 auto;
     border: none;
 }
-.about-item p{
+.help-item p{
     margin-top: 20px;
     text-align: center;
     padding: 5px;
 }
-.about-item:hover{
+.help-item:hover{
     background-color: white;
 }
-.about-item:hover i,
-.about-item:hover h3,
-.about-item:hover p{
-    color: black;
-}
-.about-item:hover i{
+.help-item:hover i{
     transform: translateY(-20px);
 }
-.about-item:hover hr{
+.help-item:hover i
+.help-item:hover h3,
+.help-item:hover p{
+    color: black;
+}
+
+.help-item:hover hr{
     background-color: black;
 }
-.about-item:hover i,
-.about-item:hover h3,
-.about-item:hover hr{
+.help-item:hover i
+.help-item:hover h3,
+.help-item:hover hr{
     transition: all 400ms ease-in-out;
 }
 footer{
@@ -79,3 +81,10 @@ footer p{
     color: whitesmoke;
 }
 
+.ahhyeah{
+    background-color: black;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
+}

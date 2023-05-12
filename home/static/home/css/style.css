@@ -6,11 +6,13 @@ body
     /* background-repeat: no-repeat; */
     background-color: #000000;
     font-family: sans-serif;
+    margin-top: 5%;
+ 
 }
 .navbar
 {
     background-image: linear-gradient(to right, #000000, #404b51);
-
+    
 }
 
 .nav-link

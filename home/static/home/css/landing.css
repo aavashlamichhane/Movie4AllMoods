@@ -1,5 +1,6 @@
 body{
     margin: 0;
+    margin-top: 5%;
     padding: 0;
     font-family: Arial, Helvetica, sans-serif;
     height: 100vh;
@@ -17,12 +18,14 @@ body{
     margin-top: 20px;
     font-size: 70px;
     font-weight: 700;
-    color: white;
+    color: #4a9fb5;
+    filter: brightness(250%);
 }
 .info p{
     font-size: 18px;
     font-weight: 500;
-    color: whitesmoke;
+    color: #4a9fb5;
+    filter: brightness(250%);
 }
 .info a{
     margin-left: 50%;
