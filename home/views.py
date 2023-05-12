@@ -92,13 +92,15 @@ def help(request):
 def aboutus(request):
     # movie = Movies.objects.get(pk=266330)
     # print(type(movie.cast))
+    # print(movie.cast[0])
     # haha=ast.literal_eval(movie.cast)
     # print(type(haha))
+    # print(type(haha[0]))
     # print(haha[0]['name'])
     # final = ''
     # for names in haha:
     #     final += names['name']
-    #     final +=' '
+    #     final +='\n'
     # print(final)
     return render(request, "home/aboutus.html")
 
