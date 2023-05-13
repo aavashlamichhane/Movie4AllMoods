@@ -11,3 +11,8 @@
     min-width: 250px;
     max-width: 250px;
 }
+
+.smallbox{
+    width: 40%;
+    height: 30px;
+}

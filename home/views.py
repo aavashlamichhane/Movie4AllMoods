@@ -87,6 +87,12 @@ def signUp(request):
     return render(request, "home/signup.html")
 
 def help(request):
+    # movie=Movies.objects.all()[:2]
+    # for entry in movie:
+    #     director=''
+    #     print(type(entry.crew))
+    #     haha=ast.literal_eval(entry.crew)
+    #     print(type(entry.crew))
     return render(request, "home/aboutus.html")
 
 def aboutus(request):
@@ -115,6 +121,7 @@ def recommend(request):
     return render(request, "home/recommend.html",params)
 
 def filter(request):
+    
     srmovie=Movies.objects.all().order_by('-genre')[:30]
     params={'sritem':srmovie, 'range':range(10)}
     return render(request, "home/filter.html",params)
