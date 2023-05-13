@@ -1,5 +1,7 @@
-.scrollspy-example
-{
+body{
+    margin-top: 5%;
+}
+.scrollspy-example{
     background: white;
     min-width: 150px;
     max-width: 150px;

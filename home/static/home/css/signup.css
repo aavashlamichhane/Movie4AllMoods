@@ -1,6 +1,9 @@
 *{
     font-family:  sans-serif;
 }
+body{
+    margin-top: 5%;
+}
 
 .wrapper{
     /* background-image: url("../img/background.jpg"); */
