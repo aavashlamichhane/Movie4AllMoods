@@ -13,3 +13,14 @@ body{
     min-width: 250px;
     max-width: 250px;
 }
+.cards-wrapper
+{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+.card{
+    flex-direction: 20%;
+}
+

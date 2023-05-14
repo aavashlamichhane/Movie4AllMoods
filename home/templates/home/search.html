@@ -13,7 +13,7 @@
 	<p>No Movies Found</p> 
 	Your input <b> {{query}}</b> does not match any results. <br>
 {% endif %}
-<div class="col">
+<div class="col ">
 	<div class="card-container">
 		<div class="cards-wrapper">
 			{% for i in allMovies %}
@@ -26,11 +26,6 @@
 						<a href="#" class="btn btn-outline-primary">Plan-to-watch</a>
 					</div>
 				</div>
-				{% if forloop.counter|divisibleby:5 and forloop.counter > 0 and not forloop.last %}
-					</div>
-					
-					<div class="cards-wrapper">
-				{% endif %}
 			{% endfor %}
 
   </div>

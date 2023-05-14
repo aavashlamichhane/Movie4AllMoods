@@ -206,13 +206,17 @@
     <input type="range" class="form-range" id="customRange1">
   </div>
 </div>
+<h2>Results:</h2><br>
+<!-- {% if allMovies|length < 1 %}
+	<p>No Movies Found</p> 
+	Your input <b> {{query}}</b> does not match any results. <br>
+{% endif %} -->
 <div class="container-fluid">
     <div class="row row-cols-1 row-cols-md-4 g-3">
-      {% for j in range %}
       <div class="col">
-        {% for i in sritem %}
+        {% for i in allMovies %}
           <div class="card">
-            <img src="{{i.poster}}" class="card-img-top" alt="Image has failed to load." height="350px">
+            <img src="{{i.poster}}" class="card-img-top" alt="Image has failed to load." onerror="this.src='https://source.unsplash.com/400x600/?movie,{{i.title}}';" height="350px">
             <div class="card-body">
               <h5 class="card-title">{{i.title}}</h5>
               <p class="card-text">Genre: {{i.genre}}<br>Score: {{i.imdbscore}}<br>Release Date: {{i.date}}</p>
@@ -222,7 +226,7 @@
           </div>
         {% endfor %}
       </div>
-      {% endfor %}
+
     </div>
   
   </div>
