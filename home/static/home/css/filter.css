@@ -13,3 +13,18 @@ body{
     min-width: 250px;
     max-width: 250px;
 }
+
+.smallbox{
+    width: 40%;
+    height: 30px;
+}
+.cards-wrapper
+{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+.card{
+    flex-direction: 20%;
+}
