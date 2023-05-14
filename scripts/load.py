@@ -3,13 +3,17 @@ import os
 from home.models import Movies
 import ast
 
-# def run():
-    # file = open('C:\\Aavash files\\COMP206\\Project\\Movie4AllMoods\\scripts\\finale.csv',encoding="utf-8")
-    # read_file=csv.reader(file)
-    # # halo=Movies.objects.all()
+def run():
+    file = open('C:\\Abhyudit Files\\COMP206\\Movie4AllMoods\\scripts\\home_movies_final.csv',encoding="utf-8")
+    read_file=csv.reader(file)
+    halo=Movies.objects.all().order_by('id')[:24544]
+    # halo.delete()
+    for haha in halo:
+        haha.delete()
+    # Movies.objects.all().delete()
     
-    # count=1
-    # start = 299949
+    count=1
+    start = 299949
     # for record in read_file:
     #     if count==1:
     #         pass
@@ -20,9 +24,14 @@ import ast
     #         hallo = Movies.objects.get(id=start)
     #         hallo.crew=record[12]
     #         hallo.save()
-    #         # Movies.objects.create(imdbid=record[0],imdbscore=record[2],cast=record[5],crew=record[6],genre=record[3],isAdult=record[8],numVotes=record[9],otitle=record[10],poster=record[4],title=record[1],runtime=record[11],date=record[7])
+    #         Movies.objects.create(imdbid=record[0],imdbscore=record[2],cast=record[5],crew=record[6],genre=record[3],isAdult=record[8],numVotes=record[9],otitle=record[10],poster=record[4],title=record[1],runtime=record[11],date=record[7])
     #     count=count+1
-    #     start =start+1
+    
+    # for haha in halo:
+    #     haha.id = start
+    #     print(haha.id)
+    #     haha.save()
+    #     start+=1
         
         
         
