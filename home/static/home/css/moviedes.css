@@ -1,0 +1,37 @@
+body{
+    background-color: black !important;
+}
+
+.movie-details{
+    margin: 3% 0;
+    color: white;
+    background-color: gray;
+}
+.left-box{
+    color: rgb(237, 241, 245);
+    margin: 15px 0;
+    padding: 20px;
+}
+.movie-img{
+    margin-top: 10%;
+    height: 300px;
+    box-shadow: -4px 4px 5px 0 #000;
+}
+.similar h3{
+    color: rgb(255, 255, 255);
+}
+.card-wrapper{
+    display: flex;
+}
+.card{
+    margin: 1em auto;
+    width: calc(100%/3);
+}
+.image-wrapper{
+    height: 22vh;
+    margin: 0 auto;
+}
+.image-wrapper img{
+    max-width: 100%;
+    max-height: 100%;
+}
