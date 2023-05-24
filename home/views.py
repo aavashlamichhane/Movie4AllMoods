@@ -311,3 +311,6 @@ def updateStatus(request):
         entry.save()
         messages.success(request,"Entry moved to already watched.")
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    
+def moviedes(request):
+    return render(request, "home/moviedes.html")
