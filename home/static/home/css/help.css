@@ -4,6 +4,7 @@
 }
 
 body{
+    margin-top: 10%;
     background-color: black;
     background-image: url(/static/home/img/black.png);
 }

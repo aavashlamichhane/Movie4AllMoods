@@ -14,12 +14,35 @@ from django.views import generic
 from django.db.models import Q
 import pandas as pd
 import numpy as np
+import difflib
 from ast import literal_eval
 from sklearn.feature_extraction.text import TfidfVectorizer,CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from pympler import asizeof
-
 # Create your views here.
+
+def search(request):
+    query=request.GET['query']
+    if query == '':
+        allMovies = Movies.objects.all().order_by('-numVotes')[:20]
+        params={'allMovies':allMovies, 'query':query}
+        return render(request,"home/filter.html", params) 
+    # exactMatch = Movies.objects.filter(title__iexact=query).first()
+    # if exactMatch:    
+    #     allMovies = [exactMatch] 
+    
+    allMoviesTitle = Movies.objects.filter(title__icontains=query)
+    
+    if allMoviesTitle.exists():
+        allMovies = allMoviesTitle.order_by('-numVotes')
+    
+    else:
+        allMoviesCast = Movies.objects.filter(cast__icontains=query)
+        allMoviesCrew = Movies.objects.filter(crew__icontains=query)
+        allMovies = allMoviesTitle.union(allMoviesCast,allMoviesCrew).order_by('-numVotes')
+
+    params={'allMovies':allMovies, 'query':query}
+    return render(request,"home/filter.html", params) 
 
 def get_list(x):
     # for i in x:
@@ -134,32 +157,41 @@ def signUp(request):
     
     return render(request, "home/signup.html")
 
-def help(request):
-    # movie=Movies.objects.all()[:2]
-    # for entry in movie:
-    #     director=''
-    #     print(type(entry.crew))
-    #     haha=ast.literal_eval(entry.crew)
-    #     print(type(entry.crew))
-    return render(request, "home/aboutus.html")
 
 def aboutus(request):
-    # # # movie = Movies.objects.get(pk=266330)
-    # # # print(type(movie.cast))
-    # # # haha=ast.literal_eval(movie.cast)
-    # # # print(type(haha))
-    # # # print(haha[0]['name'])
-    # # # final = ''
-    # # # for names in haha:
-    # # #     final += names['name']
-    # # #     final +=' '
-    # # # print(final)
+    # # # # movie = Movies.objects.get(pk=266330)
+    # # # # print(type(movie.cast))
+    # # # # haha=ast.literal_eval(movie.cast)
+    # # # # print(type(haha))
+    # # # # print(haha[0]['name'])
+    # # # # final = ''
+    # # # # for names in haha:
+    # # # #     final += names['name']
+    # # # #     final +=' '
+    # # # # print(final)
 
-    # movie = Movies.objects.all()
+    # # movie = Movies.objects.all()
+    # # movies_panda=pd.DataFrame([t.__dict__ for t in movie])
+    # # # # print(movie)
+    # # # # print(movies_panda.head())
+    # # # # print(movies_panda[['id','imdbid','title','crew','cast','otitle','numVotes','imdbscore','runtime','date','genre','isAdult','poster',]])
+    # # features = ['crew','cast','genre']
+    # # combined_features = movies_panda['genre']+' '+movies_panda['cast']+' '+movies_panda['crew']
+    # # # # print(combined_features)
+    # # vectorizer = TfidfVectorizer()
+    # # feature_vectors = vectorizer.fit_transform(combined_features)
+    # # similarity = cosine_similarity(feature_vectors)
+    
+    
+    
+    # movie = Movies.objects.all().order_by('-numVotes')[:10000]
+    # # print(type(movie))
     # movies_panda=pd.DataFrame([t.__dict__ for t in movie])
     # # # print(movie)
-    # # # print(movies_panda.head())
+    # # print(movies_panda['cast'].head())
     # # # print(movies_panda[['id','imdbid','title','crew','cast','otitle','numVotes','imdbscore','runtime','date','genre','isAdult','poster',]])
+<<<<<<< HEAD
+=======
     # features = ['crew','cast','genre']
     # combined_features = movies_panda['genre']+' '+movies_panda['cast']+' '+movies_panda['crew']
     # # # print(combined_features)
@@ -169,15 +201,25 @@ def aboutus(request):
     
     
     
-    movie = Movies.objects.all().order_by('-numVotes')[:10000]
-    # print(type(movie))
-    movies_panda=pd.DataFrame([t.__dict__ for t in movie])
-    # # print(movie)
-    # print(movies_panda['cast'].head())
-    # # print(movies_panda[['id','imdbid','title','crew','cast','otitle','numVotes','imdbscore','runtime','date','genre','isAdult','poster',]])
-    features = ['cast']
-    for feature in features:
-        movies_panda[feature]=movies_panda[feature].apply(literal_eval)
+    # movie = Movies.objects.all().order_by('-numVotes')[:10000]
+    # # print(type(movie))
+    # movies_panda=pd.DataFrame([t.__dict__ for t in movie])
+    # # # print(movie)
+    # # print(movies_panda['cast'].head())
+    # # # print(movies_panda[['id','imdbid','title','crew','cast','otitle','numVotes','imdbscore','runtime','date','genre','isAdult','poster',]])
+>>>>>>> b20bb9330b14a1df95f2d0af26b7532edd152a2f
+    # features = ['cast']
+    # for feature in features:
+    #     movies_panda[feature]=movies_panda[feature].apply(literal_eval)
+    # # print(movies_panda[['title','cast','crew','genre']].head(5))
+    # # print(movies_panda['cast'][1][1]['name'])
+    # features = ['cast']
+    # for feature in features:
+    #     movies_panda[feature]=movies_panda[feature].apply(get_list)
+    # print(movies_panda[['title','cast','crew','genre']].head(5))
+    # features = ['cast','crew','genre']
+    # for feature in features:
+    #     movies_panda[feature] = movies_panda[feature].apply(clean_data)
     # print(movies_panda[['title','cast','crew','genre']].head(5))
     # print(movies_panda['cast'][1][1]['name'])
     features = ['cast']
@@ -260,25 +302,26 @@ def aboutus(request):
     
     # print(user_panda.head())
     # print(type(userlist))
+>>>>>>> b20bb9330b14a1df95f2d0af26b7532edd152a2f
     
-    # for m in userlist:
-    #     print(m.movie.title)
+    # # for m in userlist:
+    # #     print(m.movie.title)
     
     
-    # similarity = cosine_similarity(count_matrix,count_matrix)
-    # movies_panda = movies_panda.reset_index()
-    # indices = pd.Series(movies_panda.index,index=movies_panda['title'])
-    # def get_recom(title,cosine_sim=similarity):
-    #     idx = indices[title]
-    #     sim_scores= builtins.list(enumerate(cosine_sim[idx].tolist()))
-    #     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    #     sim_scores = sim_scores[1:11]
-    #     movie_indices = [i[0] for i in sim_scores]
-    #     return movies_panda.iloc[movie_indices]
+    # # similarity = cosine_similarity(count_matrix,count_matrix)
+    # # movies_panda = movies_panda.reset_index()
+    # # indices = pd.Series(movies_panda.index,index=movies_panda['title'])
+    # # def get_recom(title,cosine_sim=similarity):
+    # #     idx = indices[title]
+    # #     sim_scores= builtins.list(enumerate(cosine_sim[idx].tolist()))
+    # #     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+    # #     sim_scores = sim_scores[1:11]
+    # #     movie_indices = [i[0] for i in sim_scores]
+    # #     return movies_panda.iloc[movie_indices]
     
-    # oolala = get_recom('The Avengers')
-    # print(type(oolala))
-    # print(oolala['title'])
+    # # oolala = get_recom('The Avengers')
+    # # print(type(oolala))
+    # # print(oolala['title'])
     
     
     
@@ -458,20 +501,7 @@ def p2w(request):
             return HttpResponse("Something went wrong.")
     
 
-def search(request):
-    query=request.GET['query']
-    if len(query) == '':
-        allMovies = Movies.objects.all()[:20]
-    # elif len(query) > 100 :
-    #     allMovies=[]
-    else:
-        allMoviesTitle = Movies.objects.filter(title__icontains=query)
-        allMoviesCast = Movies.objects.filter(cast__icontains=query)
-        allMoviesCrew = Movies.objects.filter(crew__icontains=query)
-        allMovies = allMoviesTitle.union(allMoviesCast).union(allMoviesCrew).order_by('-imdbscore')
 
-    params={'allMovies':allMovies, 'query':query}
-    return render(request,"home/filter.html", params) 
 
 def watched(request):
     tmovie=list.objects.filter(user=request.user,status=1)
@@ -540,3 +570,6 @@ def updateStatus(request):
     
 def moviedes(request):
     return render(request, "home/moviedes.html")
+
+def recommend(request):
+    return render(request, "home/recommend.html")
