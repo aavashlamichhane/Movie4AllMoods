@@ -176,8 +176,8 @@ def aboutus(request):
     # # # print(movie)
     # # print(movies_panda['cast'].head())
     # # # print(movies_panda[['id','imdbid','title','crew','cast','otitle','numVotes','imdbscore','runtime','date','genre','isAdult','poster',]])
-<<<<<<< HEAD
-=======
+# <<<<<<< HEAD
+# =======
     # features = ['crew','cast','genre']
     # combined_features = movies_panda['genre']+' '+movies_panda['cast']+' '+movies_panda['crew']
     # # # print(combined_features)
@@ -193,7 +193,7 @@ def aboutus(request):
     # # # print(movie)
     # # print(movies_panda['cast'].head())
     # # # print(movies_panda[['id','imdbid','title','crew','cast','otitle','numVotes','imdbscore','runtime','date','genre','isAdult','poster',]])
->>>>>>> b20bb9330b14a1df95f2d0af26b7532edd152a2f
+# >>>>>>> b20bb9330b14a1df95f2d0af26b7532edd152a2f
     # features = ['cast']
     # for feature in features:
     #     movies_panda[feature]=movies_panda[feature].apply(literal_eval)
@@ -223,13 +223,13 @@ def aboutus(request):
     #     user_panda[feature] = user_panda[feature].apply(clean_data)
     # user_panda['soup']=user_panda.apply(create_soup,axis=1)
     # print(user_panda[['title','cast','crew','genre','soup']].head(5))
-<<<<<<< HEAD
+# <<<<<<< HEAD
     # # print(user_panda.head())
     # # print(type(userlist))
-=======
+# =======
     # print(user_panda.head())
     # print(type(userlist))
->>>>>>> b20bb9330b14a1df95f2d0af26b7532edd152a2f
+# >>>>>>> b20bb9330b14a1df95f2d0af26b7532edd152a2f
     
     # # for m in userlist:
     # #     print(m.movie.title)
@@ -249,10 +249,6 @@ def aboutus(request):
     # # oolala = get_recom('The Avengers')
     # # print(type(oolala))
     # # print(oolala['title'])
-    
-    
-    
-    
     
     return render(request, "home/aboutus.html")
 
