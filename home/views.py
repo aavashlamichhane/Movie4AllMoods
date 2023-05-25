@@ -14,12 +14,30 @@ from django.views import generic
 from django.db.models import Q
 import pandas as pd
 import numpy as np
+import difflib
 from ast import literal_eval
 from sklearn.feature_extraction.text import TfidfVectorizer,CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from pympler import asizeof
 
 # Create your views here.
+
+def search(request):
+    query=request.GET['query']
+    if len(query) == '':
+        allMovies = Movies.objects.filter(imdbscore__gt=9).order_by('-imdbscore')[:20]
+        params={'allMovies':allMovies, 'query':query}
+        return render(request,"home/filter.html", params) 
+    allMoviesTitle = Movies.objects.filter(title__icontains=query).order_by('-imdbscore')
+    if allMoviesTitle.exists():
+        allMovies = allMoviesTitle
+    else:
+        allMoviesCast = Movies.objects.filter(cast__icontains=query)
+        allMoviesCrew = Movies.objects.filter(crew__icontains=query)
+        allMovies = allMoviesTitle.union(allMoviesCast).union(allMoviesCrew).order_by('-imdbscore')
+
+    params={'allMovies':allMovies, 'query':query}
+    return render(request,"home/filter.html", params) 
 
 def get_list(x):
     # for i in x:
@@ -311,20 +329,7 @@ def p2w(request):
             return HttpResponse("Something went wrong.")
     
 
-def search(request):
-    query=request.GET['query']
-    if len(query) == '':
-        allMovies = Movies.objects.all()[:20]
-    # elif len(query) > 100 :
-    #     allMovies=[]
-    else:
-        allMoviesTitle = Movies.objects.filter(title__icontains=query)
-        allMoviesCast = Movies.objects.filter(cast__icontains=query)
-        allMoviesCrew = Movies.objects.filter(crew__icontains=query)
-        allMovies = allMoviesTitle.union(allMoviesCast).union(allMoviesCrew).order_by('-imdbscore')
 
-    params={'allMovies':allMovies, 'query':query}
-    return render(request,"home/filter.html", params) 
 
 def watched(request):
     tmovie=list.objects.filter(user=request.user,status=1)
