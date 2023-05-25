@@ -155,41 +155,41 @@ def aboutus(request):
     
     
     
-    movie = Movies.objects.all().order_by('-numVotes')[:10000]
-    # print(type(movie))
-    movies_panda=pd.DataFrame([t.__dict__ for t in movie])
-    # # print(movie)
-    # print(movies_panda['cast'].head())
-    # # print(movies_panda[['id','imdbid','title','crew','cast','otitle','numVotes','imdbscore','runtime','date','genre','isAdult','poster',]])
-    features = ['cast']
-    for feature in features:
-        movies_panda[feature]=movies_panda[feature].apply(literal_eval)
+    # movie = Movies.objects.all().order_by('-numVotes')[:10000]
+    # # print(type(movie))
+    # movies_panda=pd.DataFrame([t.__dict__ for t in movie])
+    # # # print(movie)
+    # # print(movies_panda['cast'].head())
+    # # # print(movies_panda[['id','imdbid','title','crew','cast','otitle','numVotes','imdbscore','runtime','date','genre','isAdult','poster',]])
+    # features = ['cast']
+    # for feature in features:
+    #     movies_panda[feature]=movies_panda[feature].apply(literal_eval)
+    # # print(movies_panda[['title','cast','crew','genre']].head(5))
+    # # print(movies_panda['cast'][1][1]['name'])
+    # features = ['cast']
+    # for feature in features:
+    #     movies_panda[feature]=movies_panda[feature].apply(get_list)
     # print(movies_panda[['title','cast','crew','genre']].head(5))
-    # print(movies_panda['cast'][1][1]['name'])
-    features = ['cast']
-    for feature in features:
-        movies_panda[feature]=movies_panda[feature].apply(get_list)
-    print(movies_panda[['title','cast','crew','genre']].head(5))
-    features = ['cast','crew','genre']
-    for feature in features:
-        movies_panda[feature] = movies_panda[feature].apply(clean_data)
-    print(movies_panda[['title','cast','crew','genre']].head(5))
-    movies_panda['soup']=movies_panda.apply(create_soup,axis=1)
-    print(movies_panda[['cast','crew','genre','soup']].head(5))
-    count = CountVectorizer(stop_words='english')
-    count_matrix = count.fit_transform(movies_panda['soup'])
-    userlist = list.objects.filter(user=request.user,status=1,rating__gte=6)
-    user_movies = userlist.values_list('movie',flat=True)
-    umovies = Movies.objects.filter(id__in=user_movies)
+    # features = ['cast','crew','genre']
+    # for feature in features:
+    #     movies_panda[feature] = movies_panda[feature].apply(clean_data)
+    # print(movies_panda[['title','cast','crew','genre']].head(5))
+    # movies_panda['soup']=movies_panda.apply(create_soup,axis=1)
+    # print(movies_panda[['cast','crew','genre','soup']].head(5))
+    # count = CountVectorizer(stop_words='english')
+    # count_matrix = count.fit_transform(movies_panda['soup'])
+    # userlist = list.objects.filter(user=request.user,status=1,rating__gte=6)
+    # user_movies = userlist.values_list('movie',flat=True)
+    # umovies = Movies.objects.filter(id__in=user_movies)
     
-    user_panda = pd.DataFrame([t.__dict__ for t in umovies])
-    user_panda['cast']=user_panda['cast'].apply(literal_eval)
-    user_panda['cast']=user_panda['cast'].apply(get_list)
-    features = ['cast','crew','genre']
-    for feature in features:
-        user_panda[feature] = user_panda[feature].apply(clean_data)
-    user_panda['soup']=user_panda.apply(create_soup,axis=1)
-    print(user_panda[['title','cast','crew','genre','soup']].head(5))
+    # user_panda = pd.DataFrame([t.__dict__ for t in umovies])
+    # user_panda['cast']=user_panda['cast'].apply(literal_eval)
+    # user_panda['cast']=user_panda['cast'].apply(get_list)
+    # features = ['cast','crew','genre']
+    # for feature in features:
+    #     user_panda[feature] = user_panda[feature].apply(clean_data)
+    # user_panda['soup']=user_panda.apply(create_soup,axis=1)
+    # print(user_panda[['title','cast','crew','genre','soup']].head(5))
     # print(user_panda.head())
     # print(type(userlist))
     
