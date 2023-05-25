@@ -34,6 +34,9 @@
                             <input class="form-control me-2" type="search" name="query" id="query" placeholder="Search by Movie Title" aria-label="Search">
                         </form>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home/filter">Advance Filters</a>
+                    </li>
                     {% if not user.is_authenticated %}
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/home/login">Log In</a>
@@ -41,14 +44,14 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/home/signup">Sign Up</a>
                         </li>
+
                     {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="/home/userprofile">User Profile</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/home/filter">Advance Filters</a>
-                    </li>
+                
                     {% endif %}
+                    
                     <li class="nav-item">
                         <a class="nav-link" href="/home/help">Help</a>
                     </li>
