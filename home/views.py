@@ -12,10 +12,29 @@ from django.contrib.auth.forms import UserChangeForm
 from django.views import generic
 import pandas as pd
 import numpy as np
+import difflib
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 # Create your views here.
+def recommend(request):
+    rmovie=Movies.objects.all().order_by('-title')[:50]
+    params={'ritem':rmovie, 'range':range(10)}
+    return render(request, "home/recommend.html",params)
+
+   
+    movie = Movies.objects.all()[:100]
+    movies_panda=pd.DataFrame([t.__dict__ for t in movie])   
+    features = ['crew','cast','genre']
+    for feature in features:
+        movie[feature] = movie[feature].fillna('')  
+    combined_features = movies_panda['genre']+' '+movies_panda['cast']+' '+movies_panda['crew']
+    vectorizer = TfidfVectorizer(stop_words='english')
+    feature_vectors = vectorizer.fit_transform(combined_features)
+    similarity = cosine_similarity(feature_vectors)
+    
+
+
 def landing(request):
     if request.user.is_authenticated:
         return redirect('/home')
@@ -112,20 +131,6 @@ def aboutus(request):
     # # print(final)
     
     
-    movie = Movies.objects.all()
-    movies_panda=pd.DataFrame([t.__dict__ for t in movie])
-    # # print(movie)
-    # # print(movies_panda.head())
-    # # print(movies_panda[['id','imdbid','title','crew','cast','otitle','numVotes','imdbscore','runtime','date','genre','isAdult','poster',]])
-    features = ['crew','cast','genre']
-    combined_features = movies_panda['genre']+' '+movies_panda['cast']+' '+movies_panda['crew']
-    # # print(combined_features)
-    vectorizer = TfidfVectorizer()
-    feature_vectors = vectorizer.fit_transform(combined_features)
-    similarity = cosine_similarity(feature_vectors)
-    
-    
-    
     return render(request, "home/aboutus.html")
 
 def help(request):
@@ -136,10 +141,7 @@ def signout(request):
     messages.success(request,"Logged out successfully.")
     return redirect('/home')
 
-def recommend(request):
-    rmovie=Movies.objects.all().order_by('-title')[:50]
-    params={'ritem':rmovie, 'range':range(10)}
-    return render(request, "home/recommend.html",params)
+    
 
 def filter(request):
     
