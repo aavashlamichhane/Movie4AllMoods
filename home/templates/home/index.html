@@ -35,6 +35,7 @@
 				<div class="card-body">
 				<h5 class="card-title">{{i.title}}</h5>
 				<p class="card-text">Genre: {{i.genre}}<br>Score: {{i.imdbscore}}<br>Release Date: {{i.date}}</p>
+			</a>
 				<form action="alwat/" method="POST">
 					{% csrf_token %}
 					{% comment %} <input type="hidden" name="amovieId" value="{{i.pk}}" />
@@ -68,7 +69,7 @@
 				<input type="hidden" name="movieId" value="{{i.pk}}" />
 				<input type="submit" class="btn btn-outline-primary" value="Plan-to-Watch">
 			</form>
-			</a>
+			
 		</div>
 		</div>
 	{% if forloop.counter|divisibleby:5 and forloop.counter > 0 and not forloop.last %}
@@ -115,6 +116,7 @@
 				<div class="card-body">
 					<h5 class="card-title">{{i.title}}</h5>
 					<p class="card-text">Genre: {{i.genre}}<br>Score: {{i.imdbscore}}<br>Release Date: {{i.date}}</p>
+				</a>
 					<form action="alwat/" method="POST">
 						{% csrf_token %}
 						{% comment %} <input type="hidden" name="amovieId" value="{{i.pk}}" />
@@ -149,7 +151,7 @@
 					<input type="submit" class="btn btn-outline-primary" value="Plan-to-Watch">
 				</div>
 			</form>
-			</a>
+			
 		</div>
 	{% if forloop.counter|divisibleby:5 and forloop.counter > 0 and not forloop.last %}
 	</div>
@@ -193,6 +195,7 @@
 			<div class="card-body">
 				<h5 class="card-title">{{i.title}}</h5>
 				<p class="card-text">Genre: {{i.genre}}<br>Score: {{i.imdbscore}}<br>Release Date: {{i.date}}</p>
+			</a>
 				<form action="alwat/" method="POST">
 					{% csrf_token %}
 					{% comment %} <input type="hidden" name="amovieId" value="{{i.pk}}" />
@@ -227,7 +230,7 @@
 				<input type="submit" class="btn btn-outline-primary" value="Plan-to-Watch">
 			</div>
 		</form>
-		</a>
+		
 	</div>
 	{% if forloop.counter|divisibleby:5 and forloop.counter > 0 and not forloop.last %}
 	</div>
@@ -269,6 +272,7 @@
 				<div class="card-body">
 					<h5 class="card-title">{{i.title}}</h5>
 					<p class="card-text">Genre: {{i.genre}}<br>Score: {{i.imdbscore}}<br>Release Date: {{i.date}}</p>
+				</a>
 					<form action="alwat/" method="POST">
 						{% csrf_token %}
 						{% comment %} <input type="hidden" name="amovieId" value="{{i.pk}}" />
@@ -303,7 +307,7 @@
 					<input type="submit" class="btn btn-outline-primary" value="Plan-to-Watch">
 				</div>
 			</form>
-			</a>
+			
 		</div>
 		{% if forloop.counter|divisibleby:5 and forloop.counter > 0 and not forloop.last %}
 		</div>

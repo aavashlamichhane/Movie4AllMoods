@@ -131,7 +131,7 @@ def run():
         movie_indices = [i[0] for i in sim_scores]
         return movies_panda.iloc[movie_indices]
     
-    oolala = get_recom('Iron Man')
+    oolala = get_recom('The Dark Knight')
     print(type(oolala))
     print(oolala['title'])
     
