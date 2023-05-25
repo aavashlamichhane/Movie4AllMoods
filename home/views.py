@@ -72,7 +72,7 @@ def logIn(request):
             messages.success(request,"Logged in successfully.")
             return redirect("/home")
         else:
-            messages.error(request,"Incorrect creds.")
+            messages.error(request,"Incorrect credentials.")
             return redirect("/home/login")
             
     return render(request, "home/login.html")
