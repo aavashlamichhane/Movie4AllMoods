@@ -1,4 +1,5 @@
 import ast
+import builtins
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
@@ -10,12 +11,41 @@ from django.contrib.auth.decorators import login_required
 from .forms import EditProfileForm
 from django.contrib.auth.forms import UserChangeForm
 from django.views import generic
+from django.db.models import Q
 import pandas as pd
 import numpy as np
-from sklearn.feature_extraction.text import TfidfVectorizer
+from ast import literal_eval
+from sklearn.feature_extraction.text import TfidfVectorizer,CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+from pympler import asizeof
 
 # Create your views here.
+
+def get_list(x):
+    # for i in x:
+        # print(type(i))
+        # print(i['name'])
+    # print(type(x))
+    # if type(x) is list:
+        names = [i['name'] for i in x]
+        # if len(names)>:
+        #     names = names[:4]
+        # print(names)
+        return names
+    # else:
+    #     # print('I am here.')
+    #     return []
+
+def clean_data(x):
+    if isinstance(x,str):
+        ahaha= str.lower(x.replace(' ',''))
+        return ahaha.replace(',',' ')
+    else:
+        return [str.lower(i.replace(' ','')) for i in x]
+
+def create_soup(x):
+    return ' '+x['crew']+' '+' '.join(x['cast'])+' '+x['genre']
+
 def landing(request):
     if request.user.is_authenticated:
         return redirect('/home')
@@ -100,29 +130,89 @@ def help(request):
     return render(request, "home/aboutus.html")
 
 def aboutus(request):
-    # # movie = Movies.objects.get(pk=266330)
-    # # print(type(movie.cast))
-    # # haha=ast.literal_eval(movie.cast)
-    # # print(type(haha))
-    # # print(haha[0]['name'])
-    # # final = ''
-    # # for names in haha:
-    # #     final += names['name']
-    # #     final +=' '
-    # # print(final)
+    # # # movie = Movies.objects.get(pk=266330)
+    # # # print(type(movie.cast))
+    # # # haha=ast.literal_eval(movie.cast)
+    # # # print(type(haha))
+    # # # print(haha[0]['name'])
+    # # # final = ''
+    # # # for names in haha:
+    # # #     final += names['name']
+    # # #     final +=' '
+    # # # print(final)
+
+    # movie = Movies.objects.all()
+    # movies_panda=pd.DataFrame([t.__dict__ for t in movie])
+    # # # print(movie)
+    # # # print(movies_panda.head())
+    # # # print(movies_panda[['id','imdbid','title','crew','cast','otitle','numVotes','imdbscore','runtime','date','genre','isAdult','poster',]])
+    # features = ['crew','cast','genre']
+    # combined_features = movies_panda['genre']+' '+movies_panda['cast']+' '+movies_panda['crew']
+    # # # print(combined_features)
+    # vectorizer = TfidfVectorizer()
+    # feature_vectors = vectorizer.fit_transform(combined_features)
+    # similarity = cosine_similarity(feature_vectors)
     
     
-    movie = Movies.objects.all()
+    
+    movie = Movies.objects.all().order_by('-numVotes')[:10000]
+    # print(type(movie))
     movies_panda=pd.DataFrame([t.__dict__ for t in movie])
     # # print(movie)
-    # # print(movies_panda.head())
+    # print(movies_panda['cast'].head())
     # # print(movies_panda[['id','imdbid','title','crew','cast','otitle','numVotes','imdbscore','runtime','date','genre','isAdult','poster',]])
-    features = ['crew','cast','genre']
-    combined_features = movies_panda['genre']+' '+movies_panda['cast']+' '+movies_panda['crew']
-    # # print(combined_features)
-    vectorizer = TfidfVectorizer()
-    feature_vectors = vectorizer.fit_transform(combined_features)
-    similarity = cosine_similarity(feature_vectors)
+    features = ['cast']
+    for feature in features:
+        movies_panda[feature]=movies_panda[feature].apply(literal_eval)
+    # print(movies_panda[['title','cast','crew','genre']].head(5))
+    # print(movies_panda['cast'][1][1]['name'])
+    features = ['cast']
+    for feature in features:
+        movies_panda[feature]=movies_panda[feature].apply(get_list)
+    print(movies_panda[['title','cast','crew','genre']].head(5))
+    features = ['cast','crew','genre']
+    for feature in features:
+        movies_panda[feature] = movies_panda[feature].apply(clean_data)
+    print(movies_panda[['title','cast','crew','genre']].head(5))
+    movies_panda['soup']=movies_panda.apply(create_soup,axis=1)
+    print(movies_panda[['cast','crew','genre','soup']].head(5))
+    count = CountVectorizer(stop_words='english')
+    count_matrix = count.fit_transform(movies_panda['soup'])
+    userlist = list.objects.filter(user=request.user,status=1,rating__gte=6)
+    user_movies = userlist.values_list('movie',flat=True)
+    umovies = Movies.objects.filter(id__in=user_movies)
+    
+    user_panda = pd.DataFrame([t.__dict__ for t in umovies])
+    user_panda['cast']=user_panda['cast'].apply(literal_eval)
+    user_panda['cast']=user_panda['cast'].apply(get_list)
+    features = ['cast','crew','genre']
+    for feature in features:
+        user_panda[feature] = user_panda[feature].apply(clean_data)
+    user_panda['soup']=user_panda.apply(create_soup,axis=1)
+    print(user_panda[['title','cast','crew','genre','soup']].head(5))
+    # print(user_panda.head())
+    # print(type(userlist))
+    
+    # for m in userlist:
+    #     print(m.movie.title)
+    
+    
+    # similarity = cosine_similarity(count_matrix,count_matrix)
+    # movies_panda = movies_panda.reset_index()
+    # indices = pd.Series(movies_panda.index,index=movies_panda['title'])
+    # def get_recom(title,cosine_sim=similarity):
+    #     idx = indices[title]
+    #     sim_scores= builtins.list(enumerate(cosine_sim[idx].tolist()))
+    #     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+    #     sim_scores = sim_scores[1:11]
+    #     movie_indices = [i[0] for i in sim_scores]
+    #     return movies_panda.iloc[movie_indices]
+    
+    # oolala = get_recom('The Avengers')
+    # print(type(oolala))
+    # print(oolala['title'])
+    
+    
     
     
     
