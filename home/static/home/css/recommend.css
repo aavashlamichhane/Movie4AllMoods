@@ -4,8 +4,34 @@ body{
 }
 .card-body{
     background-color: black;
-  }
+}
 
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 20px;
+}
+  
+
+
+
+
+/* .cardss{
+    margin: 0 auto;
+    max-width: 1000px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(225px,1fr));
+    gap: 20px;
+}
+
+.card__image{
+    width: 100%;
+    display: block;
+}
+
+.card{
+    display: block;
+} */
 /* .card{
     display: flex;
 } */
