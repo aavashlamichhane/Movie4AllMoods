@@ -19,5 +19,6 @@ urlpatterns = [
     path('home/alwat/',views.alwat,name='Already Watched button'),
     path('home/updaterating/',views.updaterating,name="update rating"),
     path('home/deletelistentry/',views.deleteListEntry,name="delete list entry"),
-    path('home/updatestatus/',views.updateStatus,name="updatestatus")
+    path('home/updatestatus/',views.updateStatus,name="updatestatus"),
+    path('home/moviedes/',views.moviedes,name="Movie"),
 ]

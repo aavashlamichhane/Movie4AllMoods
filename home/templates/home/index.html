@@ -53,9 +53,7 @@ Action
 <br> 
 {% comment %} <form method="POST" action="p2w/"> {% endcomment %}
 {% if user.is_authenticated %}
-<a class="btn btn-dark" href="/home/filter" role="button">Advanced Filters ></a>
-<br>
-<br>
+
 <a class="btn btn-dark btn-lg" href="/home/recommend" role="button">Recommended Movies ></a>
 <br>
 <br>
@@ -71,7 +69,7 @@ Action
 <div class="cards-wrapper">
 	{% for i in ritem %}
 		<div class="card">
-			
+			<a style="text-decoration:none" href="/home/moviedes">
 				<img src="{{i.poster}}" class="card-img-top" alt="Image has failed to load." onerror="this.src='https://source.unsplash.com/400x600/?movie,{{i.title}}';" height="350px">
 				<div class="card-body">
 				<h5 class="card-title">{{i.title}}</h5>
@@ -109,6 +107,7 @@ Action
 				<input type="hidden" name="movieId" value="{{i.pk}}" />
 				<input type="submit" class="btn btn-outline-primary" value="Plan-to-Watch">
 			</form>
+			</a>
 		</div>
 		</div>
 	{% if forloop.counter|divisibleby:5 and forloop.counter > 0 and not forloop.last %}
@@ -150,7 +149,7 @@ Action
 	<div class="cards-wrapper">
 		{% for i in pitem %}
 		<div class="card">
-			
+			<a style="text-decoration:none" href="/home/moviedes">
 				<img src="{{i.poster}}" class="card-img-top" alt="Image has failed to load" onerror="this.src='https://source.unsplash.com/400x600/?movie,{{i.title}}';" height="350px">
 				<div class="card-body">
 					<h5 class="card-title">{{i.title}}</h5>
@@ -189,6 +188,7 @@ Action
 					<input type="submit" class="btn btn-outline-primary" value="Plan-to-Watch">
 				</div>
 			</form>
+			</a>
 		</div>
 	{% if forloop.counter|divisibleby:5 and forloop.counter > 0 and not forloop.last %}
 	</div>
@@ -227,7 +227,7 @@ Action
 <div class="cards-wrapper">
 	{% for i in titem %}
 	<div class="card">
-		
+		<a style="text-decoration:none" href="/home/moviedes">
 			<img src="{{i.poster}}" class="card-img-top" alt="Image has failed to load." onerror="this.src='https://source.unsplash.com/400x600/?movie,{{i.title}}';" height="350px">
 			<div class="card-body">
 				<h5 class="card-title">{{i.title}}</h5>
@@ -266,6 +266,7 @@ Action
 				<input type="submit" class="btn btn-outline-primary" value="Plan-to-Watch">
 			</div>
 		</form>
+		</a>
 	</div>
 	{% if forloop.counter|divisibleby:5 and forloop.counter > 0 and not forloop.last %}
 	</div>
@@ -302,7 +303,7 @@ Action
 	<div class="cards-wrapper">
 		{% for i in litem %}
 		<div class="card">
-			
+			<a style="text-decoration:none" href="/home/moviedes">
 				<img src="{{i.poster}}" class="card-img-top" alt="Image has failed to load." onerror="this.src='https://source.unsplash.com/400x600/?movie,{{i.title}}';" height="350px">
 				<div class="card-body">
 					<h5 class="card-title">{{i.title}}</h5>
@@ -341,7 +342,7 @@ Action
 					<input type="submit" class="btn btn-outline-primary" value="Plan-to-Watch">
 				</div>
 			</form>
-
+			</a>
 		</div>
 		{% if forloop.counter|divisibleby:5 and forloop.counter > 0 and not forloop.last %}
 		</div>
