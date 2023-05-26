@@ -9,15 +9,8 @@
 {% block body %}
 {% load static %}
 
-
-
-  <form class="d-flex" role="search">
-    <button class="btn btn-outline-light" type="submit">Search</button>
-  </form>
-
-  </div>
-</nav>
-<form action="/home/filter" method="post">
+<form action="/home/filter/" method="post">
+  {%csrf_token%}
 <div class="container-fluid">
 <form class="main-container d-flex">
 <div class="sidebar" id="side_nav">
@@ -93,15 +86,15 @@
       </label>
     </div>
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="1" id="fantasy" name="fantasy">
-      <label class="form-check-label" for="fantasy">
-        Fantasy
-      </label>
-    </div>
-    <div class="form-check">
       <input class="form-check-input" type="checkbox" value="1" id="animation" name="animation">
       <label class="form-check-label" for="animation">
         Animation
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="1" id="biography" name="biography">
+      <label class="form-check-label" for="biography">
+        Biography
       </label>
     </div>
     <div class="form-check">
@@ -111,33 +104,9 @@
       </label>
     </div>
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="1" id="romance" name="romance">
-      <label class="form-check-label" for="romance" >
-        Romance
-      </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="1" id="tragedy" name="tragedy">
-      <label class="form-check-label" for="tragedy">
-        Trajedy
-      </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="1" id="drame" name="drama">
-      <label class="form-check-label" for="drame">
-        Drama
-      </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="1" id="thriller" name ="thriller">
-      <label class="form-check-label" for="thriller">
-        Thriller
-      </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="1" id="horror" name="horror">
-      <label class="form-check-label" for="horror">
-        Horror
+      <input class="form-check-input" type="checkbox" value="1" id="fantasy" name="fantasy">
+      <label class="form-check-label" for="fantasy">
+        Crime
       </label>
     </div>
     <div class="form-check">
@@ -147,11 +116,78 @@
       </label>
     </div>
     <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="1" id="drama" name="drama">
+      <label class="form-check-label" for="drama">
+        Drama
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="1" id="fantasy" name="fantasy">
+      <label class="form-check-label" for="fantasy">
+        Fantasy
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="1" id="film-noir" name="film-noir">
+      <label class="form-check-label" for="film-noir">
+        Film-Noir
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="1" id="horror" name="horror">
+      <label class="form-check-label" for="horror">
+        History
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="1" id="horror" name="horror">
+      <label class="form-check-label" for="horror">
+        Horror
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="1" id="fantasy" name="fantasy">
+      <label class="form-check-label" for="fantasy">
+        Music
+      </label>
+    </div>
+    <div class="form-check">
       <input class="form-check-input" type="checkbox" value="1" id="musical" name="musical">
       <label class="form-check-label" for="musical">
         Musical
       </label>
     </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="1" id="mystery" name="mystery">
+      <label class="form-check-label" for="mystery">
+        Mystery
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="1" id="romance" name="romance">
+      <label class="form-check-label" for="romance" >
+        Romance
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="1" id="fantasy" name="fantasy">
+      <label class="form-check-label" for="fantasy">
+        Sport
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="1" id="fantasy" name="fantasy">
+      <label class="form-check-label" for="fantasy">
+        War
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="1" id="fantasy" name="fantasy">
+      <label class="form-check-label" for="fantasy">
+        Western
+      </label>
+    </div>
+
     <hr/>
 
     <h4 id="releaseddate">Released Date</h4>
@@ -180,7 +216,8 @@
     <input type="text" name="min" id="min" class="smallbox form-check-input" placeholder="Min"> - <input type="text" class="smallbox form-check-input" name="max" id="max" placeholder="Max">
     <br>
     <br>
-    <input type="submit" value="Filter" class="btn btn-primary">
+    <button href="/home/filter">Filter</button>
+  
   </div>
 </div>
 </form>
@@ -216,240 +253,3 @@
 
 
 {% endblock body %}
-{% comment %}<nav class="navbar navbar-expand-lg bg-body-dark">
-    <div class="container-fluid">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Mood
-          </a>
-            <ul class="dropdown-menu">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                  Happy
-                </label>
-              </div>
-              <li><hr class="dropdown-divider"></li>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                  Sad
-                </label>
-              </div>
-              <li><hr class="dropdown-divider"></li>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                  Bored
-                </label>
-              </div>
-              <li><hr class="dropdown-divider"></li>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                  Angry
-                </label>
-              </div>
-              <li><hr class="dropdown-divider"></li>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                  Excited
-                </label>
-              </div>
-              <li><hr class="dropdown-divider"></li>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                  Nostalgic
-                </label>
-              </div>
-              <li><hr class="dropdown-divider"></li>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                  Anxious
-                </label>
-              </div>
-              <li><hr class="dropdown-divider"></li>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                  Romantic
-                </label>
-              </div>
-              <li><hr class="dropdown-divider"></li>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                  Inspirational
-                </label>
-              </div>
-            </ul>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Genre
-          </a>
-          <ul class="dropdown-menu">
-            <div class="container text-center">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                  Action
-                </label>
-              </div>
-              <li><hr class="dropdown-divider"></li>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                  Adventure
-                </label>
-              </div>
-              <li><hr class="dropdown-divider"></li>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                  Fantasy
-                </label>
-              </div>
-              <li><hr class="dropdown-divider"></li>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                  Animation
-                </label>
-              </div>
-              <li><hr class="dropdown-divider"></li>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                  Comedy
-                </label>
-              </div>
-              <li><hr class="dropdown-divider"></li>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                  Romance
-                </label>
-              </div>
-              <li><hr class="dropdown-divider"></li>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                  Trajedy
-                </label>
-              </div>
-              <li><hr class="dropdown-divider"></li>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                  Drama
-                </label>
-              </div>
-              <li><hr class="dropdown-divider"></li>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                  Thriller
-                </label>
-              </div>
-              <li><hr class="dropdown-divider"></li>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                  Horror
-                </label>
-              </div>
-              <li><hr class="dropdown-divider"></li>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                  Documentary
-                </label>
-              </div>
-              <li><hr class="dropdown-divider"></li>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                  Musical
-                </label>
-              </div>
-            </div>
-          </ul>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Released Date
-          </a>
-          <ul class="dropdown-menu">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
-              <label class="form-check-label" for="flexCheckDefault">
-                1990-2000
-              </label>
-            </div>
-            <li><hr class="dropdown-divider"></li>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
-              <label class="form-check-label" for="flexCheckDefault">
-                2000-2010
-              </label>
-            </div>
-            <li><hr class="dropdown-divider"></li>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
-              <label class="form-check-label" for="flexCheckDefault">
-                2010-2020
-              </label>
-            </div>
-          </ul>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Playtime
-          </a>
-            <ul class="dropdown-menu">
-              <label for="customRange2" class="form-label"></label>
-              <input type="range" class="form-range" min="0" max="5" id="customRange2">
-            </ul>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Sort By
-          </a>
-          <ul class="dropdown-menu">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
-              <label class="form-check-label" for="flexCheckDefault">
-                Title
-              </label>
-            </div>
-            <li><hr class="dropdown-divider"></li>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
-              <label class="form-check-label" for="flexCheckDefault">
-                Imdb score
-              </label>
-            </div>
-            <li><hr class="dropdown-divider"></li>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault">
-              <label class="form-check-label" for="flexCheckDefault">
-                Released date
-              </label>
-            </div>
-          </ul>
-        </li>
-        </ul>
-
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-light" type="submit">Search</button>
-        </form>
-    </div>
-  </nav>
-
-{% endcomment %}

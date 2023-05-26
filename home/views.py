@@ -21,6 +21,75 @@ from sklearn.metrics.pairwise import cosine_similarity
 from pympler import asizeof
 # Create your views here.
 
+# def filter(request):
+    
+#     srmovie=Movies.objects.all().order_by('-genre')[:30]
+#     params={'sritem':srmovie, 'range':range(10)}
+#     return render(request, "home/filter.html",params)
+from django.shortcuts import render
+
+def filter(request):
+    if request.method == 'POST':
+        selected_genres=[]
+        if request.POST.get('happy', False):
+            selected_genres.append('Comedy')
+            selected_genres.append('Musical')
+        if request.POST.get('sad', False):
+            selected_genres.append('Tragedy')
+            selected_genres.append('Musical')
+        if request.POST.get('bored', False):
+            selected_genres.append('Drama')
+        if request.POST.get('angry', False):
+            selected_genres.append('Action')
+            selected_genres.append('Thriller')
+        if request.POST.get('excited', False):
+            selected_genres.append('Action')
+            selected_genres.append('Adventure')
+        if request.POST.get('nostalgic', False):
+            selected_genres.append('Adventure')
+            selected_genres.append('History')
+        if request.POST.get('anxious', False):
+            selected_genres.append('Thriller')
+            selected_genres.append('Horror')
+        if request.POST.get('romantic', False):
+            selected_genres.append('Romance')
+        if request.POST.get('inspirational', False):
+            selected_genres.append('Biography')
+            
+            
+            
+        if request.POST.get('action', False):
+            selected_genres.append('Action')
+        if request.POST.get('adventure', False):
+            selected_genres.append('Adventure')
+        if request.POST.get('fantasy', False):
+            selected_genres.append('Fantasy')
+        if request.POST.get('animation', False):
+            selected_genres.append('Animation')
+        if request.POST.get('comedy', False):
+            selected_genres.append('Comedy')
+        if request.POST.get('romance', False):
+            selected_genres.append('Romance')
+        if request.POST.get('tragedy', False):
+            selected_genres.append('Tragedy')
+        if request.POST.get('drama', False):
+            selected_genres.append('Drama')
+        if request.POST.get('thriller', False):
+            selected_genres.append('Thriller')
+        if request.POST.get('horror', False):
+            selected_genres.append('Horror')
+        if request.POST.get('documentary', False):
+            selected_genres.append('Documentary')
+        if request.POST.get('musical', False):
+            selected_genres.append('Musical')
+            
+        allMovies = Movies.objects.filter(genre__in=selected_genres).order_by('-numVotes')[:20]
+        params={'allMovies':allMovies}
+        return render(request,"home/filter.html", params) 
+    else: 
+        return render(request, "home/filter.html")
+
+
 def search(request):
     query=request.GET['query']
     if query == '':
@@ -332,7 +401,7 @@ def signout(request):
     messages.success(request,"Logged out successfully.")
     return redirect('/home')
 
-def recommend(request):
+def recommend(request): # type: ignore
     # rmovie=Movies.objects.all().order_by('-title')[:50]
     # params={'ritem':rmovie, 'range':range(10)}
     movie = Movies.objects.all().order_by('-numVotes')[:10000]
@@ -405,11 +474,7 @@ def recommend(request):
     
     return render(request, "home/recommend.html",params)
 
-def filter(request):
-    
-    srmovie=Movies.objects.all().order_by('-genre')[:30]
-    params={'sritem':srmovie, 'range':range(10)}
-    return render(request, "home/filter.html",params)
+
 
 @login_required
 def profile(request,*args,**kwargs):
