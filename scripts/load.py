@@ -35,28 +35,28 @@ def create_soup(x):
     
 
 def run():
-    # file = open('C:\\Abhyudit Files\\COMP206\\Movie4AllMoods\\scripts\\home_movies_final.csv',encoding="utf-8")
+    # file = open('C:\\Aavash files\\COMP206\\Project\\Movie4AllMoods\\scripts\\home_movies.csv',encoding="utf-8")
     # read_file=csv.reader(file)
-    # halo=Movies.objects.all().order_by('id')[:24544]
-    # # halo.delete()
-    # for haha in halo:
-    #     haha.delete()
-    # # Movies.objects.all().delete()
+    # # halo=Movies.objects.all().order_by('id')[:24544]
+    # # # halo.delete()
+    # # for haha in halo:
+    # #     haha.delete()
+    # Movies.objects.all().delete()
     
     # count=1
-    # start = 299949
-    # # for record in read_file:
-    # #     if count==1:
-    # #         pass
-    # #     else:
-    # #         print(start)
-    # #         if start == 324493:
-    # #             break
-    # #         hallo = Movies.objects.get(id=start)
-    # #         hallo.crew=record[12]
-    # #         hallo.save()
-    # #         Movies.objects.create(imdbid=record[0],imdbscore=record[2],cast=record[5],crew=record[6],genre=record[3],isAdult=record[8],numVotes=record[9],otitle=record[10],poster=record[4],title=record[1],runtime=record[11],date=record[7])
-    # #     count=count+1
+    # # start = 299949
+    # for record in read_file:
+    #     if count==1:
+    #         pass
+    #     else:
+    #         # print(start)
+    #         # if start == 324493:
+    #         #     break
+    #         # hallo = Movies.objects.get(id=start)
+    #         # hallo.crew=record[12]
+    #         # hallo.save()
+    #         Movies.objects.create(imdbid=record[0],imdbscore=record[2],cast=record[5],crew=record[6],genre=record[3],isAdult=record[8],numVotes=record[9],otitle=record[10],poster=record[4],title=record[1],runtime=record[11],date=record[7])
+    #     count=count+1
     
     # # for haha in halo:
     # #     haha.id = start
@@ -99,41 +99,41 @@ def run():
     # #     entry.crew=director
     # #     entry.save()
     
-    movie = Movies.objects.all().order_by('-numVotes')[:10000]
-    movies_panda=pd.DataFrame([t.__dict__ for t in movie])
-    # # print(movie)
-    # # print(movies_panda.head())
-    # # print(movies_panda[['id','imdbid','title','crew','cast','otitle','numVotes','imdbscore','runtime','date','genre','isAdult','poster',]])
-    features = ['cast']
-    for feature in features:
-        movies_panda[feature]=movies_panda[feature].apply(literal_eval)
-    feature = ['cast']
-    for feature in features:
-        movies_panda[feature]=movies_panda[feature].apply(get_list)
-    # print(movies_panda[['title','cast','crew','genre']].head(5))
-    features = ['cast','crew','genre']
-    for feature in features:
-        movies_panda[feature] = movies_panda[feature].apply(clean_data)
-    # print(movies_panda[['title','cast','crew','genre']].head(5))
-    movies_panda['soup']=movies_panda.apply(create_soup,axis=1)
-    print(movies_panda[['cast','crew','genre','soup']].head(5))
-    count = CountVectorizer(stop_words='english')
-    count_matrix = count.fit_transform(movies_panda['soup'])
-    similarity = cosine_similarity(count_matrix,count_matrix)
-    movies_panda = movies_panda.reset_index()
-    indices = pd.Series(movies_panda.index,index=movies_panda['title'])
+    # movie = Movies.objects.all().order_by('-numVotes')[:10000]
+    # movies_panda=pd.DataFrame([t.__dict__ for t in movie])
+    # # # print(movie)
+    # # # print(movies_panda.head())
+    # # # print(movies_panda[['id','imdbid','title','crew','cast','otitle','numVotes','imdbscore','runtime','date','genre','isAdult','poster',]])
+    # features = ['cast']
+    # for feature in features:
+    #     movies_panda[feature]=movies_panda[feature].apply(literal_eval)
+    # feature = ['cast']
+    # for feature in features:
+    #     movies_panda[feature]=movies_panda[feature].apply(get_list)
+    # # print(movies_panda[['title','cast','crew','genre']].head(5))
+    # features = ['cast','crew','genre']
+    # for feature in features:
+    #     movies_panda[feature] = movies_panda[feature].apply(clean_data)
+    # # print(movies_panda[['title','cast','crew','genre']].head(5))
+    # movies_panda['soup']=movies_panda.apply(create_soup,axis=1)
+    # print(movies_panda[['cast','crew','genre','soup']].head(5))
+    # count = CountVectorizer(stop_words='english')
+    # count_matrix = count.fit_transform(movies_panda['soup'])
+    # similarity = cosine_similarity(count_matrix,count_matrix)
+    # movies_panda = movies_panda.reset_index()
+    # indices = pd.Series(movies_panda.index,index=movies_panda['title'])
     
-    def get_recom(title,cosine_sim=similarity):
-        idx = indices[title]
-        sim_scores= list(enumerate(cosine_sim[idx].tolist()))
-        sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-        sim_scores = sim_scores[1:16]
-        movie_indices = [i[0] for i in sim_scores]
-        return movies_panda.iloc[movie_indices]
+    # def get_recom(title,cosine_sim=similarity):
+    #     idx = indices[title]
+    #     sim_scores= list(enumerate(cosine_sim[idx].tolist()))
+    #     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+    #     sim_scores = sim_scores[1:16]
+    #     movie_indices = [i[0] for i in sim_scores]
+    #     return movies_panda.iloc[movie_indices]
     
-    oolala = get_recom('The Dark Knight')
-    print(type(oolala))
-    print(oolala['title'])
+    # oolala = get_recom('The Dark Knight')
+    # print(type(oolala))
+    # print(oolala['title'])
     
     
     
@@ -150,4 +150,17 @@ def run():
     # print(asizeof.asizeof(combined_features))
     # print(asizeof.asizeof(movies_panda))
     # print(asizeof.asizeof(movie))
+    
+    
+    
+    
+    movie= Movies.objects.all().order_by('numVotes')[:13966]
+    for i in movie:
+        print(i.title)
+        # i.delete()
+        
+    
+    # for row in Movies.objects.all().reverse():
+    #     if Movies.objects.filter(imdbid=row.imdbid).count() > 1:
+    #         row.delete()
     
