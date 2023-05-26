@@ -7,9 +7,10 @@ body{
     max-width: 150px;
 }
 
-#side_nav
+div#side_nav
 {
-    background: white;
+    background: black !important;
+    color: white !important;
     min-width: 250px;
     max-width: 250px;
 }

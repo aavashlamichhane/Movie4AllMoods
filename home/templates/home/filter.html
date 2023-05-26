@@ -10,17 +10,12 @@
 {% load static %}
 
 
-
-  <form class="d-flex" role="search">
-    <button class="btn btn-outline-light" type="submit">Search</button>
-  </form>
-
-  </div>
-</nav>
 <form action="/home/filter" method="post">
 <div class="container-fluid">
+  <div class="row">
 <form class="main-container d-flex">
-<div class="sidebar" id="side_nav">
+  <div class="col-md-3 sidebar" id="side_nav">
+
   <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
     <h4 id="mood">Mood</h4>
     <div class="form-check">

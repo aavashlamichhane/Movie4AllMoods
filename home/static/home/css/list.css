@@ -15,9 +15,14 @@
     border-radius: 50%;
 } */
 body{
-    background-color: brown;
+    background-color: black;
     margin-top: 5%;
+    color: white;
 }
+/* #hmm{
+    margin-top: 10%;
+    color: white !important;
+} */
 
 .form-inline{
     display: inline-block;
@@ -25,6 +30,6 @@ body{
 }
 
 .modal-body{
-    color: black;
+    color: black;   
 }
 
