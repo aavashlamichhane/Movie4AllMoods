@@ -62,28 +62,49 @@ def filter(request):
             selected_genres.append('Action')
         if request.POST.get('adventure', False):
             selected_genres.append('Adventure')
-        if request.POST.get('fantasy', False):
-            selected_genres.append('Fantasy')
         if request.POST.get('animation', False):
             selected_genres.append('Animation')
+        if request.POST.get('biography', False):
+            selected_genres.append('Biography')
         if request.POST.get('comedy', False):
             selected_genres.append('Comedy')
-        if request.POST.get('romance', False):
-            selected_genres.append('Romance')
-        if request.POST.get('tragedy', False):
-            selected_genres.append('Tragedy')
-        if request.POST.get('drama', False):
-            selected_genres.append('Drama')
-        if request.POST.get('thriller', False):
-            selected_genres.append('Thriller')
-        if request.POST.get('horror', False):
-            selected_genres.append('Horror')
+        if request.POST.get('crime', False):
+            selected_genres.append('Crime')
         if request.POST.get('documentary', False):
             selected_genres.append('Documentary')
+        if request.POST.get('drama', False):
+            selected_genres.append('Drama')
+        if request.POST.get('fantasy', False):
+            selected_genres.append('Fantasy')
+        if request.POST.get('film-noir', False):
+            selected_genres.append('Film-Noir')
+        if request.POST.get('history', False):
+            selected_genres.append('History')
+        if request.POST.get('horror', False):
+            selected_genres.append('Horror')
+        if request.POST.get('music', False):
+            selected_genres.append('Music')
         if request.POST.get('musical', False):
             selected_genres.append('Musical')
-            
-        allMovies = Movies.objects.filter(genre__in=selected_genres).order_by('-numVotes')[:20]
+        if request.POST.get('mystery', False):
+            selected_genres.append('Mystery')
+        if request.POST.get('romance', False):
+            selected_genres.append('Romance')
+        if request.POST.get('sport', False):
+            selected_genres.append('Sport')
+        if request.POST.get('thriller', False):
+            selected_genres.append('Thriller')
+        if request.POST.get('tragedy', False):
+            selected_genres.append('Tragedy')
+        if request.POST.get('war', False):
+            selected_genres.append('War')
+        if request.POST.get('western', False):
+            selected_genres.append('Western')
+
+        genre_filters = Q()
+        for genre in selected_genres:
+            genre_filters &= Q(genre__contains=genre)
+        allMovies = Movies.objects.filter(genre_filters).order_by('-numVotes')[:50]
         params={'allMovies':allMovies}
         return render(request,"home/filter.html", params) 
     else: 
