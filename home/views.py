@@ -264,7 +264,6 @@ def recommend(request): # type: ignore
     # params={'ritem':rmovie, 'range':range(10)}
     movie = Movies.objects.all().order_by('-numVotes')[:10000]
     movies_panda=pd.DataFrame([t.__dict__ for t in movie])
-    
     features = ['cast']
     for feature in features:
         movies_panda[feature]=movies_panda[feature].apply(literal_eval)
@@ -272,13 +271,13 @@ def recommend(request): # type: ignore
     features = ['cast']
     for feature in features:
         movies_panda[feature]=movies_panda[feature].apply(get_list)
-    print(movies_panda[['title','cast','crew','genre']].head(5))
+    # print(movies_panda[['title','cast','crew','genre']].head(5))
     features = ['cast','crew','genre']
     for feature in features:
         movies_panda[feature] = movies_panda[feature].apply(clean_data)
-    print(movies_panda[['title','cast','crew','genre']].head(5))
+    # print(movies_panda[['title','cast','crew','genre']].head(5))
     movies_panda['soup']=movies_panda.apply(create_soup,axis=1)
-    print(movies_panda[['cast','crew','genre','soup']].head(5))
+    # print(movies_panda[['cast','crew','genre','soup']].head(5))
     count = CountVectorizer(stop_words='english')
     count_matrix = count.fit_transform(movies_panda['soup'])
     userlist = list.objects.filter(user=request.user,status=1,rating__gte=6)
@@ -312,24 +311,23 @@ def recommend(request): # type: ignore
             continue
         for item2 in item:
             to_get = Movies.objects.get(pk=item2).title
-            print(to_get)
+            # print(to_get)
             no_of_recom = get_no(ranvar,len(item))
-            print(no_of_recom)
+            # print(no_of_recom)
             if no_of_recom == 0:
                 no_of_recom+=1
             recomm = get_recom(to_get,no_of_recom)
-            print(type(recomm))
-            print(recomm[['id','title']])
+            # print(type(recomm))
+            # print(recomm[['id','title']])
             for entries in recomm['id'].tolist():
                 recommended.append(entries)
         ranvar-=1
     movies = []
     for entry in recommended:
         movies.append(Movies.objects.get(pk=entry))
-    print(type(movies))
-    print(len(movies))
+    # print(type(movies))
+    # print(len(movies))
     params = {'ritem':movies,'total':len(movies)}
-    
     return render(request, "home/recommend.html",params)
 
 
@@ -383,9 +381,6 @@ def profile(request,*args,**kwargs):
         args['form']=form
         return render(request,"home/profile.html",args)
 
-
-
-
 def lists(request):
     tmovie=list.objects.filter(user=request.user,status=2)
     params={'titem':tmovie}
@@ -402,18 +397,22 @@ def p2w(request):
             movie = Movies.objects.get(pk=movieId)
             if list.objects.filter(user=request.user,movie=movie):
                 entry = list.objects.get(user=request.user,movie=movie)
+                print(entry.movie.title)
                 if entry.status == 1:
-                    messages.warning(request,"Entry already exists in Already Watched.")
-                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                    # messages.warning(request,"Entry already exists in Already Watched.")
+                    return HttpResponse('<div class="alert alert-info alert-dismissible fade show" role="alert">Entry already exists in Already Watched.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>')
+                    # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
                 elif entry.status == 2:
-                    messages.warning(request,"Entry already exists in Plan-To-Watch")
-                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                    # messages.warning(request,"Entry already exists in Plan-To-Watch")
+                    return HttpResponse('<div class="alert alert-info alert-dismissible fade show" role="alert">Entry already exists in Plan-To-Watch.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>')
+                    # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
                 else:
                     return HttpResponse("Something went wrong1.")
             else:
                 list_entry = list(user=request.user,movie=movie,rating=0,status=2)
                 list_entry.save()
-                messages.success(request,"Added to plan to watch.")
+                # messages.success(request,"Added to plan to watch.")
+                return HttpResponse('<div class="alert alert-info alert-dismissible fade show" role="alert">Added to plan to watch.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>')
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
             return HttpResponse("Something went wrong.")
@@ -422,7 +421,7 @@ def p2w(request):
 
 
 def watched(request):
-    tmovie=list.objects.filter(user=request.user,status=1)
+    tmovie=list.objects.filter(user=request.user,status=1).order_by('-rating')
     params={'titem':tmovie}
     return render(request,"home/watched.html",params)
 
@@ -432,24 +431,27 @@ def alwat(request):
         return redirect('/home/login')
     else:
         if request.method =='POST':
+            rating = request.POST['rating']
             movieId = request.POST['amovieId']
             movie = Movies.objects.get(pk=movieId)
-            rating = request.POST['rating']
             if list.objects.filter(user=request.user,movie=movie):
                 entry = list.objects.get(user=request.user,movie=movie)
                 if entry.status == 1:
-                    messages.warning(request,"Entry already exists in Already Watched.")
-                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                    # messages.warning(request,"Entry already exists in Already Watched.")
+                    return HttpResponse('<div class="alert alert-info alert-dismissible fade show" role="alert">Entry already exists in Already Watched.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>')
+                    # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
                 elif entry.status == 2:
-                    messages.warning(request,"Entry already exists in Plan-To-Watch")
-                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                    # messages.warning(request,"Entry already exists in Plan-To-Watch")
+                    return HttpResponse('<div class="alert alert-info alert-dismissible fade show" role="alert">Entry already exists in Plan-To-Watch.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>')
+                    # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
                 else:
                     return HttpResponse("Something went wrong2.")
             else:
                 list_entry = list(user=request.user,movie=movie,rating=rating,status=1)
                 list_entry.save()
-                messages.success(request,"Added to already watched.")
-                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                # messages.success(request,"Added to already watched.")
+                return HttpResponse('<div class="alert alert-info alert-dismissible fade show" role="alert">Added to already watched.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>')
+                # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
             return HttpResponse("Something went wrong.")
         
