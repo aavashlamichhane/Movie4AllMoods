@@ -41,16 +41,25 @@ body{
 }
 
 .cards-wrapper {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    display: flex;
     gap: 20px;
     margin-left: 260px; /* Adjust the margin as needed to avoid overlapping with the sidebar */
   }
 
-
-  .card {
-    width: 100%;
+  
+  .card{
+    margin: 0.5em;
+    min-width: 200px;
   }
+  
+  .card-body{
+    background-color: black;
+  }
+
+  .card-text
+{
+  font-size: 14px;
+}
   
   @media (max-width: 768px) {
     .container-fluid .row .col-md-3,

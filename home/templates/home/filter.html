@@ -223,23 +223,61 @@
   </div>
 </div>
 
-<div class="col-md-9">
+<div class="col-md-3">
   <h2>Results</h2><br>
-  <div class="cards-wrapper">
-    {% comment %} <div class="row row-cols-1 row-cols-md-4 g-3">
-      <div class="col"> {% endcomment %}
-        {% for i in allMovies %}
-          <div class="card">
-            <img src="{{i.poster}}" class="card-img-top" alt="Image has failed to load." onerror="this.src='https://source.unsplash.com/400x600/?movie,{{i.title}}';" height="350px">
-            <div class="card-body">
-              <h5 class="card-title">{{i.title}}</h5>
-              <p class="card-text">Genre: {{i.genre}}<br>Score: {{i.imdbscore}}<br>Release Date: {{i.date}}</p>
-              <a href="http://www.imdb.com/title/{{i.imdbid}}" class="btn btn-outline-primary" target="_blank">IMDb</a>
-              <a href="#" class="btn btn-outline-primary">Plan-to-watch</a>
-            </div>
-          </div>
-        {% endfor %}
+    <div class="cards-wrapper">
+    {% for i in allMovies %}
+      <div class="card">
+        <a style="text-decoration:none" href="/home/moviedes">
+          <img src="{{i.poster}}" class="card-img-top" alt="Image has failed to load." onerror="this.src='https://source.unsplash.com/400x600/?movie,{{i.title}}';" height="350px">
+          <div class="card-body">
+          <h5 class="card-title">{{i.title}}</h5>
+          <p class="card-text">Genre: {{i.genre}}<br>Score: {{i.imdbscore}}<br>Release Date: {{i.date}}</p>
+        </a>
+          <form action="alwat/" method="POST">
+            {% csrf_token %}
+            {% comment %} <input type="hidden" name="amovieId" value="{{i.pk}}" />
+            <input type="submit" class="btn btn-outline-primary" value="Already Watched"> {% endcomment %}
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModalrecom{{forloop.counter}}">
+              Already Watched
+            </button>
+            <div class="modal fade" id="exampleModalrecom{{forloop.counter}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Please rate the movie:</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <label for="customRange2" class="form-label">Rating 1-10</label>
+                  <input type="hidden" name="amovieId" value="{{i.pk}}" />
+                  <input type="range" value="1" class="form-range" min="1" max="10" id="customRange2" name="rating" oninput="this.nextElementSibling.value = this.value">
+                  <output>1</output>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <input type="submit" class="btn btn-outline-primary" value="Submit">
+                </div>
+                </div>
+              </div>
+              </div>
+          </form>
+        <form method="POST" action="p2w/">
+            {% csrf_token %}
+          <input type="hidden" name="movieId" value="{{i.pk}}" />
+          <input type="submit" class="btn btn-outline-primary" value="Plan-to-Watch">
+        </form>
+        
       </div>
+      </div>
+    {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
+    </div>
+    </div>
+    <div class="carousel-item">
+      <div class="cards-wrapper">
+    {% endif %}
+    {% endfor %}
+  </div>
 
 <!-- {% if allMovies|length < 1 %}
 	<p>No Movies Found</p> 
@@ -247,7 +285,7 @@
 {% endif %} -->
 
 
-    </div>
+
   
   </div>
   </div>
