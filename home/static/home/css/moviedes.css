@@ -3,7 +3,9 @@ body{
 }
 
 .movie-details{
-    margin: 3% 0;
+    max-width: 1300px;
+    margin: 8% auto 3%;
+    padding: 20px;
     color: white;
     background-color: gray;
 }
@@ -24,6 +26,8 @@ body{
     display: flex;
 }
 .card{
+    background-color: black;
+    color: white;
     margin: 1em auto;
     width: calc(100%/3);
 }
