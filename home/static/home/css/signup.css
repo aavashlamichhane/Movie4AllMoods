@@ -2,7 +2,7 @@
     font-family:  sans-serif;
 }
 body{
-    margin-top: 5%;
+    margin-top: 1%;
 }
 
 .wrapper{
@@ -18,9 +18,9 @@ body{
 }
 .row{
     width: 900px;
-    height: 850px;
+    height: 640px;
     border-radius: 10px;
-    background: #fff;
+    background: black;
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.2);
 }
 .side-image{
@@ -56,12 +56,16 @@ i{
 .input-box{
     width: 330px;
     box-sizing: border-box;
+    color: white;
 }
 .input-box header{
     font-weight: 700;
     text-align: center;
     margin-bottom: 45px;
 }
+.input-field .input {
+    border-bottom: 1px solid white !important;
+  }
 .input-field{
     display: flex;
     flex-direction: column;
@@ -74,7 +78,7 @@ i{
     width: 100%;
     background: transparent;
     border: none;
-    border-bottom: 1px solid rgba(0,0,0,0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     outline: none;
     margin-bottom: 20px;
     color: #40414a;
@@ -106,12 +110,13 @@ i{
     border: none;
     outline: none;
     height: 45px;
-    background: #ececec;
+    background: white;
     border-radius: 5px;
     transition: .4s;
+    color: black;
 }
 .submit:hover{
-    background: rgba(0, 0, 0, 0.9);
+    background: grey;
     color: #fff;
 }
 .signup{
@@ -123,18 +128,15 @@ i{
 span a{
     text-decoration: none;
     font-weight: 700;
-    color: #000;
+    color: white;
     transition: .5s;
 }
 span a:hover{
     text-decoration: underline;
-    color: #000;
+    color: grey;
 }
 @media only screen and (max-width: 768px){
-    .side-image{
-        border-radius: 10px 10px 0 0;
-    }
-   
+    
     .row{
         max-width: 420px;
         width: 100%;
