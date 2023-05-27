@@ -22,10 +22,11 @@ body{
 }
 .row{
     color: white;
-    width: 900px;
+    justify-content: center;
+    width: 500px;
     height: 500px;
     border-radius: 10px;
-    background: black !important  ;
+    background-image: linear-gradient(to right, #800d0d, #824d6e);
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.2);
 }
 

@@ -23,7 +23,7 @@ body{
     margin: 10% auto 3%;
     padding: 30px;
     color: white;
-    background-image: linear-gradient(to bottom right,rgb(181, 10, 10),purple,blue);
+    background-image: linear-gradient(to right, #271212, #5d565a);
 }
 .left-box{
     color: rgb(237, 241, 245);
