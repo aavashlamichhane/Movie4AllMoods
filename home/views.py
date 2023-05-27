@@ -35,11 +35,12 @@ def advfilter(request):
         if request.POST.get('happy', False):
             selected_genres.append('Comedy')
             selected_genres.append('Musical')
+            selected_genres.append('Adventure')
         if request.POST.get('sad', False):
-            selected_genres.append('Tragedy')
-            selected_genres.append('Musical')
+            selected_genres.append('Crime')
         if request.POST.get('bored', False):
             selected_genres.append('Drama')
+            selected_genres.append('Action')
         if request.POST.get('angry', False):
             selected_genres.append('Action')
             selected_genres.append('Thriller')
