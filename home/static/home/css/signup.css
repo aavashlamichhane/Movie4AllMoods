@@ -6,7 +6,7 @@ body{
 }
 
 .wrapper{
-    /* background-image: url("../img/background.jpg"); */
+    background-image: url("/favicon.png");
     padding: 0 20px 0 20px;
 }
 
@@ -24,7 +24,7 @@ body{
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.2);
 }
 .side-image{
-    background-image: url("/m4am-logo.PNG");
+    background-image: url("/favicon.png");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -81,7 +81,7 @@ i{
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     outline: none;
     margin-bottom: 20px;
-    color: #40414a;
+    color: white;
 }
 .input-box .input-field label{
     position: absolute;
@@ -97,7 +97,7 @@ i{
 .input-field .input:valid ~ label{
     top: -10px;
     font-size: 13px;
-    color: #5d5076;
+    color: whitesmoke;
 }
 .input-field .input:focus, .input-field .input:valid{
     border-bottom: 1px solid #000000;
@@ -135,10 +135,27 @@ span a:hover{
     text-decoration: underline;
     color: grey;
 }
+@media only screen and (min-width: 768px){
+    .side-image{
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        position: relative;
+        border-radius: 10px 0 0 10px;
+    }
+}
+
 @media only screen and (max-width: 768px){
-    
-    .row{
+    .side-image{
+        background-position: top;
+        background-size: contain;
+        background-repeat: no-repeat;
+        position: relative;
+        border-radius: 10px 10px 0 0;
+    }
+}
+    /* .row{
         max-width: 420px;
         width: 100%;
     }
-}
+} */

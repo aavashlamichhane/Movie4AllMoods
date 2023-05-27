@@ -79,7 +79,7 @@ i{
     border-bottom: 1px solid rgb(255, 255, 255);
     outline: none;
     margin-bottom: 20px;
-    color: #40414a;
+    color: white;
     
 }
 .input-box .input-field label{
@@ -96,7 +96,7 @@ i{
 .input-field .input:valid ~ label{
     top: -10px;
     font-size: 13px;
-    color: #5d5076;
+    color: whitesmoke;
 }
 .input-field .input:focus, .input-field .input:valid{
     border-bottom: 1px solid black;
