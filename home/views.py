@@ -102,10 +102,57 @@ def advfilter(request):
         if request.POST.get('western', False):
             selected_genres.append('Western')
         
+           
         genre_filters = Q()
         for genre in selected_genres:
             genre_filters &= Q(genre__contains=genre)
-        allMovies = Movies.objects.filter(genre_filters).order_by('-numVotes')[:50]
+            
+        date_filters = Q()
+        
+        if request.POST.get('1910-1950', False):
+            date_filters |= Q(date__gte=1910, date__lt=1950)
+        
+        if request.POST.get('1950-1990', False):
+            date_filters |= Q(date__gte=1950, date__lt=1990)
+        
+        if request.POST.get('1990-2000', False):
+            date_filters |= Q(date__gte=1990, date__lt=2000)
+        
+        if request.POST.get('2000-2010', False):
+            date_filters |= Q(date__gte=2000, date__lt=2010)
+        
+        if request.POST.get('2010-2020', False):
+            date_filters |= Q(date__gte=2010, date__lt=2020)
+            
+            
+        runtime_filters = Q()
+        
+        if request.POST.get('0-60', False):
+            runtime_filters |= Q(runtime__gte=0, runtime__lt=60)
+        
+        if request.POST.get('60-120', False):
+            runtime_filters |= Q(runtime__gte=60, runtime__lt=120)
+        
+        if request.POST.get('120-180', False):
+            runtime_filters |= Q(runtime__gte=120, runtime__lt=180)
+        
+        if request.POST.get('180-240', False):
+            runtime_filters |= Q(runtime__gte=180, runtime__lt=240)
+        
+        if request.POST.get('>240', False):
+            runtime_filters |= Q(runtime__gte=240)
+            
+            
+        
+        if not date_filters and not runtime_filters:
+            allMovies = Movies.objects.filter(genre_filters).order_by('-numVotes')[:50]
+        elif not date_filters: 
+            allMovies = Movies.objects.filter(genre_filters, runtime_filters).order_by('-numVotes')[:50]
+        elif not runtime_filters:
+            allMovies = Movies.objects.filter(genre_filters, date_filters).order_by('-numVotes')[:50]
+        else: 
+            allMovies = Movies.objects.filter(genre_filters, date_filters, runtime_filters).order_by('-numVotes')[:50]
+        
         params={'allMovies':allMovies}
         return render(request,"home/filter.html", params) 
     else: 

@@ -226,9 +226,37 @@
     <hr>
 
     <h4 id="playtime">Playtime</h4>
-    <label>Playtime:</label><br>
-    <input type="text" name="min" id="min" class="smallbox form-check-input" placeholder="Min"> - <input type="text" class="smallbox form-check-input" name="max" id="max" placeholder="Max">
-    <br>
+    <!-- <label>(In Minutes)</label><br><br> -->
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="1" id="0-60" name="0-60">
+      <label class="form-check-label" for="0-60">
+        0-60
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="1" id="60-120" name="60-120">
+      <label class="form-check-label" for="60-120">
+        60-120
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="1" id="120-180" name="120-180">
+      <label class="form-check-label" for="120-180">
+        120-180
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="1" id="180-240" name="180-240">
+      <label class="form-check-label" for="180-240">
+        180-240
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="1" id="> 240" name="> 240">
+      <label class="form-check-label" for="> 240">
+        > 240
+      </label>
+    </div>
     <br>
     <button href="/home/filter">Filter</button>
   
