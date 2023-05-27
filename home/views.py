@@ -101,7 +101,7 @@ def advfilter(request):
             selected_genres.append('War')
         if request.POST.get('western', False):
             selected_genres.append('Western')
-
+        
         genre_filters = Q()
         for genre in selected_genres:
             genre_filters &= Q(genre__contains=genre)
