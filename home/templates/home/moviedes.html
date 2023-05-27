@@ -21,6 +21,7 @@
       {%endfor%}
       <p>Director: {{ movie.crew|slice:"-1" }}</p>
       <p>IMDb Score: {{movie.imdbscore}}</p>
+      <p>Runtime: {{movie.runtime}} minutes</p>
       <p>IMDb Link: <a href="https://www.imdb.com/title/{{movie.imdbid}}" target="_blank" style="text-decoration: none">{{movie.title}}</a></p>
     </div>
     
