@@ -210,15 +210,15 @@ def create_soup(x):
 
 def get_no(x,y):
     if x==6:
-        return int(15/y)
+        return int(8/y)
     elif x==7:
-        return int(18/y)
+        return int(10/y)
     elif x==8:
-        return int(20/y)
+        return int(21/y)
     elif x==9:
-        return int(22/y)
+        return int(28/y)
     elif x==10:
-        return int(25/y)
+        return int(32/y)
     else:
         return '0'
 
@@ -263,6 +263,7 @@ def index(request):
         similarity = cosine_similarity(count_matrix,count_matrix)
         movies_panda = movies_panda.reset_index()
         indices = pd.Series(movies_panda.index,index=movies_panda['title'])
+        global get_recom
         def get_recom(title,number,cosine_sim=similarity):
             idx = indices[title]
             sim_scores= builtins.list(enumerate(cosine_sim[idx].tolist()))
@@ -296,15 +297,14 @@ def index(request):
                 continue
             else:
                 movies.append(Movies.objects.get(pk=entry))
-            
         if len(movies)==0:
             movies = Movies.objects.all().order_by('-numVotes')[:20]
     else:
         movies=[]
-    tmovie=Movies.objects.all().order_by('-imdbscore')[:10]
-    pmovie=Movies.objects.all().order_by('-numVotes')[:10]
-    lmovie=Movies.objects.all().order_by('-date')[:10]
-    params={'titem':tmovie,'pitem':pmovie,'litem':lmovie, 'ritem':movies[:10]}
+    tmovie=Movies.objects.all().order_by('-imdbscore')[:20]
+    pmovie=Movies.objects.all().order_by('-numVotes')[:20]
+    lmovie=Movies.objects.all().order_by('-date')[:20]
+    params={'titem':tmovie,'pitem':pmovie,'litem':lmovie, 'ritem':movies[:20]}
     return render(request, 'home/index.html',params)
 
 def logIn(request):
@@ -617,7 +617,11 @@ def updateStatus(request):
 def moviedes(request, title):
     movie = Movies.objects.get(title=title)
     movie_cast = literal_eval(movie.cast)
-    params = {'movie': movie , 'movie_cast': movie_cast}
+    recomms=get_recom(movie.title,10)
+    rmovies = []
+    for i in recomms['id'].tolist():
+        rmovies.append(Movies.objects.get(pk=i))
+    params = {'movie': movie , 'movie_cast': movie_cast,'ritem':rmovies}
     
     
     return render(request, "home/moviedes.html", params)

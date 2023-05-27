@@ -17,10 +17,11 @@ body{
     min-height: 100vh;
 }
 .row{
-    width: 900px;
+    width: 500px;
     height: 640px;
+    justify-content: center;
     border-radius: 10px;
-    background: black;
+    background-image: linear-gradient(to right, #800d0d, #824d6e);
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.2);
 }
 .side-image{

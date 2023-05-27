@@ -1,9 +1,13 @@
 {% extends 'home/basic.html' %} 
-{% block title %}Movie Description{% endblock title %} 
+{% block title %}{{movie.title}}{% endblock title %} 
 {% block css %} {% load static %}
 <link rel="stylesheet" href="{% static 'home/css/moviedes.css' %}" />
 {% endblock css %} {% block body %} {% load static %}
+{% for i in ritem %}
+	<span id="success{{i.pk}}" class="padding-bottom--15 fixed-top" style="color:rgb(103, 103, 103);top: 70px; z-index: 9999;">
 
+	</span>
+{% endfor %}
 <div class="wrapper">
 <div class="container movie-details" style="border-radius: 20px">
   <div class="row">
@@ -34,65 +38,134 @@
 
 <div class="container similar">
   <h3>Similar Movies</h3>
-  <div id="carouselExample" class="carousel carousel-dark slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <div class="card-wrapper">
-          {% for i in ritem %}
-            <div class="card">
-              <a style="text-decoration:none" href="/home/moviedes">
-                <img src="{{i.poster}}" class="card-img-top" alt="Image has failed to load." onerror="this.src='https://source.unsplash.com/400x600/?movie,{{i.title}}';" height="350px">
-                <div class="card-body">
-                <h5 class="card-title">{{i.title}}</h5>
-                <p class="card-text">Genre: {{i.genre}}<br>Score: {{i.imdbscore}}<br>Release Date: {{i.date}}</p>
-              </a>	
-                <form id= "alwat_recom{{i.pk}}" action="alwat/" method="POST">
-                  {% csrf_token %}
-                  {% comment %} <input type="hidden" name="amovieId" value="{{i.pk}}" />
-                  <input type="submit" class="btn btn-outline-primary" value="Already Watched"> {% endcomment %}
-                  <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModalrecom{{forloop.counter}}">
-                    Already Watched
-                  </button>
-                  <div class="modal fade" id="exampleModalrecom{{forloop.counter}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Please rate the movie:</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        <label for="rating{{i.pk}}" class="form-label">Rating 1-10</label>
-                        <input type="hidden" name="amovieId" id="amovieId{{i.pk}}" value="{{i.pk}}" />
-                        <input type="range" value="1" class="form-range" min="1" max="10" id="rating{{i.pk}}" name="rating" oninput="this.nextElementSibling.value = this.value">
-                        <output>1</output>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <input type="submit" class="btn btn-outline-primary" data-bs-dismiss="modal" value="Submit">
-                      </div>
-                      </div>
-                    </div>
-                    </div>
-                </form>
-              <form id="p2w_recom{{i.pk}}" method="POST" action="p2w/">
-                  {% csrf_token %}
-                <input type="hidden" name="movieId" id="movieId{{i.pk}}" value="{{i.pk}}" />
-                <input type="submit" class="btn btn-outline-primary" value="Plan-to-Watch">
-              </form>
-              
-            </div>
-            </div>
-          {% if forloop.counter|divisibleby:5 and forloop.counter > 0 and not forloop.last %}
-          </div>
-          </div>
-          <div class="carousel-item">
-            <div class="cards-wrapper">
-          {% endif %}
-          {% endfor %}
-        </div>
-      </div>
-
-      {% endblock body %}
+  <div id="rmovies" class="carousel carousel-dark slide">
+    <div class="carousel-indicators">
+    <button type="button" data-bs-target="#rmovies" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#rmovies" data-bs-slide-to="1" aria-label="Slide 2"></button>
     </div>
-  </div>
+    <div class="container">
+      <div class="carousel-inner">
+      <div class="carousel-item active">
+      <div class="cards-wrapper">
+        {% for i in ritem %}
+        <div class="card">
+          <a style="text-decoration:none" href="/home/moviedes/{{i.title}}">
+            <img src="{{i.poster}}" class="card-img-top" alt="Image has failed to load" onerror="this.src='https://source.unsplash.com/400x600/?movie,{{i.title}}';" height="350px">
+            <div class="card-body">
+              <h5 class="card-title">{{i.title}}</h5>
+              <p class="card-text">Genre: {{i.genre}}<br>Score: {{i.imdbscore}}<br>Release Date: {{i.date}}</p>
+            </a>
+              <form id="alwat{{i.pk}}" action="alwat/" method="POST">
+                {% csrf_token %}
+                {% comment %} <input type="hidden" name="amovieId" value="{{i.pk}}" />
+                <input type="submit" class="btn btn-outline-primary" value="Already Watched"> {% endcomment %}
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModalpopu{{forloop.counter}}">
+                  Already Watched
+                </button>
+                <div class="modal fade" id="exampleModalpopu{{forloop.counter}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Please rate the movie:</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <label for="rating{{i.pk}}" class="form-label">Rating 1-10</label>
+                      <input type="hidden" name="amovieId" id="amovieId{{i.pk}}" value="{{i.pk}}" />
+                      <input type="range" value="1" class="form-range" min="1" max="10" id="rating{{i.pk}}" name="rating" oninput="this.nextElementSibling.value = this.value">
+                      <output>1</output>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <input type="submit" class="btn btn-outline-primary" data-bs-dismiss="modal" value="Submit">
+                    </div>
+                    </div>
+                  </div>
+                  </div>
+              </form>
+              <form id="p2w{{i.pk}}" method="POST" action="p2w/">
+                {% csrf_token %}
+              <input type="hidden" name="movieId" id="movieId{{i.pk}}" value="{{i.pk}}" />
+              <input type="submit" class="btn btn-outline-primary" value="Plan-to-Watch">
+            </div>
+          </form>
+          
+        </div>
+      {% if forloop.counter|divisibleby:5 and forloop.counter > 0 and not forloop.last %}
+      </div>
+      </div>
+      <div class="carousel-item">
+        <div class="cards-wrapper">
+      {% endif %}
+      {% endfor %}
+      </div>
+      </div>
+      </div>
+    
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#rmovies" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#rmovies" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+    </button>
+    </div>
 </div>
+{% for i in ritem %}
+<script>
+  $(document).on('submit','#p2w{{i.pk}}',function(e){
+    e.preventDefault();
+    $.ajax({
+      type:'POST',
+      url:"{% url 'Plan-to-watch' %}",
+      data:{
+        movieId:$('#movieId{{i.pk}}').val(),
+        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+      },
+      success: function(data){
+        $('#success{{i.pk}}').html(data);
+        let alert_list = document.querySelectorAll('.alert');
+              alert_list.forEach(function(alert) {
+                new bootstrap.Alert(alert);
+
+                let alert_timeout = alert.getAttribute('data-timeout');
+                setTimeout(() => {
+                  bootstrap.Alert.getInstance(alert).close();
+                }, +alert_timeout);
+            });
+      }
+    })
+  })
+</script>
+<script>
+  $(document).on('submit','#alwat{{i.pk}}',function(e){
+    e.preventDefault();
+    $.ajax({
+      type:'POST',
+      url:"{% url 'Already Watched button' %}",
+      data:{
+        amovieId:$('#amovieId{{i.pk}}').val(),
+        rating:$('#rating{{i.pk}}').val(),
+        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+      },
+      success: function(data){
+        $('#success{{i.pk}}').html(data);
+        let alert_list = document.querySelectorAll('.alert');
+              alert_list.forEach(function(alert) {
+                new bootstrap.Alert(alert);
+
+                let alert_timeout = alert.getAttribute('data-timeout');
+                setTimeout(() => {
+                  bootstrap.Alert.getInstance(alert).close();
+                }, +alert_timeout);
+            });
+      }
+    })
+  })
+</script>
+{% endfor %}
+
+{% endblock body %}
+
