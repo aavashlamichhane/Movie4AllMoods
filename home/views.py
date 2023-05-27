@@ -19,6 +19,7 @@ from ast import literal_eval
 from sklearn.feature_extraction.text import TfidfVectorizer,CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from pympler import asizeof
+from django import template
 # Create your views here.
 
 # def filter(request):
@@ -561,7 +562,28 @@ def updateStatus(request):
         entry.save()
         messages.success(request,"Entry moved to already watched.")
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-    
-def moviedes(request):
-    return render(request, "home/moviedes.html")
 
+
+from django import template
+
+register = template.Library()
+
+@register.filter
+def extract_cast(cast_list):
+    if cast_list:
+        extracted_data = []
+        for item in cast_list:
+            name = item.get('name', '')
+            character = item.get('character', '')
+            extracted_data.append(f"{name} - {character}")
+        return ', '.join(extracted_data)
+    return ''
+
+
+def moviedes(request, title):
+    movie = Movies.objects.get(title=title)
+    movie_cast = literal_eval(movie.cast)
+    params = {'movie': movie , 'movie_cast': movie_cast}
+    
+    
+    return render(request, "home/moviedes.html", params)
