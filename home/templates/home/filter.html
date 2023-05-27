@@ -9,13 +9,21 @@
 {% block body %}
 {% load static %}
 
-<form action="/home/filter/" method="post">
-  {%csrf_token%}
-<div class="container-fluid">
-  <div class="row">
-<form class="main-container d-flex">
-  <div class="col-md-3 sidebar" id="side_nav">
 
+
+
+  
+<div class="container-fluid">
+  {% for i in allMovies %}
+	<span id="success{{i.pk}}" class="padding-bottom--15 fixed-top" style="color:rgb(103, 103, 103);top: 70px; z-index: 9999;">
+
+	</span>
+{% endfor %}
+  <div class="row">
+<!-- <form class="main-container d-flex"> -->
+  <div class="col-md-3 sidebar" id="side_nav">
+    <form action="/home/filter/" method="post">
+      {%csrf_token%}
   <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
     <h4 id="mood">Mood</h4>
     <div class="form-check">
@@ -194,8 +202,20 @@
 
     <h4 id="releaseddate">Released Date</h4>
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="1" id="1900-2000" name="90s">
-      <label class="form-check-label" for="1900-2000">
+      <input class="form-check-input" type="checkbox" value="1" id="1910-1950" name="1910-1950">
+      <label class="form-check-label" for="1910-1950">
+        1910-1950
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="1" id="1950-1990" name="1950-1990">
+      <label class="form-check-label" for="1950-1990">
+        1950-1990
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="1" id="90s" name="90s">
+      <label class="form-check-label" for="90s">
         1990-2000
       </label>
     </div>
@@ -214,84 +234,161 @@
     <hr>
 
     <h4 id="playtime">Playtime</h4>
-    <label>Playtime:</label><br>
-    <input type="text" name="min" id="min" class="smallbox form-check-input" placeholder="Min"> - <input type="text" class="smallbox form-check-input" name="max" id="max" placeholder="Max">
+    <!-- <label>(In Minutes)</label><br><br> -->
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="1" id="0-60" name="0-60">
+      <label class="form-check-label" for="0-60">
+        0-60
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="1" id="60-120" name="60-120">
+      <label class="form-check-label" for="60-120">
+        60-120
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="1" id="120-180" name="120-180">
+      <label class="form-check-label" for="120-180">
+        120-180
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="1" id="180-240" name="180-240">
+      <label class="form-check-label" for="180-240">
+        180-240
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="1" id="> 240" name="> 240">
+      <label class="form-check-label" for="> 240">
+        > 240
+      </label>
+    </div>
     <br>
-    <br>
-    <button href="/home/filter">Filter</button>
+    <input type="submit" class="btn btn-outline-primary" value="Filter">
   
   </div>
+</form>
 </div>
 
-<div class="col-md-3">
-  <h2>Results</h2><br>
-    <div class="cards-wrapper">
+<div class="col-md-3" style="margin-left:250px ;margin-top: 10px;">
+  <h2 style="color: white;">Results:</h2><br>
+  <div class="card-grid" style="display:flex;">
     {% for i in allMovies %}
-      <div class="card">
-        <a style="text-decoration:none" href="/home/moviedes/{{i.title}}">
-          <img src="{{i.poster}}" class="card-img-top" alt="Image has failed to load." onerror="this.src='https://source.unsplash.com/400x600/?movie,{{i.title}}';" height="350px">
-          <div class="card-body">
-          <h5 class="card-title">{{i.title}}</h5>
-          <p class="card-text">Genre: {{i.genre}}<br>Score: {{i.imdbscore}}<br>Release Date: {{i.date}}</p>
-        </a>
-          <form action="alwat/" method="POST">
-            {% csrf_token %}
-            {% comment %} <input type="hidden" name="amovieId" value="{{i.pk}}" />
-            <input type="submit" class="btn btn-outline-primary" value="Already Watched"> {% endcomment %}
-            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModalrecom{{forloop.counter}}">
-              Already Watched
-            </button>
-            <div class="modal fade" id="exampleModalrecom{{forloop.counter}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Please rate the movie:</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <label for="customRange2" class="form-label">Rating 1-10</label>
-                  <input type="hidden" name="amovieId" value="{{i.pk}}" />
-                  <input type="range" value="1" class="form-range" min="1" max="10" id="customRange2" name="rating" oninput="this.nextElementSibling.value = this.value">
-                  <output>1</output>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <input type="submit" class="btn btn-outline-primary" value="Submit">
-                </div>
-                </div>
+    <div class="card">
+      <a style="text-decoration:none" href="/home/moviedes/{{i.title}}">
+      <img src="{{i.poster}}" class="card-img-top" alt="Image has failed to load." onerror="this.src='https://source.unsplash.com/400x600/?movie,{{i.title}}';" height="350px">
+      <div class="card-body">
+        <h5 class="card-title">{{i.title}}</h5>
+        <p class="card-text">Genre: {{i.genre}}<br>Score: {{i.imdbscore}}<br>Release Date: {{i.date}}</p>
+      </a>
+        <form id="alwat{{i.pk}}" action="/home/alwat/" method="POST">
+          {% csrf_token %}
+          <input type="hidden" id="amovieId{{i.pk}}" name="amovieId" value="{{i.pk}}" />
+          <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModalrecom{{i.pk}}">
+            Already Watched
+          </button>
+          <div class="modal fade" id="exampleModalrecom{{i.pk}}" tabindex="-1" aria-labelledby="exampleModalLabel{{i.pk}}" aria-hidden="true">
+            <div id ="modeel{{forloop.counter}}" class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel{{for}}">Please rate the movie:</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <label for="rating{{i.pk}}" class="form-label">Rating 1-10</label>
+                <input type="range" value="1" class="form-range" min="1" max="10" id="rating{{i.pk}}" name="rating" oninput="this.nextElementSibling.value = this.value">
+                <output>1</output>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <input type="submit" class="btn btn-outline-primary" data-bs-dismiss="modal" value="Submit">
               </div>
               </div>
-          </form>
-        <form method="POST" action="p2w/">
-            {% csrf_token %}
-          <input type="hidden" name="movieId" value="{{i.pk}}" />
-          <input type="submit" class="btn btn-outline-primary" value="Plan-to-Watch">
+            </div>
+            </div>
         </form>
-        
-      </div>
-      </div>
+      <form id="p2watch{{i.pk}}" method="POST" action="/home/p2w/">
+          {% csrf_token %}
+        <input type="hidden" name="movieId" id="movieId{{i.pk}}" value="{{i.pk}}" />
+        <input type="submit" class="btn btn-outline-primary" value="Plan-to-Watch">
+      </form>
+      
+      
+    </div>
+    </div>
+    
     {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
-    </div>
-    </div>
-      <div class="cards-wrapper">
+  </div>
+  <div class="card-grid" style="display:flex;">
     {% endif %}
     {% endfor %}
   </div>
+  </div>
+</div>
 
 <!-- {% if allMovies|length < 1 %}
 	<p>No Movies Found</p> 
 	Your input <b> {{query}}</b> does not match any results. <br>
 {% endif %} -->
+{% for i in allMovies %}
+<script>
+  $(document).on('submit','#p2watch{{i.pk}}',function(e){
+    e.preventDefault();
+    $.ajax({
+      type:'POST',
+      url:"{% url 'Plan-to-watch' %}",
+      data:{
+        movieId:$('#movieId{{i.pk}}').val(),
+        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+      },
+      success: function(data){
+        $('#success{{i.pk}}').html(data);
+        let alert_list = document.querySelectorAll('.alert');
+              alert_list.forEach(function(alert) {
+                new bootstrap.Alert(alert);
 
+                let alert_timeout = alert.getAttribute('data-timeout');
+                setTimeout(() => {
+                  bootstrap.Alert.getInstance(alert).close();
+                }, +alert_timeout);
+            });
+      }
+    })
+  })
+</script>
+<script>
+  $(document).on('submit','#alwat{{i.pk}}',function(e){
+    e.preventDefault();
+    $.ajax({
+      type:'POST',
+      url:"{% url 'Already Watched button' %}",
+      data:{
+        amovieId:$('#amovieId{{i.pk}}').val(),
+        rating:$('#rating{{i.pk}}').val(),
+        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+      },
+      success: function(data){
+        $('#success{{i.pk}}').html(data);
+        let alert_list = document.querySelectorAll('.alert');
+              alert_list.forEach(function(alert) {
+                new bootstrap.Alert(alert);
 
-
-  
-  </div>
-  </div>
+                let alert_timeout = alert.getAttribute('data-timeout');
+                setTimeout(() => {
+                  bootstrap.Alert.getInstance(alert).close();
+                }, +alert_timeout);
+            });
+      }
+    })
+  })
+</script>
+{% endfor %}
 </div>
 
-</div>
-</div>
+
+
 
 
 {% endblock body %}

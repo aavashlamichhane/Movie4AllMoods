@@ -4,10 +4,11 @@
 <link rel="stylesheet" href="{% static 'home/css/moviedes.css' %}" />
 {% endblock css %} {% block body %} {% load static %}
 
-<div class="container movie-details">
+<div class="wrapper">
+<div class="container movie-details" style="border-radius: 20px">
   <div class="row">
     <div class="col-md-6 left-box">
-      <h1>{{movie.title}}</h1>
+      <h1 style="font-weight: 700">{{movie.title}}</h1>
       <p>Genre: {{movie.genre}}</p>
       <p>Cast: </p>
       <style>
@@ -20,13 +21,15 @@
       {%endfor%}
       <p>Director: {{ movie.crew|slice:"-1" }}</p>
       <p>IMDb Score: {{movie.imdbscore}}</p>
-      <p>IMDb Link: <a href="https://www.imdb.com/title/{{movie.imdbid}}" target="_blank">{{movie.title}}</a></p>
+      <p>Runtime: {{movie.runtime}} minutes</p>
+      <p>IMDb Link: <a href="https://www.imdb.com/title/{{movie.imdbid}}" target="_blank" style="text-decoration: none">{{movie.title}}</a></p>
     </div>
     
     <div class="col-md-6 text-center">
-      <img src="{{movie.poster}}" class="movie-img" onerror="this.src='https://source.unsplash.com/400x600/?movie,{{movie.title}}';"/>
+      <img src="{{movie.poster}}" class="movie-img" onerror="this.src='https://source.unsplash.com/400x600/?movie,{{movie.title}}';" width="250"/>
     </div>
   </div>
+</div>
 </div>
 
 <div class="container similar">

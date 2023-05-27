@@ -25,8 +25,8 @@
         <tr>
           <th scope="row">{{forloop.counter}}</th>
           
-          <td><a href="/home/moviedes/{{i.movie.title}}"><img src="{{i.movie.poster}}" onerror="this.src='https://source.unsplash.com/400x600/?{{i.movie.title}}';" width="75" height="100"></a></td>
-          <td><a href="/home/moviedes/{{i.movie.title}}">{{i.movie.title}}</a></td>
+          <td><a href="/home/moviedes/{{i.movie.title}}" style="text-decoration: none"><img src="{{i.movie.poster}}" onerror="this.src='https://source.unsplash.com/400x600/?{{i.movie.title}}';" width="75" height="100"></a></td>
+          <td><a href="/home/moviedes/{{i.movie.title}}" style="text-decoration: none">{{i.movie.title}}</a></td>
           <td>
             <form action="/home/updatestatus/" method="post">
               {% csrf_token %}
