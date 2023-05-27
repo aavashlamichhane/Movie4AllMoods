@@ -9,6 +9,12 @@
 {% block body %}
 {% load static %}
 
+{% for i in allMovies %}
+	<span id="success{{i.pk}}" class="padding-bottom--15 fixed-top" style="color:rgb(103, 103, 103);top: 70px; z-index: 9999;">
+
+	</span>
+{% endfor %}
+
 <form action="/home/filter/" method="post">
   {%csrf_token%}
 <div class="container-fluid">
@@ -274,7 +280,7 @@
           <h5 class="card-title">{{i.title}}</h5>
           <p class="card-text">Genre: {{i.genre}}<br>Score: {{i.imdbscore}}<br>Release Date: {{i.date}}</p>
         </a>
-          <form action="alwat/" method="POST">
+          <form id="alwat{{i.pk}}" action="/home/alwat/" method="POST">
             {% csrf_token %}
             {% comment %} <input type="hidden" name="amovieId" value="{{i.pk}}" />
             <input type="submit" class="btn btn-outline-primary" value="Already Watched"> {% endcomment %}
@@ -289,24 +295,24 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  <label for="customRange2" class="form-label">Rating 1-10</label>
-                  <input type="hidden" name="amovieId" value="{{i.pk}}" />
-                  <input type="range" value="1" class="form-range" min="1" max="10" id="customRange2" name="rating" oninput="this.nextElementSibling.value = this.value">
+                  <label for="rating{{i.pk}}" class="form-label">Rating 1-10</label>
+                  <input type="hidden" id="amovieId{{i.pk}}" name="amovieId" value="{{i.pk}}" />
+                  <input type="range" value="1" class="form-range" min="1" max="10" id="rating{{i.pk}}" name="rating" oninput="this.nextElementSibling.value = this.value">
                   <output>1</output>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <input type="submit" class="btn btn-outline-primary" value="Submit">
+                  <input type="submit" data-bs-dismiss="modal" class="btn btn-outline-primary" value="Submit">
                 </div>
                 </div>
               </div>
               </div>
           </form>
-        <form method="POST" action="p2w/">
-            {% csrf_token %}
-          <input type="hidden" name="movieId" value="{{i.pk}}" />
-          <input type="submit" class="btn btn-outline-primary" value="Plan-to-Watch">
-        </form>
+        <form id="p2w{{i.pk}}" method="POST" action="/home/p2w/">
+						{% csrf_token %}
+					<input type="hidden" name="movieId" id="movieId{{i.pk}}" value="{{i.pk}}" />
+					<input type="submit" class="btn btn-outline-primary" value="Plan-to-Watch">
+				</form>
         
       </div>
       </div>
@@ -333,5 +339,7 @@
 </div>
 </div>
 
+
+{% endfor %}
 
 {% endblock body %}
