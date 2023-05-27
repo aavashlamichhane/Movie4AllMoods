@@ -328,7 +328,58 @@
 	<p>No Movies Found</p> 
 	Your input <b> {{query}}</b> does not match any results. <br>
 {% endif %} -->
+{% for i in allMovies %}
+<script>
+  $(document).on('submit','#p2w{{i.pk}}',function(e){
+    e.preventDefault();
+    $.ajax({
+      type:'POST',
+      url:"{% url 'Plan-to-watch' %}",
+      data:{
+        movieId:$('#movieId{{i.pk}}').val(),
+        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+      },
+      success: function(data){
+        $('#success{{i.pk}}').html(data);
+        let alert_list = document.querySelectorAll('.alert');
+              alert_list.forEach(function(alert) {
+                new bootstrap.Alert(alert);
 
+                let alert_timeout = alert.getAttribute('data-timeout');
+                setTimeout(() => {
+                  bootstrap.Alert.getInstance(alert).close();
+                }, +alert_timeout);
+            });
+      }
+    })
+  })
+</script>
+<script>
+  $(document).on('submit','#alwat{{i.pk}}',function(e){
+    e.preventDefault();
+    $.ajax({
+      type:'POST',
+      url:"{% url 'Already Watched button' %}",
+      data:{
+        amovieId:$('#amovieId{{i.pk}}').val(),
+        rating:$('#rating{{i.pk}}').val(),
+        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+      },
+      success: function(data){
+        $('#success{{i.pk}}').html(data);
+        let alert_list = document.querySelectorAll('.alert');
+              alert_list.forEach(function(alert) {
+                new bootstrap.Alert(alert);
+
+                let alert_timeout = alert.getAttribute('data-timeout');
+                setTimeout(() => {
+                  bootstrap.Alert.getInstance(alert).close();
+                }, +alert_timeout);
+            });
+      }
+    })
+  })
+</script>
 
 
   
