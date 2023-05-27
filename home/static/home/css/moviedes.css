@@ -2,21 +2,37 @@ body{
     background-color: black !important;
 }
 
+.wrapper{
+    width: 1200px;
+    padding: 0 100px 0 120px;
+}
+
+.movie-details{
+    display: flex;
+    justify-content: center;
+    min-height: 70vh;
+}
+
+.left-box{
+    display: flex;
+    flex-direction: column;
+}
+
 .movie-details{
     max-width: 1300px;
-    margin: 8% auto 3%;
-    padding: 20px;
+    margin: 10% auto 3%;
+    padding: 30px;
     color: white;
-    background-color: gray;
+    background-image: linear-gradient(to bottom right,rgb(181, 10, 10),purple,blue);
 }
 .left-box{
     color: rgb(237, 241, 245);
-    margin: 15px 0;
+    margin: 20px 0;
     padding: 20px;
 }
 .movie-img{
-    margin-top: 10%;
-    height: 300px;
+    margin-top: 5%;
+    height: 350px;
     box-shadow: -4px 4px 5px 0 #000;
 }
 .similar h3{
