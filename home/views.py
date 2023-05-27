@@ -19,6 +19,7 @@ from ast import literal_eval
 from sklearn.feature_extraction.text import TfidfVectorizer,CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from pympler import asizeof
+from django import template
 # Create your views here.
 
 # def filter(request):
@@ -180,11 +181,80 @@ def landing(request):
         return render(request, 'home/landing.html')
  
 def index(request):
+    
+    movie = Movies.objects.all().order_by('-numVotes')[:10000]
+    movies_panda=pd.DataFrame([t.__dict__ for t in movie])
+    features = ['cast']
+    for feature in features:
+        movies_panda[feature]=movies_panda[feature].apply(literal_eval)
+    
+    features = ['cast']
+    for feature in features:
+        movies_panda[feature]=movies_panda[feature].apply(get_list)
+    # print(movies_panda[['title','cast','crew','genre']].head(5))
+    features = ['cast','crew','genre']
+    for feature in features:
+        movies_panda[feature] = movies_panda[feature].apply(clean_data)
+    # print(movies_panda[['title','cast','crew','genre']].head(5))
+    movies_panda['soup']=movies_panda.apply(create_soup,axis=1)
+    # print(movies_panda[['cast','crew','genre','soup']].head(5))
+    count = CountVectorizer(stop_words='english')
+    count_matrix = count.fit_transform(movies_panda['soup'])
+    userlist = list.objects.filter(user=request.user,status=1,rating__gte=6)
+    ranges = range(10,5,-1)
+    list_of_list = []
+    for i in ranges:
+        userlist = list.objects.filter(user=request.user,status=1,rating=i)
+        hajar = []
+        for m in userlist:
+            hajar.append(m.movie.pk)
+        list_of_list.append(hajar)
+    
+    
+    
+    similarity = cosine_similarity(count_matrix,count_matrix)
+    movies_panda = movies_panda.reset_index()
+    indices = pd.Series(movies_panda.index,index=movies_panda['title'])
+    def get_recom(title,number,cosine_sim=similarity):
+        idx = indices[title]
+        sim_scores= builtins.list(enumerate(cosine_sim[idx].tolist()))
+        sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+        sim_scores = sim_scores[1:number+1]
+        movie_indices = [i[0] for i in sim_scores]
+        return movies_panda.iloc[movie_indices]
+    
+    recommended = []
+    ranvar = int(10)
+    for item in list_of_list:
+        if len(item)==0:
+            ranvar-=1
+            continue
+        for item2 in item:
+            to_get = Movies.objects.get(pk=item2).title
+            # print(to_get)
+            no_of_recom = get_no(ranvar,len(item))
+            # print(no_of_recom)
+            if no_of_recom == 0:
+                no_of_recom+=1
+            recomm = get_recom(to_get,no_of_recom)
+            # print(type(recomm))
+            # print(recomm[['id','title']])
+            for entries in recomm['id'].tolist():
+                recommended.append(entries)
+        ranvar-=1
+    movies = []
+    for entry in recommended:
+        if list.objects.filter(user=request.user,movie=Movies.objects.get(pk=entry),status=1).exists():
+            continue
+        else:
+            movies.append(Movies.objects.get(pk=entry))
+        
+    if len(movies)==0:
+        movies = Movies.objects.all().order_by('-numVotes')[:20]
     tmovie=Movies.objects.all().order_by('-imdbscore')[:10]
     pmovie=Movies.objects.all().order_by('-numVotes')[:10]
     lmovie=Movies.objects.all().order_by('-date')[:10]
-    rmovie=Movies.objects.all().order_by('-title')[:10]
-    params={'titem':tmovie,'pitem':pmovie,'litem':lmovie, 'ritem':rmovie}
+    params={'titem':tmovie,'pitem':pmovie,'litem':lmovie, 'ritem':movies[:10]}
     return render(request, 'home/index.html',params)
 
 def logIn(request):
@@ -199,7 +269,7 @@ def logIn(request):
             messages.success(request,"Logged in successfully.")
             return redirect("/home")
         else:
-            messages.error(request,"Incorrect credentials.")
+            messages.warning(request,"Incorrect credentials.")
             return redirect("/home/login")
             
     return render(request, "home/login.html")
@@ -324,9 +394,14 @@ def recommend(request): # type: ignore
         ranvar-=1
     movies = []
     for entry in recommended:
-        movies.append(Movies.objects.get(pk=entry))
+        if list.objects.filter(user=request.user,movie=Movies.objects.get(pk=entry),status=1).exists():
+            continue
+        else:
+            movies.append(Movies.objects.get(pk=entry))
     # print(type(movies))
     # print(len(movies))
+    if len(movies)==0:
+        movies = Movies.objects.all().order_by('-numVotes')[:20]
     params = {'ritem':movies,'total':len(movies)}
     return render(request, "home/recommend.html",params)
 
@@ -487,7 +562,28 @@ def updateStatus(request):
         entry.save()
         messages.success(request,"Entry moved to already watched.")
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-    
-def moviedes(request):
-    return render(request, "home/moviedes.html")
 
+
+from django import template
+
+register = template.Library()
+
+@register.filter
+def extract_cast(cast_list):
+    if cast_list:
+        extracted_data = []
+        for item in cast_list:
+            name = item.get('name', '')
+            character = item.get('character', '')
+            extracted_data.append(f"{name} - {character}")
+        return ', '.join(extracted_data)
+    return ''
+
+
+def moviedes(request, title):
+    movie = Movies.objects.get(title=title)
+    movie_cast = literal_eval(movie.cast)
+    params = {'movie': movie , 'movie_cast': movie_cast}
+    
+    
+    return render(request, "home/moviedes.html", params)

@@ -7,7 +7,26 @@
 {% block body %}
 <div class="hahaha">
 {% load static %}
+{% for i in ritem %}
+	<span id="recom_success{{i.pk}}" class="padding-bottom--15" style="color:rgb(103, 103, 103);">
 
+	</span>
+{% endfor %}
+{% for i in pitem %}
+	<span id="popu_success{{i.pk}}" class="padding-bottom--15" style="color:rgb(103, 103, 103);">
+
+	</span>
+{% endfor %}
+{% for i in titem %}
+	<span id="top_success{{i.pk}}" class="padding-bottom--15" style="color:rgb(103, 103, 103);">
+
+	</span>
+{% endfor %}
+{% for i in litem %}
+	<span id="latest_success{{i.pk}}" class="padding-bottom--15" style="color:rgb(103, 103, 103);">
+
+	</span>
+{% endfor %}
 <br>
 <br> 
 {% comment %} <form method="POST" action="p2w/"> {% endcomment %}
@@ -28,13 +47,13 @@
 <div class="cards-wrapper">
 	{% for i in ritem %}
 		<div class="card">
-			<a style="text-decoration:none" href="/home/moviedes">
+			<a style="text-decoration:none" href="/home/moviedes/{{i.title}}">
 				<img src="{{i.poster}}" class="card-img-top" alt="Image has failed to load." onerror="this.src='https://source.unsplash.com/400x600/?movie,{{i.title}}';" height="350px">
 				<div class="card-body">
 				<h5 class="card-title">{{i.title}}</h5>
 				<p class="card-text">Genre: {{i.genre}}<br>Score: {{i.imdbscore}}<br>Release Date: {{i.date}}</p>
-			</a>
-				<form action="alwat/" method="POST">
+			</a>	
+				<form id= "alwat_recom{{i.pk}}" action="alwat/" method="POST">
 					{% csrf_token %}
 					{% comment %} <input type="hidden" name="amovieId" value="{{i.pk}}" />
 					<input type="submit" class="btn btn-outline-primary" value="Already Watched"> {% endcomment %}
@@ -49,26 +68,25 @@
 							  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							</div>
 							<div class="modal-body">
-								<label for="customRange2" class="form-label">Rating 1-10</label>
-								<input type="hidden" name="amovieId" value="{{i.pk}}" />
-								<input type="range" value="1" class="form-range" min="1" max="10" id="customRange2" name="rating" oninput="this.nextElementSibling.value = this.value">
+								<label for="rating{{i.pk}}" class="form-label">Rating 1-10</label>
+								<input type="hidden" name="amovieId" id="amovieId{{i.pk}}" value="{{i.pk}}" />
+								<input type="range" value="1" class="form-range" min="1" max="10" id="rating{{i.pk}}" name="rating" oninput="this.nextElementSibling.value = this.value">
 								<output>1</output>
 							</div>
 							<div class="modal-footer">
 							  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-							  <input type="submit" class="btn btn-outline-primary" value="Submit">
+							  <input type="submit" class="btn btn-outline-primary" data-bs-dismiss="modal" value="Submit">
 							</div>
 						  </div>
 						</div>
 					  </div>
 				</form>
-			<form method="POST" action="p2w/">
+			<form id="p2w_recom{{i.pk}}" method="POST" action="p2w/">
 					{% csrf_token %}
-				<input type="hidden" name="movieId" value="{{i.pk}}" />
+				<input type="hidden" name="movieId" id="movieId{{i.pk}}" value="{{i.pk}}" />
 				<input type="submit" class="btn btn-outline-primary" value="Plan-to-Watch">
 			</form>
 			
-		</div>
 		</div>
 	{% if forloop.counter|divisibleby:5 and forloop.counter > 0 and not forloop.last %}
 	</div>
@@ -109,13 +127,13 @@
 	<div class="cards-wrapper">
 		{% for i in pitem %}
 		<div class="card">
-			<a style="text-decoration:none" href="/home/moviedes">
+			<a style="text-decoration:none" href="/home/moviedes/{{i.title}}">
 				<img src="{{i.poster}}" class="card-img-top" alt="Image has failed to load" onerror="this.src='https://source.unsplash.com/400x600/?movie,{{i.title}}';" height="350px">
 				<div class="card-body">
 					<h5 class="card-title">{{i.title}}</h5>
 					<p class="card-text">Genre: {{i.genre}}<br>Score: {{i.imdbscore}}<br>Release Date: {{i.date}}</p>
 				</a>
-					<form action="alwat/" method="POST">
+					<form id="alwat_popular{{i.pk}}" action="alwat/" method="POST">
 						{% csrf_token %}
 						{% comment %} <input type="hidden" name="amovieId" value="{{i.pk}}" />
 						<input type="submit" class="btn btn-outline-primary" value="Already Watched"> {% endcomment %}
@@ -130,22 +148,22 @@
 								  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 								</div>
 								<div class="modal-body">
-									<label for="customRange2" class="form-label">Rating 1-10</label>
-									<input type="hidden" name="amovieId" value="{{i.pk}}" />
-									<input type="range" value="1" class="form-range" min="1" max="10" id="customRange2" name="rating" oninput="this.nextElementSibling.value = this.value">
+									<label for="rating{{i.pk}}" class="form-label">Rating 1-10</label>
+									<input type="hidden" name="amovieId" id="amovieId{{i.pk}}" value="{{i.pk}}" />
+									<input type="range" value="1" class="form-range" min="1" max="10" id="rating{{i.pk}}" name="rating" oninput="this.nextElementSibling.value = this.value">
 									<output>1</output>
 								</div>
 								<div class="modal-footer">
 								  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-								  <input type="submit" class="btn btn-outline-primary" value="Submit">
+								  <input type="submit" class="btn btn-outline-primary" data-bs-dismiss="modal" value="Submit">
 								</div>
 							  </div>
 							</div>
 						  </div>
 					</form>
-					<form method="POST" action="p2w/">
+					<form id="p2w_popular{{i.pk}}" method="POST" action="p2w/">
 						{% csrf_token %}
-					<input type="hidden" name="movieId" value="{{i.pk}}" />
+					<input type="hidden" name="movieId" id="movieId{{i.pk}}" value="{{i.pk}}" />
 					<input type="submit" class="btn btn-outline-primary" value="Plan-to-Watch">
 				</div>
 			</form>
@@ -188,13 +206,13 @@
 <div class="cards-wrapper">
 	{% for i in titem %}
 	<div class="card">
-		<a style="text-decoration:none" href="/home/moviedes">
+		<a style="text-decoration:none" href="/home/moviedes/{{i.title}}">
 			<img src="{{i.poster}}" class="card-img-top" alt="Image has failed to load." onerror="this.src='https://source.unsplash.com/400x600/?movie,{{i.title}}';" height="350px">
 			<div class="card-body">
 				<h5 class="card-title">{{i.title}}</h5>
 				<p class="card-text">Genre: {{i.genre}}<br>Score: {{i.imdbscore}}<br>Release Date: {{i.date}}</p>
 			</a>
-				<form action="alwat/" method="POST">
+				<form id="alwat_top{{i.pk}}"  action="alwat/" method="POST">
 					{% csrf_token %}
 					{% comment %} <input type="hidden" name="amovieId" value="{{i.pk}}" />
 					<input type="submit" class="btn btn-outline-primary" value="Already Watched"> {% endcomment %}
@@ -209,22 +227,22 @@
 							  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							</div>
 							<div class="modal-body">
-								<label for="customRange2" class="form-label">Rating 1-10</label>
-								<input type="hidden" name="amovieId" value="{{i.pk}}" />
-								<input type="range" value="1" class="form-range" min="1" max="10" id="customRange2" name="rating" oninput="this.nextElementSibling.value = this.value">
+								<label for="rating{{i.pk}}" class="form-label">Rating 1-10</label>
+								<input type="hidden" name="amovieId" id="amovieId{{i.pk}}" value="{{i.pk}}" />
+								<input type="range" value="1" class="form-range" min="1" max="10" id="rating{{i.pk}}" name="rating" oninput="this.nextElementSibling.value = this.value">
 								<output>1</output>
 							</div>
 							<div class="modal-footer">
 							  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-							  <input type="submit" class="btn btn-outline-primary" value="Submit">
+							  <input type="submit" class="btn btn-outline-primary" data-bs-dismiss="modal" value="Submit">
 							</div>
 						  </div>
 						</div>
 					  </div>
 				</form>
-				<form method="POST" action="p2w/">
+				<form id="p2w_top{{i.pk}}" method="POST" action="p2w/">
 					{% csrf_token %}
-				<input type="hidden" name="movieId" value="{{i.pk}}" />
+				<input type="hidden" name="movieId" id="movieId{{i.pk}}" value="{{i.pk}}" />
 				<input type="submit" class="btn btn-outline-primary" value="Plan-to-Watch">
 			</div>
 		</form>
@@ -265,13 +283,13 @@
 	<div class="cards-wrapper">
 		{% for i in litem %}
 		<div class="card">
-			<a style="text-decoration:none" href="/home/moviedes">
+			<a style="text-decoration:none" href="/home/moviedes/{{i.title}}">
 				<img src="{{i.poster}}" class="card-img-top" alt="Image has failed to load." onerror="this.src='https://source.unsplash.com/400x600/?movie,{{i.title}}';" height="350px">
 				<div class="card-body">
 					<h5 class="card-title">{{i.title}}</h5>
 					<p class="card-text">Genre: {{i.genre}}<br>Score: {{i.imdbscore}}<br>Release Date: {{i.date}}</p>
 				</a>
-					<form action="alwat/" method="POST">
+					<form id="alwat_latest{{i.pk}}" action="alwat/" method="POST">
 						{% csrf_token %}
 						{% comment %} <input type="hidden" name="amovieId" value="{{i.pk}}" />
 						<input type="submit" class="btn btn-outline-primary" value="Already Watched"> {% endcomment %}
@@ -286,22 +304,22 @@
 								  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 								</div>
 								<div class="modal-body">
-									<label for="customRange2" class="form-label">Rating 1-10</label>
-									<input type="hidden" name="amovieId" value="{{i.pk}}" />
-									<input type="range" value="1" class="form-range" min="1" max="10" id="customRange2" name="rating" oninput="this.nextElementSibling.value = this.value">
+									<label for="rating{{i.pk}}" class="form-label">Rating 1-10</label>
+									<input type="hidden" name="amovieId" id="amovieId{{i.pk}}" value="{{i.pk}}" />
+									<input type="range" value="1" class="form-range" min="1" max="10" id="rating{{i.pk}}" name="rating" oninput="this.nextElementSibling.value = this.value">
 									<output>1</output>
 								</div>
 								<div class="modal-footer">
 								  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-								  <input type="submit" class="btn btn-outline-primary" value="Submit">
+								  <input type="submit" class="btn btn-outline-primary" data-bs-dismiss="modal" value="Submit">
 								</div>
 							  </div>
 							</div>
 						  </div>
 					</form>
-					<form method="POST" action="p2w/">
+					<form id="p2w_latest{{i.pk}}" method="POST" action="p2w/">
 						{% csrf_token %}
-					<input type="hidden" name="movieId" value="{{i.pk}}" />
+					<input type="hidden" name="movieId" id="movieId{{i.pk}}" value="{{i.pk}}" />
 					<input type="submit" class="btn btn-outline-primary" value="Plan-to-Watch">
 				</div>
 			</form>
@@ -328,7 +346,150 @@
 <span class="visually-hidden">Next</span>
 </button>
 </div>
+{% for i in ritem %}
+<script>
+	$(document).on('submit','#p2w_recom{{i.pk}}',function(e){
+		e.preventDefault();
+		$.ajax({
+			type:'POST',
+			url:"{% url 'Plan-to-watch' %}",
+			data:{
+				movieId:$('#movieId{{i.pk}}').val(),
+				csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+			},
+			success: function(data){
+				$('#recom_success{{i.pk}}').html(data)
+			}
+		})
+	})
+</script>
+<script>
+	$(document).on('submit','#alwat_recom{{i.pk}}',function(e){
+		e.preventDefault();
+		$.ajax({
+			type:'POST',
+			url:"{% url 'Already Watched button' %}",
+			data:{
+				amovieId:$('#amovieId{{i.pk}}').val(),
+				rating:$('#rating{{i.pk}}').val(),
+				csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+			},
+			success: function(data){
+				$('#recom_success{{i.pk}}').html(data)
+			}
+		})
+	})
+</script>
+{% endfor %}
+{% for i in pitem %}
+<script>
+	$(document).on('submit','#p2w_popular{{i.pk}}',function(e){
+		e.preventDefault();
+		$.ajax({
+			type:'POST',
+			url:"{% url 'Plan-to-watch' %}",
+			data:{
+				movieId:$('#movieId{{i.pk}}').val(),
+				csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+			},
+			success: function(data){
+				$('#popu_success{{i.pk}}').html(data)
+			}
+		})
+	})
+</script>
+<script>
+	$(document).on('submit','#alwat_popular{{i.pk}}',function(e){
+		e.preventDefault();
+		$.ajax({
+			type:'POST',
+			url:"{% url 'Already Watched button' %}",
+			data:{
+				amovieId:$('#amovieId{{i.pk}}').val(),
+				rating:$('#rating{{i.pk}}').val(),
+				csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+			},
+			success: function(data){
+				$('#popu_success{{i.pk}}').html(data)
+			}
+		})
+	})
+</script>
+{% endfor %}
+{% for i in titem %}
+<script>
+	$(document).on('submit','#p2w_top{{i.pk}}',function(e){
+		e.preventDefault();
+		$.ajax({
+			type:'POST',
+			url:"{% url 'Plan-to-watch' %}",
+			data:{
+				movieId:$('#movieId{{i.pk}}').val(),
+				csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+			},
+			success: function(data){
+				$('#top_success{{i.pk}}').html(data)
+			}
+		})
+	})
+</script>
+<script>
+	$(document).on('submit','#alwat_top{{i.pk}}',function(e){
+		e.preventDefault();
+		$.ajax({
+			type:'POST',
+			url:"{% url 'Already Watched button' %}",
+			data:{
+				amovieId:$('#amovieId{{i.pk}}').val(),
+				rating:$('#rating{{i.pk}}').val(),
+				csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+			},
+			success: function(data){
+				$('#top_success{{i.pk}}').html(data)
+			}
+		})
+	})
+</script>
+{% endfor %}
+{% for i in litem %}
+<script>
+	$(document).on('submit','#p2w_latest{{i.pk}}',function(e){
+		e.preventDefault();
+		$.ajax({
+			type:'POST',
+			url:"{% url 'Plan-to-watch' %}",
+			data:{
+				movieId:$('#movieId{{i.pk}}').val(),
+				csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+			},
+			success: function(data){
+				$('#latest_success{{i.pk}}').html(data)
+			}
+		})
+	})
+</script>
+<script>
+	$(document).on('submit','#alwat_latest{{i.pk}}',function(e){
+		e.preventDefault();
+		$.ajax({
+			type:'POST',
+			url:"{% url 'Already Watched button' %}",
+			data:{
+				amovieId:$('#amovieId{{i.pk}}').val(),
+				rating:$('#rating{{i.pk}}').val(),
+				csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+			},
+			success: function(data){
+				$('#latest_success{{i.pk}}').html(data)
+			}
+		})
+	})
+</script>
+{% endfor %}
 </div>
+
+
+
 {% comment %} </form> {% endcomment %}
 {% endblock body %}
 
