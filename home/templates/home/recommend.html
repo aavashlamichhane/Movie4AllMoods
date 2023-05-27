@@ -10,7 +10,7 @@
 {% block body %}
 <div class="container">
 	{% for i in ritem %}
-	<span id="success{{i.pk}}" class="padding-bottom--15" style="color:rgb(103, 103, 103);">
+	<span id="success{{i.pk}}" class="padding-bottom--15 fixed-top" style="color:rgb(103, 103, 103);top: 70px; z-index: 9999;">
 
 	</span>
 	{% endfor %}
@@ -75,7 +75,16 @@
 						csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
 					},
 					success: function(data){
-						$('#success{{i.pk}}').html(data)
+						$('#success{{i.pk}}').html(data);
+						let alert_list = document.querySelectorAll('.alert');
+            			alert_list.forEach(function(alert) {
+                		new bootstrap.Alert(alert);
+
+                		let alert_timeout = alert.getAttribute('data-timeout');
+                		setTimeout(() => {
+                    	bootstrap.Alert.getInstance(alert).close();
+                		}, +alert_timeout);
+            		});
 					}
 				})
 			})
@@ -92,12 +101,22 @@
 						csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
 					},
 					success: function(data){
-						$('#success{{i.pk}}').html(data)
+						$('#success{{i.pk}}').html(data);
+						let alert_list = document.querySelectorAll('.alert');
+            			alert_list.forEach(function(alert) {
+                		new bootstrap.Alert(alert);
+
+                		let alert_timeout = alert.getAttribute('data-timeout');
+                		setTimeout(() => {
+                    	bootstrap.Alert.getInstance(alert).close();
+                		}, +alert_timeout);
+            		});
 					}
 				})
 			})
 		</script>
 		{% endfor %}
+
 	</div>
 </div>
 

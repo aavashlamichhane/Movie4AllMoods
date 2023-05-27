@@ -8,22 +8,22 @@
 <div class="hahaha">
 {% load static %}
 {% for i in ritem %}
-	<span id="recom_success{{i.pk}}" class="padding-bottom--15" style="color:rgb(103, 103, 103);">
+	<span id="recom_success{{i.pk}}" class="padding-bottom--15 fixed-top"  style="color:rgb(103, 103, 103);top: 70px; z-index: 9999;"">
 
 	</span>
 {% endfor %}
 {% for i in pitem %}
-	<span id="popu_success{{i.pk}}" class="padding-bottom--15" style="color:rgb(103, 103, 103);">
+	<span id="popu_success{{i.pk}}" class="padding-bottom--15 fixed-top"  style="color:rgb(103, 103, 103);top: 70px; z-index: 9999;"">
 
 	</span>
 {% endfor %}
 {% for i in titem %}
-	<span id="top_success{{i.pk}}" class="padding-bottom--15" style="color:rgb(103, 103, 103);">
+	<span id="top_success{{i.pk}}" class="padding-bottom--15 fixed-top"  style="color:rgb(103, 103, 103);top: 70px; z-index: 9999;"">
 
 	</span>
 {% endfor %}
 {% for i in litem %}
-	<span id="latest_success{{i.pk}}" class="padding-bottom--15" style="color:rgb(103, 103, 103);">
+	<span id="latest_success{{i.pk}}" class="padding-bottom--15 fixed-top"  style="color:rgb(103, 103, 103);top: 70px; z-index: 9999;"">
 
 	</span>
 {% endfor %}
@@ -359,7 +359,16 @@
 				csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
 			},
 			success: function(data){
-				$('#recom_success{{i.pk}}').html(data)
+				$('#recom_success{{i.pk}}').html(data);
+				let alert_list = document.querySelectorAll('.alert');
+            			alert_list.forEach(function(alert) {
+                		new bootstrap.Alert(alert);
+
+                		let alert_timeout = alert.getAttribute('data-timeout');
+                		setTimeout(() => {
+                    	bootstrap.Alert.getInstance(alert).close();
+                		}, +alert_timeout);
+            		});
 			}
 		})
 	})
@@ -376,7 +385,16 @@
 				csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
 			},
 			success: function(data){
-				$('#recom_success{{i.pk}}').html(data)
+				$('#recom_success{{i.pk}}').html(data);
+				let alert_list = document.querySelectorAll('.alert');
+            			alert_list.forEach(function(alert) {
+                		new bootstrap.Alert(alert);
+
+                		let alert_timeout = alert.getAttribute('data-timeout');
+                		setTimeout(() => {
+                    	bootstrap.Alert.getInstance(alert).close();
+                		}, +alert_timeout);
+            		});
 			}
 		})
 	})
@@ -394,7 +412,16 @@
 				csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
 			},
 			success: function(data){
-				$('#popu_success{{i.pk}}').html(data)
+				$('#popu_success{{i.pk}}').html(data);
+				let alert_list = document.querySelectorAll('.alert');
+            			alert_list.forEach(function(alert) {
+                		new bootstrap.Alert(alert);
+
+                		let alert_timeout = alert.getAttribute('data-timeout');
+                		setTimeout(() => {
+                    	bootstrap.Alert.getInstance(alert).close();
+                		}, +alert_timeout);
+            		});
 			}
 		})
 	})
@@ -411,7 +438,16 @@
 				csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
 			},
 			success: function(data){
-				$('#popu_success{{i.pk}}').html(data)
+				$('#popu_success{{i.pk}}').html(data);
+				let alert_list = document.querySelectorAll('.alert');
+            			alert_list.forEach(function(alert) {
+                		new bootstrap.Alert(alert);
+
+                		let alert_timeout = alert.getAttribute('data-timeout');
+                		setTimeout(() => {
+                    	bootstrap.Alert.getInstance(alert).close();
+                		}, +alert_timeout);
+            		});
 			}
 		})
 	})
@@ -429,7 +465,16 @@
 				csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
 			},
 			success: function(data){
-				$('#top_success{{i.pk}}').html(data)
+				$('#top_success{{i.pk}}').html(data);
+				let alert_list = document.querySelectorAll('.alert');
+            			alert_list.forEach(function(alert) {
+                		new bootstrap.Alert(alert);
+
+                		let alert_timeout = alert.getAttribute('data-timeout');
+                		setTimeout(() => {
+                    	bootstrap.Alert.getInstance(alert).close();
+                		}, +alert_timeout);
+            		});
 			}
 		})
 	})
@@ -446,7 +491,16 @@
 				csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
 			},
 			success: function(data){
-				$('#top_success{{i.pk}}').html(data)
+				$('#top_success{{i.pk}}').html(data);
+				let alert_list = document.querySelectorAll('.alert');
+            			alert_list.forEach(function(alert) {
+                		new bootstrap.Alert(alert);
+
+                		let alert_timeout = alert.getAttribute('data-timeout');
+                		setTimeout(() => {
+                    	bootstrap.Alert.getInstance(alert).close();
+                		}, +alert_timeout);
+            		});
 			}
 		})
 	})
@@ -464,7 +518,16 @@
 				csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
 			},
 			success: function(data){
-				$('#latest_success{{i.pk}}').html(data)
+				$('#latest_success{{i.pk}}').html(data);
+				let alert_list = document.querySelectorAll('.alert');
+            			alert_list.forEach(function(alert) {
+                		new bootstrap.Alert(alert);
+
+                		let alert_timeout = alert.getAttribute('data-timeout');
+                		setTimeout(() => {
+                    	bootstrap.Alert.getInstance(alert).close();
+                		}, +alert_timeout);
+            		});
 			}
 		})
 	})
@@ -481,7 +544,16 @@
 				csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
 			},
 			success: function(data){
-				$('#latest_success{{i.pk}}').html(data)
+				$('#latest_success{{i.pk}}').html(data);
+				let alert_list = document.querySelectorAll('.alert');
+            			alert_list.forEach(function(alert) {
+                		new bootstrap.Alert(alert);
+
+                		let alert_timeout = alert.getAttribute('data-timeout');
+                		setTimeout(() => {
+                    	bootstrap.Alert.getInstance(alert).close();
+                		}, +alert_timeout);
+            		});
 			}
 		})
 	})
