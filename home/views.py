@@ -341,19 +341,19 @@ def signUp(request):
         # print(lname)
         # print(check)
         if User.objects.filter(username=username):
-            messages.error(request,"Username already exists.")
+            messages.warning(request,"Username already exists.")
             return redirect('/home/signup')
         if User.objects.filter(email=email):
-            messages.error(request,"E-Mail already exists.")
+            messages.warning(request,"E-Mail already exists.")
             return redirect('/home/signup') 
         if len(username)>30:
-            messages.error(request,"Username is longer than 30 characters.")
+            messages.warning(request,"Username is longer than 30 characters.")
             return redirect('/home/signup')
         if pass1!=pass2:
-            messages.error(request,"Passwords donot match")
+            messages.warning(request,"Passwords donot match")
             return redirect('/home/signup')
         if not username.isalnum():
-            messages.error(request,"Username must be alphanumeric")
+            messages.warning(request,"Username must be alphanumeric")
             return redirect('/home/signup')
         newuser = User.objects.create_user(username,email,pass1)
         newuser.first_name = fname
