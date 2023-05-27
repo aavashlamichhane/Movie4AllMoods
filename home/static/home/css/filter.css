@@ -46,6 +46,11 @@ body{
     margin-left: 260px; /* Adjust the margin as needed to avoid overlapping with the sidebar */
   }
 
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 20px;
+}
   
   .card{
     margin: 0.5em;
