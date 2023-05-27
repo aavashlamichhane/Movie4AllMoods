@@ -6,24 +6,23 @@
 {% endblock css %}
 {% block body %}
 <div class="hahaha">
-{% load static %}
 {% for i in ritem %}
-	<span id="recom_success{{i.pk}}" class="padding-bottom--15 fixed-top"  style="color:rgb(103, 103, 103);top: 70px; z-index: 9999;"">
+	<span id="recom_success{{i.pk}}" class="padding-bottom--15 fixed-top"  style="color:rgb(103, 103, 103);top: 70px; z-index: 9999;">
 
 	</span>
 {% endfor %}
 {% for i in pitem %}
-	<span id="popu_success{{i.pk}}" class="padding-bottom--15 fixed-top"  style="color:rgb(103, 103, 103);top: 70px; z-index: 9999;"">
+	<span id="popu_success{{i.pk}}" class="padding-bottom--15 fixed-top"  style="color:rgb(103, 103, 103);top: 70px; z-index: 9999;">
 
 	</span>
 {% endfor %}
 {% for i in titem %}
-	<span id="top_success{{i.pk}}" class="padding-bottom--15 fixed-top"  style="color:rgb(103, 103, 103);top: 70px; z-index: 9999;"">
+	<span id="top_success{{i.pk}}" class="padding-bottom--15 fixed-top"  style="color:rgb(103, 103, 103);top: 70px; z-index: 9999;">
 
 	</span>
 {% endfor %}
 {% for i in litem %}
-	<span id="latest_success{{i.pk}}" class="padding-bottom--15 fixed-top"  style="color:rgb(103, 103, 103);top: 70px; z-index: 9999;"">
+	<span id="latest_success{{i.pk}}" class="padding-bottom--15 fixed-top"  style="color:rgb(103, 103, 103);top: 70px; z-index: 9999;">
 
 	</span>
 {% endfor %}
@@ -35,11 +34,11 @@
 <a class="btn btn-dark btn-lg" href="/home/recommend" role="button">Recommended Movies </a>
 <br>
 <br>
-
-<div id="recom" class="carousel carousel-dark slide">
+<!-- 
+<div id="recom_carousel" class="carousel carousel-dark slide">
 <div class="carousel-indicators">
-<button type="button" data-bs-target="#recom" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-<button type="button" data-bs-target="#recom" data-bs-slide-to="1" aria-label="Slide 2"></button>
+<button type="button" data-bs-target="#recom_carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+<button type="button" data-bs-target="#recom_carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
 </div>
 <div class="container">
 <div class="carousel-inner">
@@ -52,7 +51,7 @@
 				<div class="card-body">
 				<h5 class="card-title">{{i.title}}</h5>
 				<p class="card-text">Genre: {{i.genre}}<br>Score: {{i.imdbscore}}<br>Release Date: {{i.date}}</p>
-			</a>	
+			</a>
 				<form id= "alwat_recom{{i.pk}}" action="alwat/" method="POST">
 					{% csrf_token %}
 					{% comment %} <input type="hidden" name="amovieId" value="{{i.pk}}" />
@@ -102,15 +101,89 @@
 </div>
 
 
-<button class="carousel-control-prev" type="button" data-bs-target="#recom" data-bs-slide="prev">
+<button class="carousel-control-prev" type="button" data-bs-target="#recom_carousel" data-bs-slide="prev">
 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
 <span class="visually-hidden">Previous</span>
 </button>
-<button class="carousel-control-next" type="button" data-bs-target="#recom" data-bs-slide="next">
+<button class="carousel-control-next" type="button" data-bs-target="#recom_carousel" data-bs-slide="next">
 <span class="carousel-control-next-icon" aria-hidden="true"></span>
 <span class="visually-hidden">Next</span>
 </button>
-</div>
+</div> -->
+<div id="rmovies" class="carousel carousel-dark slide">
+	<div class="carousel-indicators">
+	<button type="button" data-bs-target="#rmovies" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+	<button type="button" data-bs-target="#rmovies" data-bs-slide-to="1" aria-label="Slide 2"></button>
+	</div>
+	<div class="container">
+		<div class="carousel-inner">
+		<div class="carousel-item active">
+		<div class="cards-wrapper">
+			{% for i in ritem %}
+			<div class="card">
+				<a style="text-decoration:none" href="/home/moviedes/{{i.title}}">
+					<img src="{{i.poster}}" class="card-img-top" alt="Image has failed to load" onerror="this.src='https://source.unsplash.com/400x600/?movie,{{i.title}}';" height="350px">
+					<div class="card-body">
+						<h5 class="card-title">{{i.title}}</h5>
+						<p class="card-text">Genre: {{i.genre}}<br>Score: {{i.imdbscore}}<br>Release Date: {{i.date}}</p>
+					</a>
+						<form id="alwat_recom{{i.pk}}" action="alwat/" method="POST">
+							{% csrf_token %}
+							{% comment %} <input type="hidden" name="amovieId" value="{{i.pk}}" />
+							<input type="submit" class="btn btn-outline-primary" value="Already Watched"> {% endcomment %}
+							<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModalpopu{{forloop.counter}}">
+								Already Watched
+							</button>
+							<div class="modal fade" id="exampleModalpopu{{forloop.counter}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered">
+								  <div class="modal-content">
+									<div class="modal-header">
+									  <h5 class="modal-title" id="exampleModalLabel">Please rate the movie:</h5>
+									  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<label for="rating{{i.pk}}" class="form-label">Rating 1-10</label>
+										<input type="hidden" name="amovieId" id="amovieId{{i.pk}}" value="{{i.pk}}" />
+										<input type="range" value="1" class="form-range" min="1" max="10" id="rating{{i.pk}}" name="rating" oninput="this.nextElementSibling.value = this.value">
+										<output>1</output>
+									</div>
+									<div class="modal-footer">
+									  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+									  <input type="submit" class="btn btn-outline-primary" data-bs-dismiss="modal" value="Submit">
+									</div>
+								  </div>
+								</div>
+							  </div>
+						</form>
+						<form id="p2w_recom{{i.pk}}" method="POST" action="p2w/">
+							{% csrf_token %}
+						<input type="hidden" name="movieId" id="movieId{{i.pk}}" value="{{i.pk}}" />
+						<input type="submit" class="btn btn-outline-primary" value="Plan-to-Watch">
+					</div>
+				</form>
+				
+			</div>
+		{% if forloop.counter|divisibleby:5 and forloop.counter > 0 and not forloop.last %}
+		</div>
+		</div>
+		<div class="carousel-item">
+			<div class="cards-wrapper">
+		{% endif %}
+		{% endfor %}
+		</div>
+		</div>
+		</div>
+	
+	</div>
+	<button class="carousel-control-prev" type="button" data-bs-target="#rmovies" data-bs-slide="prev">
+	<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+	<span class="visually-hidden">Previous</span>
+	</button>
+	<button class="carousel-control-next" type="button" data-bs-target="#rmovies" data-bs-slide="next">
+	<span class="carousel-control-next-icon" aria-hidden="true"></span>
+	<span class="visually-hidden">Next</span>
+	</button>
+	</div>
 <br>
 <br>
 {% endif %}
@@ -346,6 +419,7 @@
 <span class="visually-hidden">Next</span>
 </button>
 </div>
+{% if user.is_authenticated %}
 {% for i in ritem %}
 <script>
 	$(document).on('submit','#p2w_recom{{i.pk}}',function(e){
@@ -558,6 +632,7 @@
 	})
 </script>
 {% endfor %}
+{% endif %}
 </div>
 
 
