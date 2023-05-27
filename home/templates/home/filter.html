@@ -12,7 +12,7 @@
 
 
 
-  {%csrf_token%}
+  
 <div class="container-fluid">
   {% for i in allMovies %}
 	<span id="success{{i.pk}}" class="padding-bottom--15 fixed-top" style="color:rgb(103, 103, 103);top: 70px; z-index: 9999;">
@@ -23,6 +23,7 @@
 <!-- <form class="main-container d-flex"> -->
   <div class="col-md-3 sidebar" id="side_nav">
     <form action="/home/filter/" method="post">
+      {%csrf_token%}
   <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
     <h4 id="mood">Mood</h4>
     <div class="form-check">
