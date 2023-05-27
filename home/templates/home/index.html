@@ -62,13 +62,14 @@
 						</div>
 					  </div>
 				</form>
-			<form method="POST" action="p2w/">
+				<form method="POST" action="p2w/">
 					{% csrf_token %}
-				<input type="hidden" name="movieId" value="{{i.pk}}" />
-				<input type="submit" class="btn btn-outline-primary" value="Plan-to-Watch">
-			</form>
+					<input type="hidden" name="movieId" value="{{i.pk}}" />
+					<input type="submit" class="btn btn-outline-primary" value="Plan-to-Watch">
+				</form>
+				</div>
+
 			
-		</div>
 		</div>
 	{% if forloop.counter|divisibleby:5 and forloop.counter > 0 and not forloop.last %}
 	</div>
