@@ -8,22 +8,22 @@
 <div class="hahaha">
 {% load static %}
 {% for i in ritem %}
-	<span id="recom_success{{i.pk}}" class="padding-bottom--15 fixed-top"  style="color:rgb(103, 103, 103);top: 70px; z-index: 9999;"">
+	<span id="recom_success{{i.pk}}" class="padding-bottom--15 fixed-top"  style="color:rgb(103, 103, 103);top: 70px; z-index: 9999;">
 
 	</span>
 {% endfor %}
 {% for i in pitem %}
-	<span id="popu_success{{i.pk}}" class="padding-bottom--15 fixed-top"  style="color:rgb(103, 103, 103);top: 70px; z-index: 9999;"">
+	<span id="popu_success{{i.pk}}" class="padding-bottom--15 fixed-top"  style="color:rgb(103, 103, 103);top: 70px; z-index: 9999;">
 
 	</span>
 {% endfor %}
 {% for i in titem %}
-	<span id="top_success{{i.pk}}" class="padding-bottom--15 fixed-top"  style="color:rgb(103, 103, 103);top: 70px; z-index: 9999;"">
+	<span id="top_success{{i.pk}}" class="padding-bottom--15 fixed-top"  style="color:rgb(103, 103, 103);top: 70px; z-index: 9999;">
 
 	</span>
 {% endfor %}
 {% for i in litem %}
-	<span id="latest_success{{i.pk}}" class="padding-bottom--15 fixed-top"  style="color:rgb(103, 103, 103);top: 70px; z-index: 9999;"">
+	<span id="latest_success{{i.pk}}" class="padding-bottom--15 fixed-top"  style="color:rgb(103, 103, 103);top: 70px; z-index: 9999;">
 
 	</span>
 {% endfor %}
@@ -346,6 +346,7 @@
 <span class="visually-hidden">Next</span>
 </button>
 </div>
+{% if user.is_authenticated %}
 {% for i in ritem %}
 <script>
 	$(document).on('submit','#p2w_recom{{i.pk}}',function(e){
@@ -558,6 +559,7 @@
 	})
 </script>
 {% endfor %}
+{% endif %}
 </div>
 
 
