@@ -19,7 +19,7 @@ class Movies(models.Model):
     crew=models.TextField()
     isAdult= models.IntegerField()
     numVotes=models.IntegerField()
-    otitle=models.CharField(max_length=200)
+    otitle=models.CharField(max_length=200) 
     runtime=models.IntegerField()
     date=models.IntegerField()
     def __str__(self):

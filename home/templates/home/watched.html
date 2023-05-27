@@ -32,7 +32,7 @@
   </main>
   {% endcomment %}
 
-
+<h1>Already Watched</h1>
   <table class="table table-dark table-hover">
     <thead>
         <tr>
@@ -47,8 +47,8 @@
         {% for i in titem %}
         <tr>
           <th scope="row">{{forloop.counter}}</th>
-          <td><img src="{{i.movie.poster}}" width="75" onerror="this.src='https://source.unsplash.com/400x600/?movie,{{i.movie.title}}';" height="100"></td>
-          <td>{{i.movie.title}}</td>
+          <td><a href="/home/moviedes/{{i.movie.title}}"><img src="{{i.movie.poster}}" width="75" onerror="this.src='https://source.unsplash.com/400x600/?movie,{{i.movie.title}}';" height="100"></a></td>
+          <td><a href="/home/moviedes/{{i.movie.title}}">{{i.movie.title}}</a></td>
           <td>
             <form action="/home/updaterating/" method="post">
               {% csrf_token %}

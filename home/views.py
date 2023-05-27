@@ -19,7 +19,98 @@ from ast import literal_eval
 from sklearn.feature_extraction.text import TfidfVectorizer,CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from pympler import asizeof
+from django import template
 # Create your views here.
+
+# def filter(request):
+    
+#     srmovie=Movies.objects.all().order_by('-genre')[:30]
+#     params={'sritem':srmovie, 'range':range(10)}
+#     return render(request, "home/filter.html",params)
+from django.shortcuts import render
+
+def filter(request):
+    if request.method == 'POST':
+        selected_genres=[]
+        if request.POST.get('happy', False):
+            selected_genres.append('Comedy')
+            selected_genres.append('Musical')
+        if request.POST.get('sad', False):
+            selected_genres.append('Tragedy')
+            selected_genres.append('Musical')
+        if request.POST.get('bored', False):
+            selected_genres.append('Drama')
+        if request.POST.get('angry', False):
+            selected_genres.append('Action')
+            selected_genres.append('Thriller')
+        if request.POST.get('excited', False):
+            selected_genres.append('Action')
+            selected_genres.append('Adventure')
+        if request.POST.get('nostalgic', False):
+            selected_genres.append('Adventure')
+            selected_genres.append('History')
+        if request.POST.get('anxious', False):
+            selected_genres.append('Thriller')
+            selected_genres.append('Horror')
+        if request.POST.get('romantic', False):
+            selected_genres.append('Romance')
+        if request.POST.get('inspirational', False):
+            selected_genres.append('Biography')
+            
+            
+            
+        if request.POST.get('action', False):
+            selected_genres.append('Action')
+        if request.POST.get('adventure', False):
+            selected_genres.append('Adventure')
+        if request.POST.get('animation', False):
+            selected_genres.append('Animation')
+        if request.POST.get('biography', False):
+            selected_genres.append('Biography')
+        if request.POST.get('comedy', False):
+            selected_genres.append('Comedy')
+        if request.POST.get('crime', False):
+            selected_genres.append('Crime')
+        if request.POST.get('documentary', False):
+            selected_genres.append('Documentary')
+        if request.POST.get('drama', False):
+            selected_genres.append('Drama')
+        if request.POST.get('fantasy', False):
+            selected_genres.append('Fantasy')
+        if request.POST.get('film-noir', False):
+            selected_genres.append('Film-Noir')
+        if request.POST.get('history', False):
+            selected_genres.append('History')
+        if request.POST.get('horror', False):
+            selected_genres.append('Horror')
+        if request.POST.get('music', False):
+            selected_genres.append('Music')
+        if request.POST.get('musical', False):
+            selected_genres.append('Musical')
+        if request.POST.get('mystery', False):
+            selected_genres.append('Mystery')
+        if request.POST.get('romance', False):
+            selected_genres.append('Romance')
+        if request.POST.get('sport', False):
+            selected_genres.append('Sport')
+        if request.POST.get('thriller', False):
+            selected_genres.append('Thriller')
+        if request.POST.get('tragedy', False):
+            selected_genres.append('Tragedy')
+        if request.POST.get('war', False):
+            selected_genres.append('War')
+        if request.POST.get('western', False):
+            selected_genres.append('Western')
+
+        genre_filters = Q()
+        for genre in selected_genres:
+            genre_filters &= Q(genre__contains=genre)
+        allMovies = Movies.objects.filter(genre_filters).order_by('-numVotes')[:50]
+        params={'allMovies':allMovies}
+        return render(request,"home/filter.html", params) 
+    else: 
+        return render(request, "home/filter.html")
+
 
 def search(request):
     query=request.GET['query']
@@ -90,11 +181,80 @@ def landing(request):
         return render(request, 'home/landing.html')
  
 def index(request):
+    
+    movie = Movies.objects.all().order_by('-numVotes')[:10000]
+    movies_panda=pd.DataFrame([t.__dict__ for t in movie])
+    features = ['cast']
+    for feature in features:
+        movies_panda[feature]=movies_panda[feature].apply(literal_eval)
+    
+    features = ['cast']
+    for feature in features:
+        movies_panda[feature]=movies_panda[feature].apply(get_list)
+    # print(movies_panda[['title','cast','crew','genre']].head(5))
+    features = ['cast','crew','genre']
+    for feature in features:
+        movies_panda[feature] = movies_panda[feature].apply(clean_data)
+    # print(movies_panda[['title','cast','crew','genre']].head(5))
+    movies_panda['soup']=movies_panda.apply(create_soup,axis=1)
+    # print(movies_panda[['cast','crew','genre','soup']].head(5))
+    count = CountVectorizer(stop_words='english')
+    count_matrix = count.fit_transform(movies_panda['soup'])
+    userlist = list.objects.filter(user=request.user,status=1,rating__gte=6)
+    ranges = range(10,5,-1)
+    list_of_list = []
+    for i in ranges:
+        userlist = list.objects.filter(user=request.user,status=1,rating=i)
+        hajar = []
+        for m in userlist:
+            hajar.append(m.movie.pk)
+        list_of_list.append(hajar)
+    
+    
+    
+    similarity = cosine_similarity(count_matrix,count_matrix)
+    movies_panda = movies_panda.reset_index()
+    indices = pd.Series(movies_panda.index,index=movies_panda['title'])
+    def get_recom(title,number,cosine_sim=similarity):
+        idx = indices[title]
+        sim_scores= builtins.list(enumerate(cosine_sim[idx].tolist()))
+        sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+        sim_scores = sim_scores[1:number+1]
+        movie_indices = [i[0] for i in sim_scores]
+        return movies_panda.iloc[movie_indices]
+    
+    recommended = []
+    ranvar = int(10)
+    for item in list_of_list:
+        if len(item)==0:
+            ranvar-=1
+            continue
+        for item2 in item:
+            to_get = Movies.objects.get(pk=item2).title
+            # print(to_get)
+            no_of_recom = get_no(ranvar,len(item))
+            # print(no_of_recom)
+            if no_of_recom == 0:
+                no_of_recom+=1
+            recomm = get_recom(to_get,no_of_recom)
+            # print(type(recomm))
+            # print(recomm[['id','title']])
+            for entries in recomm['id'].tolist():
+                recommended.append(entries)
+        ranvar-=1
+    movies = []
+    for entry in recommended:
+        if list.objects.filter(user=request.user,movie=Movies.objects.get(pk=entry),status=1).exists():
+            continue
+        else:
+            movies.append(Movies.objects.get(pk=entry))
+        
+    if len(movies)==0:
+        movies = Movies.objects.all().order_by('-numVotes')[:20]
     tmovie=Movies.objects.all().order_by('-imdbscore')[:10]
     pmovie=Movies.objects.all().order_by('-numVotes')[:10]
     lmovie=Movies.objects.all().order_by('-date')[:10]
-    rmovie=Movies.objects.all().order_by('-title')[:10]
-    params={'titem':tmovie,'pitem':pmovie,'litem':lmovie, 'ritem':rmovie}
+    params={'titem':tmovie,'pitem':pmovie,'litem':lmovie, 'ritem':movies[:10]}
     return render(request, 'home/index.html',params)
 
 def logIn(request):
@@ -159,173 +319,6 @@ def signUp(request):
 
 
 def aboutus(request):
-    # # # # movie = Movies.objects.get(pk=266330)
-    # # # # print(type(movie.cast))
-    # # # # haha=ast.literal_eval(movie.cast)
-    # # # # print(type(haha))
-    # # # # print(haha[0]['name'])
-    # # # # final = ''
-    # # # # for names in haha:
-    # # # #     final += names['name']
-    # # # #     final +=' '
-    # # # # print(final)
-
-    # # movie = Movies.objects.all()
-    # # movies_panda=pd.DataFrame([t.__dict__ for t in movie])
-    # # # # print(movie)
-    # # # # print(movies_panda.head())
-    # # # # print(movies_panda[['id','imdbid','title','crew','cast','otitle','numVotes','imdbscore','runtime','date','genre','isAdult','poster',]])
-    # # features = ['crew','cast','genre']
-    # # combined_features = movies_panda['genre']+' '+movies_panda['cast']+' '+movies_panda['crew']
-    # # # # print(combined_features)
-    # # vectorizer = TfidfVectorizer()
-    # # feature_vectors = vectorizer.fit_transform(combined_features)
-    # # similarity = cosine_similarity(feature_vectors)
-    
-    
-    
-    # movie = Movies.objects.all().order_by('-numVotes')[:10000]
-    # # print(type(movie))
-    # movies_panda=pd.DataFrame([t.__dict__ for t in movie])
-    # # # print(movie)
-    # # print(movies_panda['cast'].head())
-    # # # print(movies_panda[['id','imdbid','title','crew','cast','otitle','numVotes','imdbscore','runtime','date','genre','isAdult','poster',]])
-
-    # features = ['crew','cast','genre']
-    # combined_features = movies_panda['genre']+' '+movies_panda['cast']+' '+movies_panda['crew']
-    # # # print(combined_features)
-    # vectorizer = TfidfVectorizer()
-    # feature_vectors = vectorizer.fit_transform(combined_features)
-    # similarity = cosine_similarity(feature_vectors)
-    
-    
-    
-    # movie = Movies.objects.all().order_by('-numVotes')[:10000]
-    # # print(type(movie))
-    # movies_panda=pd.DataFrame([t.__dict__ for t in movie])
-    # # # print(movie)
-    # # print(movies_panda['cast'].head())
-    # # # print(movies_panda[['id','imdbid','title','crew','cast','otitle','numVotes','imdbscore','runtime','date','genre','isAdult','poster',]])
-
-    # features = ['cast']
-    # for feature in features:
-    #     movies_panda[feature]=movies_panda[feature].apply(literal_eval)
-    # # print(movies_panda[['title','cast','crew','genre']].head(5))
-    # # print(movies_panda['cast'][1][1]['name'])
-    # features = ['cast']
-    # for feature in features:
-    #     movies_panda[feature]=movies_panda[feature].apply(get_list)
-    # print(movies_panda[['title','cast','crew','genre']].head(5))
-    # features = ['cast','crew','genre']
-    # for feature in features:
-    #     movies_panda[feature] = movies_panda[feature].apply(clean_data)
-    # print(movies_panda[['title','cast','crew','genre']].head(5))
-    # print(movies_panda['cast'][1][1]['name'])
-    features = ['cast']
-    for feature in features:
-        movies_panda[feature]=movies_panda[feature].apply(get_list)
-    print(movies_panda[['title','cast','crew','genre']].head(5))
-    features = ['cast','crew','genre']
-    for feature in features:
-        movies_panda[feature] = movies_panda[feature].apply(clean_data)
-    print(movies_panda[['title','cast','crew','genre']].head(5))
-    movies_panda['soup']=movies_panda.apply(create_soup,axis=1)
-    print(movies_panda[['cast','crew','genre','soup']].head(5))
-    count = CountVectorizer(stop_words='english')
-    count_matrix = count.fit_transform(movies_panda['soup'])
-    userlist = list.objects.filter(user=request.user,status=1,rating__gte=6)
-    ranges = range(10,5,-1)
-    list_of_list = []
-    for i in ranges:
-        userlist = list.objects.filter(user=request.user,status=1,rating=i)
-        hajar = []
-        for m in userlist:
-            hajar.append(m.movie.pk)
-        list_of_list.append(hajar)
-    # print(list_of_list)
-    # print(type(umovies))
-    # ? Following snippet is for converting user list to pandas
-    
-    # user_panda = pd.DataFrame([t.__dict__ for t in umovies])
-    # user_panda['cast']=user_panda['cast'].apply(literal_eval)
-    # user_panda['cast']=user_panda['cast'].apply(get_list)
-    # features = ['cast','crew','genre']
-    # for feature in features:
-    #     user_panda[feature] = user_panda[feature].apply(clean_data)
-    # user_panda['soup']=user_panda.apply(create_soup,axis=1)
-    # # print(user_panda[['title','cast','crew','genre','soup']].head(5))
-    # user_matrix = count.fit_transform(user_panda['soup'])
-    
-    
-    similarity = cosine_similarity(count_matrix,count_matrix)
-    # print(similarity.shape)
-    movies_panda = movies_panda.reset_index()
-    indices = pd.Series(movies_panda.index,index=movies_panda['title'])
-    def get_recom(title,number,cosine_sim=similarity):
-        idx = indices[title]
-        sim_scores= builtins.list(enumerate(cosine_sim[idx].tolist()))
-        sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-        sim_scores = sim_scores[1:number+1]
-        movie_indices = [i[0] for i in sim_scores]
-        return movies_panda.iloc[movie_indices]
-    
-    recommended = []
-    ranvar = int(10)
-    for item in list_of_list:
-        if len(item)==0:
-            ranvar-=1
-            continue
-        for item2 in item:
-            to_get = Movies.objects.get(pk=item2).title
-            print(to_get)
-            no_of_recom = get_no(ranvar,len(item))
-            print(no_of_recom)
-            if no_of_recom == 0:
-                no_of_recom+=1
-            recomm = get_recom(to_get,no_of_recom)
-            print(type(recomm))
-            print(recomm[['id','title']])
-            for entries in recomm['id'].tolist():
-                recommended.append(entries)
-        ranvar-=1
-    movies = []
-    for entry in recommended:
-        movies.append(Movies.objects.get(pk=entry))
-    print(type(movies))
-    print(len(movies))
-    # print(recommended)
-    # print(type(recommended))
-    # print(len(recommended))
-    
-    # print(len(userlist))
-    
-    # print(user_panda.head())
-    # print(type(userlist))
-
-    
-    # # for m in userlist:
-    # #     print(m.movie.title)
-    
-    
-    # # similarity = cosine_similarity(count_matrix,count_matrix)
-    # # movies_panda = movies_panda.reset_index()
-    # # indices = pd.Series(movies_panda.index,index=movies_panda['title'])
-    # # def get_recom(title,cosine_sim=similarity):
-    # #     idx = indices[title]
-    # #     sim_scores= builtins.list(enumerate(cosine_sim[idx].tolist()))
-    # #     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    # #     sim_scores = sim_scores[1:11]
-    # #     movie_indices = [i[0] for i in sim_scores]
-    # #     return movies_panda.iloc[movie_indices]
-    
-    # # oolala = get_recom('The Avengers')
-    # # print(type(oolala))
-    # # print(oolala['title'])
-    
-    
-    
-    
-    
     return render(request, "home/aboutus.html")
 
 def help(request):
@@ -336,12 +329,11 @@ def signout(request):
     messages.success(request,"Logged out successfully.")
     return redirect('/home')
 
-def recommend(request):
+def recommend(request): # type: ignore
     # rmovie=Movies.objects.all().order_by('-title')[:50]
     # params={'ritem':rmovie, 'range':range(10)}
     movie = Movies.objects.all().order_by('-numVotes')[:10000]
     movies_panda=pd.DataFrame([t.__dict__ for t in movie])
-    
     features = ['cast']
     for feature in features:
         movies_panda[feature]=movies_panda[feature].apply(literal_eval)
@@ -349,13 +341,13 @@ def recommend(request):
     features = ['cast']
     for feature in features:
         movies_panda[feature]=movies_panda[feature].apply(get_list)
-    print(movies_panda[['title','cast','crew','genre']].head(5))
+    # print(movies_panda[['title','cast','crew','genre']].head(5))
     features = ['cast','crew','genre']
     for feature in features:
         movies_panda[feature] = movies_panda[feature].apply(clean_data)
-    print(movies_panda[['title','cast','crew','genre']].head(5))
+    # print(movies_panda[['title','cast','crew','genre']].head(5))
     movies_panda['soup']=movies_panda.apply(create_soup,axis=1)
-    print(movies_panda[['cast','crew','genre','soup']].head(5))
+    # print(movies_panda[['cast','crew','genre','soup']].head(5))
     count = CountVectorizer(stop_words='english')
     count_matrix = count.fit_transform(movies_panda['soup'])
     userlist = list.objects.filter(user=request.user,status=1,rating__gte=6)
@@ -389,31 +381,31 @@ def recommend(request):
             continue
         for item2 in item:
             to_get = Movies.objects.get(pk=item2).title
-            print(to_get)
+            # print(to_get)
             no_of_recom = get_no(ranvar,len(item))
-            print(no_of_recom)
+            # print(no_of_recom)
             if no_of_recom == 0:
                 no_of_recom+=1
             recomm = get_recom(to_get,no_of_recom)
-            print(type(recomm))
-            print(recomm[['id','title']])
+            # print(type(recomm))
+            # print(recomm[['id','title']])
             for entries in recomm['id'].tolist():
                 recommended.append(entries)
         ranvar-=1
     movies = []
     for entry in recommended:
-        movies.append(Movies.objects.get(pk=entry))
-    print(type(movies))
-    print(len(movies))
+        if list.objects.filter(user=request.user,movie=Movies.objects.get(pk=entry),status=1).exists():
+            continue
+        else:
+            movies.append(Movies.objects.get(pk=entry))
+    # print(type(movies))
+    # print(len(movies))
+    if len(movies)==0:
+        movies = Movies.objects.all().order_by('-numVotes')[:20]
     params = {'ritem':movies,'total':len(movies)}
-    
     return render(request, "home/recommend.html",params)
 
-def filter(request):
-    
-    srmovie=Movies.objects.all().order_by('-genre')[:30]
-    params={'sritem':srmovie, 'range':range(10)}
-    return render(request, "home/filter.html",params)
+
 
 @login_required
 def profile(request,*args,**kwargs):
@@ -464,9 +456,6 @@ def profile(request,*args,**kwargs):
         args['form']=form
         return render(request,"home/profile.html",args)
 
-
-
-
 def lists(request):
     tmovie=list.objects.filter(user=request.user,status=2)
     params={'titem':tmovie}
@@ -483,18 +472,22 @@ def p2w(request):
             movie = Movies.objects.get(pk=movieId)
             if list.objects.filter(user=request.user,movie=movie):
                 entry = list.objects.get(user=request.user,movie=movie)
+                print(entry.movie.title)
                 if entry.status == 1:
-                    messages.warning(request,"Entry already exists in Already Watched.")
-                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                    # messages.warning(request,"Entry already exists in Already Watched.")
+                    return HttpResponse('<div class="alert alert-info alert-dismissible fade show" role="alert">Entry already exists in Already Watched.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>')
+                    # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
                 elif entry.status == 2:
-                    messages.warning(request,"Entry already exists in Plan-To-Watch")
-                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                    # messages.warning(request,"Entry already exists in Plan-To-Watch")
+                    return HttpResponse('<div class="alert alert-info alert-dismissible fade show" role="alert">Entry already exists in Plan-To-Watch.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>')
+                    # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
                 else:
                     return HttpResponse("Something went wrong1.")
             else:
                 list_entry = list(user=request.user,movie=movie,rating=0,status=2)
                 list_entry.save()
-                messages.success(request,"Added to plan to watch.")
+                # messages.success(request,"Added to plan to watch.")
+                return HttpResponse('<div class="alert alert-info alert-dismissible fade show" role="alert">Added to plan to watch.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>')
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
             return HttpResponse("Something went wrong.")
@@ -503,7 +496,7 @@ def p2w(request):
 
 
 def watched(request):
-    tmovie=list.objects.filter(user=request.user,status=1)
+    tmovie=list.objects.filter(user=request.user,status=1).order_by('-rating')
     params={'titem':tmovie}
     return render(request,"home/watched.html",params)
 
@@ -513,24 +506,27 @@ def alwat(request):
         return redirect('/home/login')
     else:
         if request.method =='POST':
+            rating = request.POST['rating']
             movieId = request.POST['amovieId']
             movie = Movies.objects.get(pk=movieId)
-            rating = request.POST['rating']
             if list.objects.filter(user=request.user,movie=movie):
                 entry = list.objects.get(user=request.user,movie=movie)
                 if entry.status == 1:
-                    messages.warning(request,"Entry already exists in Already Watched.")
-                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                    # messages.warning(request,"Entry already exists in Already Watched.")
+                    return HttpResponse('<div class="alert alert-info alert-dismissible fade show" role="alert">Entry already exists in Already Watched.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>')
+                    # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
                 elif entry.status == 2:
-                    messages.warning(request,"Entry already exists in Plan-To-Watch")
-                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                    # messages.warning(request,"Entry already exists in Plan-To-Watch")
+                    return HttpResponse('<div class="alert alert-info alert-dismissible fade show" role="alert">Entry already exists in Plan-To-Watch.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>')
+                    # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
                 else:
                     return HttpResponse("Something went wrong2.")
             else:
                 list_entry = list(user=request.user,movie=movie,rating=rating,status=1)
                 list_entry.save()
-                messages.success(request,"Added to already watched.")
-                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                # messages.success(request,"Added to already watched.")
+                return HttpResponse('<div class="alert alert-info alert-dismissible fade show" role="alert">Added to already watched.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>')
+                # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
             return HttpResponse("Something went wrong.")
         
@@ -566,9 +562,28 @@ def updateStatus(request):
         entry.save()
         messages.success(request,"Entry moved to already watched.")
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-    
-def moviedes(request):
-    return render(request, "home/moviedes.html")
 
-def recommend(request):
-    return render(request, "home/recommend.html")
+
+from django import template
+
+register = template.Library()
+
+@register.filter
+def extract_cast(cast_list):
+    if cast_list:
+        extracted_data = []
+        for item in cast_list:
+            name = item.get('name', '')
+            character = item.get('character', '')
+            extracted_data.append(f"{name} - {character}")
+        return ', '.join(extracted_data)
+    return ''
+
+
+def moviedes(request, title):
+    movie = Movies.objects.get(title=title)
+    movie_cast = literal_eval(movie.cast)
+    params = {'movie': movie , 'movie_cast': movie_cast}
+    
+    
+    return render(request, "home/moviedes.html", params)

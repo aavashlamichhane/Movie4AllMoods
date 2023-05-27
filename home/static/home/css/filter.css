@@ -1,15 +1,36 @@
 body{
     margin-top: 5%;
+    margin: 0;
+    padding: 0;
 }
 .scrollspy-example{
-    background: white;
-    min-width: 150px;
-    max-width: 150px;
+    background: black;
+    width: 220px;
+   
 }
+.sidebar {
+    background-color: black;
+    color: white;
+    position: fixed;
+    /* top: 0;
+    left: 0; */
+    width: 250px;
+    height: 95vh;
+    padding: 20px;
+    overflow-y: auto;
+    
+  }
+.sidebar hr {
+    width: 100%;
+    height: 2px;
+    background-color: white;
+    margin: 10px 0;
+  }
 
 #side_nav
 {
-    background: white;
+    background: black !important;
+    color: white !important;
     min-width: 250px;
     max-width: 250px;
 }
@@ -18,13 +39,36 @@ body{
     width: 40%;
     height: 30px;
 }
-.cards-wrapper
+
+.cards-wrapper {
+    display: flex;
+    gap: 20px;
+    margin-left: 260px; /* Adjust the margin as needed to avoid overlapping with the sidebar */
+  }
+
+  
+  .card{
+    margin: 0.5em;
+    min-width: 200px;
+    max-width: 200px;
+  }
+  
+  .card-body{
+    background-color: black;
+  }
+
+  .card-text
 {
-  display: flex;
-  flex-wrap: wrap;
+  font-size: 14px;
 }
-
-
-.card{
-    flex-direction: 20%;
-}
+  
+  @media (max-width: 768px) {
+    .container-fluid .row .col-md-3,
+    .container-fluid .row .col-md-9 {
+      width: 100%;
+    }
+  
+    .cards-wrapper {
+      margin-left: 0;
+    }
+  }

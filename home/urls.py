@@ -20,5 +20,6 @@ urlpatterns = [
     path('home/updaterating/',views.updaterating,name="update rating"),
     path('home/deletelistentry/',views.deleteListEntry,name="delete list entry"),
     path('home/updatestatus/',views.updateStatus,name="updatestatus"),
-    path('home/moviedes/',views.moviedes,name="Movie"),
+    path('home/moviedes/<str:title>/', views.moviedes, name='Movie Description')
+
 ]

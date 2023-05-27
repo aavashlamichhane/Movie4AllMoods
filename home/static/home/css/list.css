@@ -1,23 +1,14 @@
-/* .btn-primary i.bi-plus{
-    color: white;
-    background-color: black;
-    font-size: 20px;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-}
-.btn-primary i.bi-trash{
-    color: white;
-    background-color: black;
-    font-size: 20px;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-} */
+
 body{
-    background-color: brown;
+    background-color: black;
     margin-top: 5%;
+  
+    color: white;
 }
+/* #hmm{
+    margin-top: 10%;
+    color: white !important;
+} */
 
 .form-inline{
     display: inline-block;
@@ -25,6 +16,6 @@ body{
 }
 
 .modal-body{
-    color: black;
+    color: black;   
 }
 
