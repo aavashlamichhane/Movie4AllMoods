@@ -19,7 +19,7 @@ from ast import literal_eval
 from sklearn.feature_extraction.text import TfidfVectorizer,CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from pympler import asizeof
-from django import template
+
 # Create your views here.
 
 # def filter(request):
@@ -29,7 +29,7 @@ from django import template
 #     return render(request, "home/filter.html",params)
 from django.shortcuts import render
 
-def filter(request):
+def advfilter(request):
     if request.method == 'POST':
         selected_genres=[]
         if request.POST.get('happy', False):
@@ -550,7 +550,7 @@ def deleteListEntry(request):
         messages.success(request,"Entry deleted.")
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else:
-        return HttpResponse("some thing went wrong.")
+        return HttpResponse("Something went wrong.")
     
 def updateStatus(request):
     if request.method=="POST":
@@ -562,22 +562,6 @@ def updateStatus(request):
         entry.save()
         messages.success(request,"Entry moved to already watched.")
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
-
-from django import template
-
-register = template.Library()
-
-@register.filter
-def extract_cast(cast_list):
-    if cast_list:
-        extracted_data = []
-        for item in cast_list:
-            name = item.get('name', '')
-            character = item.get('character', '')
-            extracted_data.append(f"{name} - {character}")
-        return ', '.join(extracted_data)
-    return ''
 
 
 def moviedes(request, title):
