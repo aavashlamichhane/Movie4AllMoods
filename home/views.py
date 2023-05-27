@@ -475,11 +475,11 @@ def p2w(request):
                 print(entry.movie.title)
                 if entry.status == 1:
                     # messages.warning(request,"Entry already exists in Already Watched.")
-                    return HttpResponse('<div class="alert alert-info alert-dismissible fade show" role="alert">Entry already exists in Already Watched.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>')
+                    return HttpResponse('<div id="alert" data-timeout="3000" class="alert alert-info alert-dismissible fade show" role="alert">Entry already exists in Already Watched.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>')
                     # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
                 elif entry.status == 2:
                     # messages.warning(request,"Entry already exists in Plan-To-Watch")
-                    return HttpResponse('<div class="alert alert-info alert-dismissible fade show" role="alert">Entry already exists in Plan-To-Watch.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>')
+                    return HttpResponse('<div id="alert" data-timeout="3000" class="alert alert-info alert-dismissible fade show" role="alert">Entry already exists in Plan-To-Watch.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>')
                     # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
                 else:
                     return HttpResponse("Something went wrong1.")
@@ -487,7 +487,7 @@ def p2w(request):
                 list_entry = list(user=request.user,movie=movie,rating=0,status=2)
                 list_entry.save()
                 # messages.success(request,"Added to plan to watch.")
-                return HttpResponse('<div class="alert alert-info alert-dismissible fade show" role="alert">Added to plan to watch.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>')
+                return HttpResponse('<div id="alert" data-timeout="3000" class="alert alert-info alert-dismissible fade show" role="alert">Added to plan to watch.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>')
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
             return HttpResponse("Something went wrong.")
@@ -513,11 +513,11 @@ def alwat(request):
                 entry = list.objects.get(user=request.user,movie=movie)
                 if entry.status == 1:
                     # messages.warning(request,"Entry already exists in Already Watched.")
-                    return HttpResponse('<div class="alert alert-info alert-dismissible fade show" role="alert">Entry already exists in Already Watched.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>')
+                    return HttpResponse('<div id="alert" data-timeout="3000" class="alert alert-info alert-dismissible fade show" role="alert">Entry already exists in Already Watched.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>')
                     # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
                 elif entry.status == 2:
                     # messages.warning(request,"Entry already exists in Plan-To-Watch")
-                    return HttpResponse('<div class="alert alert-info alert-dismissible fade show" role="alert">Entry already exists in Plan-To-Watch.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>')
+                    return HttpResponse('<div id="alert" data-timeout="3000" class="alert alert-info alert-dismissible fade show" role="alert">Entry already exists in Plan-To-Watch.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>')
                     # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
                 else:
                     return HttpResponse("Something went wrong2.")
@@ -525,7 +525,7 @@ def alwat(request):
                 list_entry = list(user=request.user,movie=movie,rating=rating,status=1)
                 list_entry.save()
                 # messages.success(request,"Added to already watched.")
-                return HttpResponse('<div class="alert alert-info alert-dismissible fade show" role="alert">Added to already watched.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>')
+                return HttpResponse('<div id="alert" data-timeout="3000" class="alert alert-info alert-dismissible fade show" role="alert">Added to already watched.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>')
                 # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
             return HttpResponse("Something went wrong.")
