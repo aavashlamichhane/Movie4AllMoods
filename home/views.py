@@ -301,10 +301,10 @@ def index(request):
             movies = Movies.objects.all().order_by('-numVotes')[:20]
     else:
         movies=[]
-    tmovie=Movies.objects.all().order_by('-imdbscore')[:10]
-    pmovie=Movies.objects.all().order_by('-numVotes')[:10]
-    lmovie=Movies.objects.all().order_by('-date')[:10]
-    params={'titem':tmovie,'pitem':pmovie,'litem':lmovie, 'ritem':movies[:10]}
+    tmovie=Movies.objects.all().order_by('-imdbscore')[:20]
+    pmovie=Movies.objects.all().order_by('-numVotes')[:20]
+    lmovie=Movies.objects.all().order_by('-date')[:20]
+    params={'titem':tmovie,'pitem':pmovie,'litem':lmovie, 'ritem':movies[:20]}
     return render(request, 'home/index.html',params)
 
 def logIn(request):
