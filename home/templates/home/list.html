@@ -24,8 +24,9 @@
         {% for i in titem %}
         <tr>
           <th scope="row">{{forloop.counter}}</th>
-          <td><img src="{{i.movie.poster}}" onerror="this.src='https://source.unsplash.com/400x600/?{{i.movie.title}}';" width="75" height="100"></td>
-          <td>{{i.movie.title}}</td>
+          
+          <td><a href="/home/moviedes/{{i.movie.title}}"><img src="{{i.movie.poster}}" onerror="this.src='https://source.unsplash.com/400x600/?{{i.movie.title}}';" width="75" height="100"></a></td>
+          <td><a href="/home/moviedes/{{i.movie.title}}">{{i.movie.title}}</a></td>
           <td>
             <form action="/home/updatestatus/" method="post">
               {% csrf_token %}
