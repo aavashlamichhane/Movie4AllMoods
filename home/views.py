@@ -296,7 +296,8 @@ def index(request):
                     movies.append(Movies.objects.get(pk=entry))
             if len(movies)==0:
                 movies = Movies.objects.all().order_by('-numVotes')[:20]
-        movies=[]
+        if not request.user.is_authenticated:
+            movies=[]
         tmovie=Movies.objects.all().order_by('-imdbscore')[:20]
         pmovie=Movies.objects.all().order_by('-numVotes')[:20]
         lmovie=Movies.objects.all().order_by('-date')[:20]
