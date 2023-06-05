@@ -42,7 +42,6 @@ def run():
     # # for haha in halo:
     # #     haha.delete()
     # Movies.objects.all().delete()
-    
     # count=1
     # # start = 299949
     # for record in read_file:
@@ -154,7 +153,7 @@ def run():
     
     
     
-    movie= Movies.objects.all().order_by('numVotes')[:13966]
+    movie= Movies.objects.all().order_by('numVotes')
     for i in movie:
         print(i.title)
         # i.delete()
