@@ -31,6 +31,9 @@ class list(models.Model):
     rating = models.FloatField(default=0)
     status = models.IntegerField(default=0)
     
+class similarity(models.Model):
+    array = models.BinaryField()
+    
     # @classmethod
     # def create(cls,user,movie,rating,status):
     #     entry = cls(user=user,movie=movie,rating=rating,status=status)

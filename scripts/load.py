@@ -1,13 +1,18 @@
 import csv
 import os
+import builtins
 
 import pandas as pd
-from home.models import Movies
+import numpy as np
+from home.models import Movies,similarity
+from imgarray import save_array_img,load_array_img
+from os import fsync
 import ast
 from ast import literal_eval
 from sklearn.feature_extraction.text import TfidfVectorizer,CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from pympler import asizeof
+
 
 def get_list(x):
     if isinstance(x,list):
@@ -29,6 +34,28 @@ def clean_data(x):
 
 def create_soup(x):
     return ' '+x['crew']+' '+' '.join(x['cast'])+' '+x['genre']
+
+
+def sync(fh):
+   fh.flush()
+   fsync(fh.fileno())
+   return True
+
+def save_array_to_PNG(numpy_array, save_path):
+    with open(save_path, 'wb+') as fh:
+        save_array_img(numpy_array, save_path, img_format='png')
+        sync(fh)
+
+    return save_path
+
+def convertToBinaryData(filename):
+    with open(filename, 'rb') as file:
+        binaryData = file.read()
+    return binaryData
+
+def insertBLOB(png_image):
+    file=convertToBinaryData(png_image)
+    similarity.objects.create(array=file)
 
 # def get_recom(title,cosine_sim):
 #     idx = indices[title]
@@ -153,13 +180,58 @@ def run():
     
     
     
-    movie= Movies.objects.all().order_by('numVotes')
-    for i in movie:
-        print(i.title)
-        # i.delete()
+    # movie= Movies.objects.all().order_by('numVotes')
+    # for i in movie:
+    #     print(i.title)
+    #     # i.delete()
         
     
     # for row in Movies.objects.all().reverse():
     #     if Movies.objects.filter(imdbid=row.imdbid).count() > 1:
     #         row.delete()
+    
+    
+    
+    movie = Movies.objects.all().order_by('-numVotes')
+    movies_panda=pd.DataFrame([t.__dict__ for t in movie])
+    features = ['cast']
+    for feature in features:
+        movies_panda[feature]=movies_panda[feature].apply(literal_eval)
+    
+    features = ['cast']
+    for feature in features:
+        movies_panda[feature]=movies_panda[feature].apply(get_list)
+    # print(movies_panda[['title','cast','crew','genre']].head(5))
+    features = ['cast','crew','genre']
+    for feature in features:
+        movies_panda[feature] = movies_panda[feature].apply(clean_data)
+    # print(movies_panda[['title','cast','crew','genre']].head(5))
+    movies_panda['soup']=movies_panda.apply(create_soup,axis=1)
+    # print(movies_panda[['cast','crew','genre','soup']].head(5))
+    count = CountVectorizer(stop_words='english')
+    count_matrix = count.fit_transform(movies_panda['soup'])
+    # userlist = list.objects.filter(user=request.user,status=1,rating__gte=6)
+    # ranges = range(10,5,-1)
+    # list_of_list = []
+    # for i in ranges:
+    #     userlist = list.objects.filter(user=request.user,status=1,rating=i)
+    #     hajar = []
+    #     for m in userlist:
+    #         hajar.append(m.movie.pk)
+    #     list_of_list.append(hajar)
+    
+    
+    
+    similarity = cosine_similarity(count_matrix,count_matrix)
+    movies_panda = movies_panda.reset_index()
+    indices = pd.Series(movies_panda.index,index=movies_panda['title'])
+    def get_recom(title,number,cosine_sim=similarity):
+        idx = indices[title]
+        sim_scores= builtins.list(enumerate(cosine_sim[idx].tolist()))
+        sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+        sim_scores = sim_scores[1:number+1]
+        movie_indices = [i[0] for i in sim_scores]
+        return movies_panda.iloc[movie_indices]
+    # print(get_recom("The Dark Knight",10)['title'])
+    
     

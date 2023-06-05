@@ -450,6 +450,7 @@ def recommend(request): # type: ignore
     if len(movies)==0:
         movies = Movies.objects.all().order_by('-numVotes')[:20]
     params = {'ritem':movies,'total':len(movies)}
+    print(type(similarity))
     return render(request, "home/recommend.html",params)
 
 
