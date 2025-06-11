@@ -30,7 +30,7 @@
     </div>
     
     <div class="col-md-6 text-center">
-      <img src="{{movie.poster}}" class="movie-img" onerror="this.src='https://source.unsplash.com/400x600/?movie,{{movie.title}}';" width="250"/>
+      <img src="{{movie.poster}}" class="movie-img" onerror="this.src='https://picsum.photos/seed/{{movie.title}}/400/600';" width="250"/>
     </div>
   </div>
 </div>
@@ -50,7 +50,7 @@
         {% for i in ritem %}
         <div class="card">
           <a style="text-decoration:none" href="/home/moviedes/{{i.title}}">
-            <img src="{{i.poster}}" class="card-img-top" alt="Image has failed to load" onerror="this.src='https://source.unsplash.com/400x600/?movie,{{i.title}}';" height="350px">
+            <img src="{{i.poster}}" class="card-img-top" alt="Image has failed to load" onerror="this.src='https://picsum.photos/seed/{{i.title}}/400/600';" height="350px">
             <div class="card-body">
               <h5 class="card-title">{{i.title}}</h5>
               <p class="card-text">Genre: {{i.genre}}<br>Score: {{i.imdbscore}}<br>Release Date: {{i.date}}</p>
